@@ -1,0 +1,32 @@
+# Blender 5.0.1 MTL File: 'GraySinCapucha.blend'
+# www.blender.org
+
+newmtl mt_cloth_sub
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0140_s99_SVT_0140_S01_cloth.png
+
+newmtl mt_dress_white
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0140_s99_SVT_0140_S01_dress_boots.png
+
+newmtl mt_skin1
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0140_s99_SVT_0140_S01_skin.png
