@@ -33,25 +33,47 @@ void Camera::keyControl(bool* keys, GLfloat deltaTime)
 	glm::vec3 forwardXZ = glm::normalize(glm::vec3(front.x, 0.0f, front.z));
 	glm::vec3 rightXZ = glm::normalize(glm::vec3(right.x, 0.0f, right.z));
 
-	// Mover el AVATAR en el plano XZ
+	// Variable para detectar si hay movimiento
+	bool isMoving = false;
+	glm::vec3 moveDirection(0.0f);
+
+	// Mover el AVATAR en el plano XZ y calcular dirección de movimiento
 	if (keys[GLFW_KEY_W])
 	{
 		avatarPosition += forwardXZ * velocity;
+		moveDirection += forwardXZ;
+		isMoving = true;
 	}
 
 	if (keys[GLFW_KEY_S])
 	{
 		avatarPosition -= forwardXZ * velocity;
+		moveDirection -= forwardXZ;
+		isMoving = true;
 	}
 
 	if (keys[GLFW_KEY_A])
 	{
 		avatarPosition -= rightXZ * velocity;
+		moveDirection -= rightXZ;
+		isMoving = true;
 	}
 
 	if (keys[GLFW_KEY_D])
 	{
 		avatarPosition += rightXZ * velocity;
+		moveDirection += rightXZ;
+		isMoving = true;
+	}
+
+
+	// Si hay movimiento, calcular la rotación del avatar hacia la dirección de movimiento
+	if (isMoving)
+	{
+		moveDirection = glm::normalize(moveDirection);
+		// Calcular el ángulo de rotación basado en la dirección de movimiento
+		// atan2 nos da el ángulo en radianes, lo convertimos a grados
+		avatarYaw = glm::degrees(atan2(moveDirection.x, moveDirection.z)) +90.0f;
 	}
 
 	// Mantener el avatar en el plano XZ
@@ -108,9 +130,15 @@ glm::vec3 Camera::getAvatarPosition()
 	return glm::vec3(avatarPosition.x, alturaSobrePiso, avatarPosition.z);
 }
 
+
 float Camera::getYaw()
 {
 	return yaw;
+}
+
+float Camera::getAvatarRotation()
+{
+	return avatarYaw;
 }
 
 void Camera::updateCameraPosition()

@@ -318,12 +318,12 @@ int main()
 		// ============ AVATAR LIGADO A LA CÁMARA ============
 		// Se obtiene la posicion del avatar basada en la camara
 		glm::vec3 avatarPos = camera.getAvatarPosition();
-		float avatarYaw = camera.getYaw();
+		float avatarRotation = camera.getAvatarRotation(); // Rotación basada en dirección de movimiento
 		//Personaje Gray FateGrandOrder
 		// Cuerpo Avatar
 		model = glm::mat4(1.0);
 		model = glm::translate(model, avatarPos);
-		model = glm::rotate(model, glm::radians(avatarYaw + 90.0f), glm::vec3(0.0f, 1.0f, 0.0f)); // Rotar segun la cámara
+		model = glm::rotate(model, glm::radians(avatarRotation), glm::vec3(0.0f, 1.0f, 0.0f)); // Rotar según dirección de movimiento
 		modelaux = model;
 		model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
@@ -358,6 +358,9 @@ int main()
 		model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		PiernaIzq.RenderModel();
+
+
+
 
 		/*
 		glEnable(GL_BLEND);

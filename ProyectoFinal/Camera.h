@@ -19,6 +19,7 @@ public:
 	glm::vec3 getCameraPosition();
 	glm::vec3 getCameraDirection();
 	glm::vec3 getAvatarPosition(); // Posición del avatar
+	float getAvatarRotation(); // Rotación del avatar
 	float getYaw(); // Para orientar el avatar
 	glm::mat4 calculateViewMatrix();
 
@@ -33,6 +34,7 @@ private:
 	glm::vec3 worldUp;
 
 	GLfloat yaw;
+	GLfloat avatarYaw; // Para orientar el avatar
 	GLfloat pitch;
 
 	GLfloat moveSpeed;
