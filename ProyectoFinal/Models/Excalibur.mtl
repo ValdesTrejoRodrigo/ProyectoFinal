@@ -1,0 +1,90 @@
+# Blender 5.0.1 MTL File: 'Excalibur.blend'
+# www.blender.org
+
+newmtl mt_gold_new
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd wp_0001_t02_WP_0001_T02_sword.png
+map_Bump -bm 1.000000 wp_0001_t02_WP_0001_T02_sword_n0.png
+
+newmtl mt_gold_new.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd wp_0001_t02_WP_0001_T02_sword.png
+map_Bump -bm 1.000000 wp_0001_t02_WP_0001_T02_sword_n0.png
+
+newmtl mt_rune
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd wp_0001_t02_WP_0001_T02_rune.png
+map_Bump -bm 1.000000 wp_0001_t02_WP_0001_T02_rune_n0.png
+
+newmtl mt_rune.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd wp_0001_t02_WP_0001_T02_rune.png
+map_Bump -bm 1.000000 wp_0001_t02_WP_0001_T02_rune_n0.png
+
+newmtl mt_sword_Blue
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd wp_0001_t02_WP_0001_T02_sword.png
+map_Bump -bm 1.000000 wp_0001_t02_WP_0001_T02_sword_n0.png
+
+newmtl mt_sword_Blue.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd wp_0001_t02_WP_0001_T02_sword.png
+map_Bump -bm 1.000000 wp_0001_t02_WP_0001_T02_sword_n0.png
+
+newmtl mt_sword_main
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd wp_0001_t02_WP_0001_T02_sword.png
+map_Bump -bm 1.000000 wp_0001_t02_WP_0001_T02_sword_n0.png
+
+newmtl mt_sword_main.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd wp_0001_t02_WP_0001_T02_sword.png
+map_Bump -bm 1.000000 wp_0001_t02_WP_0001_T02_sword_n0.png

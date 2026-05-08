@@ -48,12 +48,19 @@ Texture dirtTexture;
 Texture plainTexture;
 Texture pisoTexture;
 
+//personajes
 //Avtara ligado a la camara
 Model Cuerpo;
 Model BraDer;
 Model BraIzq;
 Model PiernaDer;
 Model PiernaIzq;
+
+
+
+//elementos del entorno
+Model excalibur;
+Model piedra;
 
 Skybox skybox;
 
@@ -186,7 +193,7 @@ int main()
 	pisoTexture.LoadTextureA();
 	
 
-
+	//avatar ligado a la camara
 	Cuerpo = Model();
 	Cuerpo.LoadModel("Models/PersonajeGray/GrayCuerpo.obj");
 	BraDer = Model();
@@ -197,6 +204,14 @@ int main()
 	PiernaDer.LoadModel("Models/PersonajeGray/PiernaDerGray.obj");
 	PiernaIzq = Model();
 	PiernaIzq.LoadModel("Models/PersonajeGray/PiernaIzqGray.obj");
+
+	//elementos del entorno
+
+	//modelo de la espada en la piedra
+	excalibur = Model();
+	excalibur.LoadModel("Models/excalibur.obj");
+	piedra = Model();
+	piedra.LoadModel("Models/piedra.obj");
 
 
 	std::vector<std::string> skyboxFaces;
@@ -385,8 +400,17 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		PiernaIzq.RenderModel();
 
+		//espada en la piedra punto de interes 1
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(36.0f, 1.0f, 36.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		excalibur.RenderModel();
 
-
+		//piedra en la que esta clavada
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(35.0f, -1.5f, 35.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		piedra.RenderModel();
 
 		/*
 		glEnable(GL_BLEND);
