@@ -16,6 +16,10 @@ Camera::Camera(glm::vec3 startPosition, glm::vec3 startUp, GLfloat startYaw, GLf
 	moveSpeed = startMoveSpeed;
 	turnSpeed = startTurnSpeed;
 
+	// Variables para animación
+	velocidadAnimacion = 0.0f;
+	caminando = false;
+
 	// Parámetros de cámara de tercera persona
 	distanciaDetrasAvatar = 8.0f;  // Distancia detrás del avatar
 	alturaSobreAvatar = 4.0f;   // Altura de la cámara sobre el avatar
@@ -74,6 +78,14 @@ void Camera::keyControl(bool* keys, GLfloat deltaTime)
 		// Calcular el ángulo de rotación basado en la dirección de movimiento
 		// atan2 nos da el ángulo en radianes, lo convertimos a grados
 		avatarYaw = glm::degrees(atan2(moveDirection.x, moveDirection.z)) +90.0f;
+		
+		// Actualizar tiempo de animación
+		velocidadAnimacion += deltaTime/8; 
+		caminando = true;
+	}
+	else
+	{
+		caminando = false;
 	}
 
 	// Mantener el avatar en el plano XZ
@@ -139,6 +151,16 @@ float Camera::getYaw()
 float Camera::getAvatarRotation()
 {
 	return avatarYaw;
+}
+
+float Camera::getVelocidadAnimacion()
+{
+	return velocidadAnimacion;
+}
+
+bool Camera::estaCaminando()
+{
+	return caminando;
 }
 
 void Camera::updateCameraPosition()

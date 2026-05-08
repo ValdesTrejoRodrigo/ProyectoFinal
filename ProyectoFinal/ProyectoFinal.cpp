@@ -314,47 +314,73 @@ int main()
 		pisoTexture.UseTexture();
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[2]->RenderMesh();
-	
-		// ============ AVATAR LIGADO A LA CÁMARA ============
+
+		// ============ AVATAR LIGADO A LA CAMARA ============
 		// Se obtiene la posicion del avatar basada en la camara
 		glm::vec3 avatarPos = camera.getAvatarPosition();
-		float avatarRotation = camera.getAvatarRotation(); // Rotación basada en dirección de movimiento
+		float avatarRotation = camera.getAvatarRotation(); // Rotacion basada en direccion de movimiento
+		
+		// Obtener tiempo de animacion
+		float animTime = camera.getVelocidadAnimacion();
+		bool estaCaminando = camera.estaCaminando();
+		
+		// Calcular angulos de animacion de brazos y piernas
+		float rotExtremidadesGray = 0.0f;
+		if (estaCaminando)
+		{
+			rotExtremidadesGray = sin(animTime) * 30.0f; // Oscilacion de 30 grados
+		}
+		
 		//Personaje Gray FateGrandOrder
 		// Cuerpo Avatar
 		model = glm::mat4(1.0);
 		model = glm::translate(model, avatarPos);
-		model = glm::rotate(model, glm::radians(avatarRotation), glm::vec3(0.0f, 1.0f, 0.0f)); // Rotar según dirección de movimiento
+		model = glm::rotate(model, glm::radians(avatarRotation), glm::vec3(0.0f, 1.0f, 0.0f)); // Rotar segun direccion de movimiento
 		modelaux = model;
 		model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Cuerpo.RenderModel();
 
-		//Brazo derecho
+		//Brazo derecho (oscila opuesto al brazo izquierdo)
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(0.0f, 0.75f, 0.105f));
-	//	model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		if (estaCaminando)
+		{
+			model = glm::rotate(model, glm::radians(rotExtremidadesGray), glm::vec3(0.0f, 0.0f, 1.0f)); 
+		}
 		model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		BraDer.RenderModel();
 
-		//Brazo izquierdo
+		//Brazo izquierdo (oscila opuesto al brazo derecho)
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(0.0f, 0.75f, -0.15f));
+		if (estaCaminando)
+		{
+			model = glm::rotate(model, glm::radians(-rotExtremidadesGray), glm::vec3(1.0f, 0.0f, 1.0f)); 
+		}
 		model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		BraIzq.RenderModel();
 
-		//PiernaDer
+		//PiernaDer (oscila opuesto a la pierna izquierda)
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(0.0f, -0.19f, 0.17f));
-	//	model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		if (estaCaminando)
+		{
+			model = glm::rotate(model, glm::radians(-rotExtremidadesGray), glm::vec3(0.0f, 0.0f, 1.0f)); 
+		}
 		model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		PiernaDer.RenderModel();
 
-		//PiernaIzq
+		//PiernaIzq (oscila opuesto a la pierna derecha)
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(0.0f, -0.19f, -0.22f));
+		if (estaCaminando)
+		{
+			model = glm::rotate(model, glm::radians(rotExtremidadesGray), glm::vec3(0.0f, 0.0f, 1.0f)); 
+		}
 		model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		PiernaIzq.RenderModel();

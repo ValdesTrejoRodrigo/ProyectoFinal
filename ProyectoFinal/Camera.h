@@ -21,6 +21,8 @@ public:
 	glm::vec3 getAvatarPosition(); // Posición del avatar
 	float getAvatarRotation(); // Rotación del avatar
 	float getYaw(); // Para orientar el avatar
+	float getVelocidadAnimacion(); // Tiempo para animación de caminar
+	bool estaCaminando(); // Indica si el avatar está caminando
 	glm::mat4 calculateViewMatrix();
 
 	~Camera();
@@ -40,6 +42,10 @@ private:
 	GLfloat moveSpeed;
 	GLfloat turnSpeed;
 
+	// Variables para animación de caminar
+	GLfloat velocidadAnimacion;
+	bool caminando;
+
 	// Parámetros de cámara de tercera persona
 	GLfloat distanciaDetrasAvatar;  // Distancia de la cámara al avatar
 	GLfloat alturaSobreAvatar;   // Altura de la cámara sobre el avatar
@@ -48,4 +54,3 @@ private:
 	void update();
 	void updateCameraPosition(); // Actualizar posición de cámara en 3era persona
 };
-
