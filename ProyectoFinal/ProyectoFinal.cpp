@@ -57,10 +57,17 @@ Model PiernaDer;
 Model PiernaIzq;
 
 
-
 //elementos del entorno
 Model excalibur;
 Model piedra;
+
+
+
+//estrcuturas
+Model Molino;
+Model AspaMolino;
+float rotAspaMolino;
+float rotAspaOffset= 1.0f;
 
 Skybox skybox;
 
@@ -214,6 +221,12 @@ int main()
 	piedra.LoadModel("Models/piedra.obj");
 
 
+	//estructuras
+	Molino = Model();
+	Molino.LoadModel("Models/Molino.obj");
+	AspaMolino = Model();
+	AspaMolino.LoadModel("Models/AspaMolino.obj");
+
 	std::vector<std::string> skyboxFaces;
 	skyboxFaces.push_back("Textures/Skybox/cupertin-lake_rt.tga");
 	skyboxFaces.push_back("Textures/Skybox/cupertin-lake_lf.tga");
@@ -286,6 +299,9 @@ int main()
 		angulovaria += 0.5f*deltaTime;
 		// Actualizar ciclo día/noche
 		mainLight.UpdateCycle(deltaTime);
+
+		//MOVIMIENTO DE LAS ASPAS DEL MOLINO
+		rotAspaMolino += rotAspaOffset * deltaTime;
 
 		//Recibir eventos del usuario
 		glfwPollEvents();
@@ -381,6 +397,7 @@ int main()
 			modelaux = model;
 			model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 			Cuerpo.RenderModel();
 
 			//Brazo derecho (oscila opuesto al brazo izquierdo)
@@ -392,6 +409,7 @@ int main()
 			}
 			model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 			BraDer.RenderModel();
 
 			//Brazo izquierdo (oscila opuesto al brazo derecho)
@@ -403,6 +421,7 @@ int main()
 			}
 			model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 			BraIzq.RenderModel();
 
 			//PiernaDer (oscila opuesto a la pierna izquierda)
@@ -414,6 +433,7 @@ int main()
 			}
 			model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 			PiernaDer.RenderModel();
 
 			//PiernaIzq (oscila opuesto a la pierna derecha)
@@ -425,6 +445,7 @@ int main()
 			}
 			model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 			PiernaIzq.RenderModel();
 
 		}//Fin del if de avatar ligado a la camara
@@ -433,13 +454,33 @@ int main()
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(36.0f, 1.0f, 36.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		excalibur.RenderModel();
 
 		//piedra en la que esta clavada
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(35.0f, -1.53f, 35.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		piedra.RenderModel();
+
+		//modelo de barco voladro
+
+		//modelo de molinos
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-106.0f, -2.0f, -106.0f));
+		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		modelaux = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Molino.RenderModel();
+
+		modelaux = model;
+		model = glm::translate(model, glm::vec3(-4.6f, 12.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(rotAspaMolino), glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		AspaMolino.RenderModel();
 
 		/*
 		glEnable(GL_BLEND);
