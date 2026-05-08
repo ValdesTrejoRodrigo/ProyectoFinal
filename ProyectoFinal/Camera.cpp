@@ -20,6 +20,15 @@ Camera::Camera(glm::vec3 startPosition, glm::vec3 startUp, GLfloat startYaw, GLf
 	velocidadAnimacion = 0.0f;
 	caminando = false;
 
+	// Modo de cámara
+	cameraMode = 1; // Iniciar en modo tercera persona
+	aerialPosition = glm::vec3(0.0f, 25.0f, 0.0f); // Posición inicial aérea (25 unidades arriba)
+	fixedPosition = glm::vec3(36.0f, 2.5f, 26.0f); // Posición fija de la cámara
+	fixedTarget = glm::vec3(36.0f, 1.0f, 36.0f); // Apunta al centro del escenario por defecto
+
+
+	// Parámetros de cámara de tercera persona
+
 	// Parámetros de cámara de tercera persona
 	distanciaDetrasAvatar = 8.0f;  // Distancia detrás del avatar
 	alturaSobreAvatar = 4.0f;   // Altura de la cámara sobre el avatar
@@ -33,44 +42,44 @@ void Camera::keyControl(bool* keys, GLfloat deltaTime)
 {
 	GLfloat velocity = moveSpeed * deltaTime;
 
-	// Crear vectores de movimiento en el plano XZ
-	glm::vec3 forwardXZ = glm::normalize(glm::vec3(front.x, 0.0f, front.z));
-	glm::vec3 rightXZ = glm::normalize(glm::vec3(right.x, 0.0f, right.z));
-
-	// Variable para detectar si hay movimiento
-	bool isMoving = false;
-	glm::vec3 moveDirection(0.0f);
-
-	// Mover el AVATAR en el plano XZ y calcular dirección de movimiento
-	if (keys[GLFW_KEY_W])
+	if (cameraMode == 1) // Modo tercera persona con avatar
 	{
-		avatarPosition += forwardXZ * velocity;
-		moveDirection += forwardXZ;
-		isMoving = true;
-	}
+		// Crear vectores de movimiento en el plano XZ
+		glm::vec3 forwardXZ = glm::normalize(glm::vec3(front.x, 0.0f, front.z));
+		glm::vec3 rightXZ = glm::normalize(glm::vec3(right.x, 0.0f, right.z));
 
-	if (keys[GLFW_KEY_S])
-	{
-		avatarPosition -= forwardXZ * velocity;
-		moveDirection -= forwardXZ;
-		isMoving = true;
-	}
+		// Variable para detectar si hay movimiento
+		bool isMoving = false;
+		glm::vec3 moveDirection(0.0f);
 
-	if (keys[GLFW_KEY_A])
-	{
-		avatarPosition -= rightXZ * velocity;
-		moveDirection -= rightXZ;
-		isMoving = true;
-	}
+		// Mover el AVATAR en el plano XZ y calcular dirección de movimiento
+		if (keys[GLFW_KEY_W])
+		{
+			avatarPosition += forwardXZ * velocity;
+			moveDirection += forwardXZ;
+			isMoving = true;
+		}
 
-	if (keys[GLFW_KEY_D])
-	{
-		avatarPosition += rightXZ * velocity;
-		moveDirection += rightXZ;
-		isMoving = true;
-	}
+		if (keys[GLFW_KEY_S])
+		{
+			avatarPosition -= forwardXZ * velocity;
+			moveDirection -= forwardXZ;
+			isMoving = true;
+		}
 
+		if (keys[GLFW_KEY_A])
+		{
+			avatarPosition -= rightXZ * velocity;
+			moveDirection -= rightXZ;
+			isMoving = true;
+		}
 
+		if (keys[GLFW_KEY_D])
+		{
+			avatarPosition += rightXZ * velocity;
+			moveDirection += rightXZ;
+			isMoving = true;
+		}
 	// Si hay movimiento, calcular la rotación del avatar hacia la dirección de movimiento
 	if (isMoving)
 	{
@@ -94,6 +103,49 @@ void Camera::keyControl(bool* keys, GLfloat deltaTime)
 	// Actualizar la posición de la cámara basada en el avatar
 	updateCameraPosition();
 }
+	else if (cameraMode == 2) // Modo cámara aérea
+	{
+		// Movimiento de cámara aérea en el plano XZ (vista desde arriba)
+		glm::vec3 forwardXZ = glm::normalize(glm::vec3(front.x, 0.0f, front.z));
+		glm::vec3 rightXZ = glm::normalize(glm::vec3(right.x, 0.0f, right.z));
+
+		if (keys[GLFW_KEY_W])
+		{
+			aerialPosition += forwardXZ * velocity * 2.0f; // Velocidad ajustada
+		}
+
+		if (keys[GLFW_KEY_S])
+		{
+			aerialPosition -= forwardXZ * velocity * 2.0f;
+		}
+
+		if (keys[GLFW_KEY_A])
+		{
+			aerialPosition -= rightXZ * velocity * 2.0f;
+		}
+
+		if (keys[GLFW_KEY_D])
+		{
+			aerialPosition += rightXZ * velocity * 2.0f;
+		}
+
+		// Mantener altura constante en modo aéreo
+		aerialPosition.y = 25.0f; // Altura fija de 25 unidades
+
+		// Actualizar posición de la cámara
+		position = aerialPosition;
+
+		// No hay animación de caminar en modo aéreo
+		caminando = false;
+		}
+	else if (cameraMode == 3) // Modo cámara fija
+	{
+		// La cámara fija no se mueve con teclas
+		// Permanece en su posición fija
+		position = fixedPosition;
+		caminando = false;
+	}
+}
 
 void Camera::mouseControl(GLfloat xChange, GLfloat yChange)
 {
@@ -103,26 +155,77 @@ void Camera::mouseControl(GLfloat xChange, GLfloat yChange)
 	yaw += xChange;
 	pitch += yChange;
 
-	// Limitar el pitch para cámara de tercera persona
-	if (pitch > 45.0f)
+	if (cameraMode == 1) // Modo tercera persona
 	{
-		pitch = 45.0f;
-	}
+		// Limitar el pitch para cámara de tercera persona
+		if (pitch > 45.0f)
+		{
+			pitch = 45.0f;
+		}
 
-	if (pitch < -45.0f)
+		if (pitch < -45.0f)
+		{
+			pitch = -45.0f;
+		}
+
+		update();
+		updateCameraPosition();
+	}
+	else if (cameraMode == 2) // Modo aéreo
 	{
-		pitch = -45.0f;
-	}
+		// Limitar el pitch para cámara aérea
+		if (pitch > 89.0f)
+		{
+			pitch = 89.0f;
+		}
 
-	update();
-	updateCameraPosition();
+		if (pitch < -89.0f)
+		{
+			pitch = -89.0f;
+		}
+
+		update(); // Actualizar vectores front, right, up
+	}
+	else if (cameraMode == 2) // Modo aéreo
+	{
+		// Limitar el pitch para cámara aérea
+		if (pitch > 89.0f)
+		{
+			pitch = 89.0f;
+		}
+
+		if (pitch < -89.0f)
+		{
+			pitch = -89.0f;
+		}
+
+		update(); // Actualizar vectores front, right, up
+	}
+	else if (cameraMode == 3) // Modo cámara fija
+	{
+		// La cámara fija no responde al mouse
+		// No hacer nada
+	}
 }
 
 glm::mat4 Camera::calculateViewMatrix()
 {
-	// La cámara siempre mira hacia el avatar
-	glm::vec3 lookAtTarget = glm::vec3(avatarPosition.x, alturaSobrePiso + 2.0f, avatarPosition.z);
-	return glm::lookAt(position, lookAtTarget, worldUp);
+	if (cameraMode == 1) // Tercera persona
+	{
+		// La cámara siempre mira hacia el avatar
+		glm::vec3 lookAtTarget = glm::vec3(avatarPosition.x, alturaSobrePiso + 2.0f, avatarPosition.z);
+		return glm::lookAt(position, lookAtTarget, worldUp);
+	}
+	else if (cameraMode == 2) // Cámara aérea
+	{
+		// La cámara mira hacia donde apunta el frente
+		return glm::lookAt(position, position + front, worldUp);
+	}
+	else // Cámara fija (modo 3)
+	{
+		// La cámara mira hacia el objetivo fijo
+		return glm::lookAt(fixedPosition, fixedTarget, worldUp);
+	}
 }
 
 glm::vec3 Camera::getCameraPosition()
@@ -161,6 +264,36 @@ float Camera::getVelocidadAnimacion()
 bool Camera::estaCaminando()
 {
 	return caminando;
+}
+
+int Camera::getCameraMode()
+{
+	return cameraMode;
+}
+
+void Camera::setFixedCameraTarget(glm::vec3 targetPos)
+{
+	fixedTarget = targetPos;
+}
+
+void Camera::setCameraMode(int mode)
+{
+	cameraMode = mode;
+
+	if (mode == 2) // Al cambiar a modo aéreo
+	{
+		// Posicionar cámara aérea sobre la posición actual del avatar
+		aerialPosition = glm::vec3(avatarPosition.x, 15.0f, avatarPosition.z);
+		position = aerialPosition;
+	}
+	else if (mode == 1) // Al volver a modo tercera persona
+	{
+		updateCameraPosition();
+	}
+	else if (mode == 3) // Al cambiar a modo fijo
+	{
+		position = fixedPosition;
+	}
 }
 
 void Camera::updateCameraPosition()
