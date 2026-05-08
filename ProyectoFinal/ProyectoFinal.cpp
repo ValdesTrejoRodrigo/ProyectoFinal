@@ -275,7 +275,8 @@ int main()
 		lastTime = now;
 
 		angulovaria += 0.5f*deltaTime;
-
+		// Actualizar ciclo día/noche
+		mainLight.UpdateCycle(deltaTime);
 
 		//Recibir eventos del usuario
 		glfwPollEvents();
@@ -408,7 +409,7 @@ int main()
 
 		//piedra en la que esta clavada
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(35.0f, -1.5f, 35.0f));
+		model = glm::translate(model, glm::vec3(35.0f, -1.53f, 35.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		piedra.RenderModel();
 

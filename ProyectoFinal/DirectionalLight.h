@@ -13,9 +13,12 @@ public:
 	void UseLight(GLfloat ambientIntensityLocation, GLfloat ambientcolorLocation,
 		GLfloat diffuseIntensityLocation, GLfloat directionLocation);
 
+	void UpdateCycle(GLfloat deltaTime);  // Nuevo método
+
 	~DirectionalLight();
 
 private:
 	glm::vec3 direction;
+	GLfloat cicloDyN;  // Tiempo del ciclo día/noche
 };
 
