@@ -61,10 +61,26 @@ Model PiernaIzq;
 Model excalibur;
 Model piedra;
 
+// Variables para animación de Excalibur
+bool excaliburSacada = false;
+float excaliburTiempoAnimado = 0.0f;
+float excaliburY = 1.0f; // Altura inicial
+float rotExcalibur = 0.0f; // Rotación en Y
+float animDuration = 8.0f;// Duración total de la animación: 8 segundos
+float progreso = 0.0f;
+float giroEspada = 0.0f;
+
 //vehiculos
 Model Dirigible;
 Model AspaDirigible;
 Model ColaDirigible;
+
+// Variables para animación del dirigible
+float dirigibleTime = 0.0f;
+glm::vec3 posicionDirigible(50.0f, 30.0f, -50.0f); // Posición central del recorrido
+float rotYDirigible = 180.0f;
+float inclinacionDirigible = 0.0f;
+float rotColaDirigible = 0.0f;
 
 //estrcuturas
 Model Molino;
@@ -180,7 +196,39 @@ void CreateShaders()
 	shaderList.push_back(*shader1);
 }
 
+// Función de animación compleja del barco volador
+void animacionDirigible(float deltaTime, glm::vec3& posicionBase, float& rotacionY, float& timeAccum)
+{
+	// Actualizar tiempo
+	timeAccum += deltaTime/16;
 
+	// Movimiento en forma de 8 (lemniscata) en el plano XZ
+	float tamañoRecorrido = 30.0f; // Tamaño de la trayectoria
+	float velocidad = 0.2f;  // Velocidad de recorrido
+
+	float t = timeAccum * velocidad;
+
+	// Ecuación paramétrica de la lemniscata (figura de 8)
+	float denominador = 1.0f + sin(t) * sin(t);
+	float offsetX = tamañoRecorrido * cos(t) / denominador;
+	float offsetZ = tamañoRecorrido * sin(t) * cos(t) / denominador;
+
+	// Guardar la posición base
+	static glm::vec3 posicionCentral = posicionBase; // Se guarda solo la primera vez
+
+	// Aplicar offset a la posición central
+	posicionBase.x = posicionCentral.x + offsetX;
+	posicionBase.z = posicionCentral.z + offsetZ;
+
+	// Movimiento vertical ondulante (sube y baja suavemente) desde la altura base
+	posicionBase.y = posicionCentral.y + sin(timeAccum * 0.5f) * 2.0f;
+
+	// Calcular rotación para que apunte hacia la dirección de movimiento
+	float dx = -tamañoRecorrido * sin(t) / denominador;
+	float dz = tamañoRecorrido * (cos(t) * cos(t) - sin(t) * sin(t)) / denominador;
+
+	rotacionY = glm::degrees(atan2(dx, dz));
+}
 
 
 int main()
@@ -309,6 +357,10 @@ int main()
 		angulovaria += 0.5f*deltaTime;
 		// Actualizar ciclo día/noche
 		mainLight.UpdateCycle(deltaTime);
+
+		// Animar el dirigible
+		animacionDirigible(deltaTime, posicionDirigible, rotYDirigible, dirigibleTime);
+
 
 		//MOVIMIENTO DE LAS ASPAS DEL MOLINO
 		rotAspaMolino += rotAspaOffset * deltaTime;
@@ -460,44 +512,107 @@ int main()
 
 		}//Fin del if de avatar ligado a la camara
 
+
+		// Activar/desactivar animación de Excalibur con tecla E
+		if (mainWindow.getsKeys()[GLFW_KEY_E])
+		{
+			if (!excaliburSacada)
+			{
+				excaliburSacada = true;
+				excaliburTiempoAnimado = 0.0f; // Reiniciar animación
+			}
+		}
+
+		// Actualizar animación de Excalibur si está activa
+		if (excaliburSacada)
+		{
+			excaliburTiempoAnimado += deltaTime/16;
+
+			if (excaliburTiempoAnimado < 2.0f) // Fase 1: Subir (2 segundos)
+			{
+				// Subir suavemente desde 1.0 hasta 8.0
+				progreso = excaliburTiempoAnimado / 2.0f; // 0 a 1
+				excaliburY = 1.0f + (progreso * 7.0f); // De 1.0 a 8.0
+				rotExcalibur = 0.0f;
+			}
+			else if (excaliburTiempoAnimado < 6.0f) // Fase 2: Girar en el aire (4 segundos)
+			{
+				// Mantener altura y girar
+				excaliburY = 6.0f;
+				giroEspada = excaliburTiempoAnimado - 2.0f; // Tiempo desde que empezó a girar
+				rotExcalibur = giroEspada * 180.0f; // 2 vueltas completas en 4 segundos (720 grados)
+			}
+			else if (excaliburTiempoAnimado < animDuration) // Fase 3: Bajar (2 segundos)
+			{
+				// Bajar suavemente desde 8.0 hasta 1.0
+				float tiempoDescenso = excaliburTiempoAnimado - 6.0f; // 0 a 2
+				progreso = tiempoDescenso / 2.0f; // 0 a 1
+				excaliburY = 6.0f - (progreso * 7.0f); // De 8.0 a 1.0
+				rotExcalibur = 720.0f; // Mantener rotación final
+			}
+			else // Animación completada
+			{
+				// Reiniciar animación
+				excaliburSacada = false;
+				excaliburTiempoAnimado = 0.0f;
+				excaliburY = 1.0f;
+				rotExcalibur = 0.0f;
+			}
+		}
+
 		//espada en la piedra punto de interes 1
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(36.0f, 1.0f, 36.0f));
+		model = glm::translate(model, glm::vec3(36.0f, excaliburY, 36.0f)); // Usar altura animada
+		model = glm::rotate(model, glm::radians(rotExcalibur), glm::vec3(0.0f, 1.0f, 0.0f)); // Rotar en Y
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		excalibur.RenderModel();
 
-		//piedra en la que esta clavada
+		//piedra en la que esta clavada (sin cambios)
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(35.0f, -1.53f, 35.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		piedra.RenderModel();
 
+
+
 		//modelo de barco volador
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(0.0f, 5.0f, 0.0f));
-		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, posicionDirigible);//para cambiar la posición del dirigible en su recorrido
+		model = glm::rotate(model, glm::radians(rotYDirigible+180), glm::vec3(0.0f, 1.0f, 0.0f)); // Rotación animada
+
+		// Añadir inclinación en los giros
+		inclinacionDirigible = sin(dirigibleTime * 0.6f) * 15.0f;
+		model = glm::rotate(model, glm::radians(inclinacionDirigible), glm::vec3(0.0f, 0.0f, 1.0f));
+
 		modelaux = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Dirigible.RenderModel();
-		// Aspa del dirigible
+
+		// Aspa del dirigible DERECHA (con rotación continua)
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(2.5f, -0.2f, 1.25f));
+		model = glm::rotate(model, dirigibleTime * 10.0f, glm::vec3(0.0f, 0.0f, 1.0f)); // Gira rápido
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		AspaDirigible.RenderModel();
 
+		// Aspa del dirigible IZQUIERDA (con rotación continua)
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(-2.5f, -0.2f, 1.25f));
+		model = glm::rotate(model, -dirigibleTime * 10.0f, glm::vec3(0.0f, 0.0f, 1.0f)); // Gira rápido en sentido opuesto
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		AspaDirigible.RenderModel();
-		
-		// Cola del dirigible
+
+		// Cola del dirigible (movimiento como pez)
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 3.0f));
+		// Movimiento de cola tipo pez (oscilación lateral)
+		rotColaDirigible = sin(dirigibleTime * 3.0f) * 20.0f; // Oscila ±20 grados
+		model = glm::rotate(model, glm::radians(rotColaDirigible), glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		ColaDirigible.RenderModel();
