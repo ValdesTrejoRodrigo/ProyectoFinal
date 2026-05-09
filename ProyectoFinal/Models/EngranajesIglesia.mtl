@@ -1,0 +1,24 @@
+# Blender 5.0.1 MTL File: 'None'
+# www.blender.org
+
+newmtl lambert18SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lambert18SG_baseColor.jpeg
+map_Bump -bm 1.000000 lambert18SG_normal.png
+
+newmtl lambert27SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lambert27SG_baseColor.jpeg
+map_Bump -bm 1.000000 lambert27SG_normal.png

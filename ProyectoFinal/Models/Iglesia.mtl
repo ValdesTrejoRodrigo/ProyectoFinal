@@ -1,0 +1,431 @@
+# Blender 5.0.1 MTL File: 'None'
+# www.blender.org
+
+newmtl initialShadingGroup
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd initialShadingGroup_baseColor.jpeg
+map_Bump -bm 1.000000 initialShadingGroup_normal.png
+
+newmtl lambert10SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lambert10SG_baseColor.jpeg
+map_Bump -bm 1.000000 lambert10SG_normal.png
+
+newmtl lambert11SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lambert11SG_baseColor.jpeg
+map_Bump -bm 1.000000 lambert11SG_normal.png
+
+newmtl lambert12SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lambert12SG_baseColor.jpeg
+map_Bump -bm 1.000000 lambert12SG_normal.png
+
+newmtl lambert13SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lambert13SG_baseColor.jpeg
+map_Bump -bm 1.000000 lambert13SG_normal.png
+
+newmtl lambert14SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lambert14SG_baseColor.jpeg
+map_Bump -bm 1.000000 lambert14SG_normal.png
+
+newmtl lambert15SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lambert15SG_baseColor.jpeg
+map_Bump -bm 1.000000 lambert15SG_normal.png
+
+newmtl lambert16SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lambert16SG_baseColor.jpeg
+map_Bump -bm 1.000000 lambert16SG_normal.png
+
+newmtl lambert17SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lambert17SG_baseColor.jpeg
+map_Bump -bm 1.000000 lambert17SG_normal.png
+
+newmtl lambert19SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lambert19SG_baseColor.jpeg
+map_Bump -bm 1.000000 lambert19SG_normal.png
+
+newmtl lambert20SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lambert20SG_baseColor.jpeg
+map_Bump -bm 1.000000 lambert20SG_normal.png
+
+newmtl lambert21SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lambert21SG_baseColor.jpeg
+map_Bump -bm 1.000000 lambert21SG_normal.png
+
+newmtl lambert22SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lambert22SG_baseColor.jpeg
+map_Bump -bm 1.000000 lambert22SG_normal.png
+
+newmtl lambert24SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lambert24SG_baseColor.jpeg
+map_Bump -bm 1.000000 lambert24SG_normal.png
+
+newmtl lambert25SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lambert25SG_baseColor.jpeg
+map_Bump -bm 1.000000 lambert25SG_normal.png
+
+newmtl lambert28SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lambert28SG_baseColor.jpeg
+map_Bump -bm 1.000000 lambert28SG_normal.png
+
+newmtl lambert30SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lambert30SG_baseColor.jpeg
+map_Bump -bm 1.000000 lambert30SG_normal.png
+
+newmtl lambert32SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lambert32SG_baseColor.jpeg
+map_Bump -bm 1.000000 lambert32SG_normal.png
+
+newmtl lambert33SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lambert33SG_baseColor.jpeg
+map_Bump -bm 1.000000 lambert33SG_normal.png
+
+newmtl lambert34SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lambert34SG_baseColor.jpeg
+map_Bump -bm 1.000000 lambert34SG_normal.png
+
+newmtl lambert35SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lambert35SG_baseColor.jpeg
+map_Bump -bm 1.000000 lambert35SG_normal.png
+
+newmtl lambert36SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lambert36SG_baseColor.jpeg
+map_Bump -bm 1.000000 lambert36SG_normal.png
+
+newmtl lambert37SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lambert37SG_baseColor.jpeg
+map_Bump -bm 1.000000 lambert37SG_normal.png
+
+newmtl lambert38SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lambert38SG_baseColor.jpeg
+map_Bump -bm 1.000000 lambert38SG_normal.png
+
+newmtl lambert39SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lambert39SG_baseColor.jpeg
+map_Bump -bm 1.000000 lambert39SG_normal.png
+
+newmtl lambert40SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lambert40SG_baseColor.jpeg
+map_Bump -bm 1.000000 lambert40SG_normal.png
+
+newmtl lambert41SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lambert41SG_baseColor.jpeg
+map_Bump -bm 1.000000 lambert41SG_normal.png
+
+newmtl lambert42SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lambert42SG_baseColor.jpeg
+map_Bump -bm 1.000000 lambert42SG_normal.png
+
+newmtl lambert43SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lambert43SG_baseColor.jpeg
+map_Bump -bm 1.000000 lambert43SG_normal.png
+
+newmtl lambert44SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lambert44SG_baseColor.jpeg
+map_Bump -bm 1.000000 lambert44SG_normal.png
+
+newmtl lambert45SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lambert45SG_baseColor.jpeg
+map_Bump -bm 1.000000 lambert45SG_normal.png
+
+newmtl lambert46SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lambert46SG_baseColor.jpeg
+map_Bump -bm 1.000000 lambert46SG_normal.png
+
+newmtl lambert47SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lambert47SG_baseColor.jpeg
+map_Bump -bm 1.000000 lambert47SG_normal.png
+
+newmtl lambert48SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lambert48SG_baseColor.jpeg
+map_Bump -bm 1.000000 lambert48SG_normal.png
+
+newmtl lambert49SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lambert49SG_baseColor.jpeg
+map_Bump -bm 1.000000 lambert49SG_normal.png
+
+newmtl lambert50SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lambert50SG_baseColor.jpeg
+map_Bump -bm 1.000000 lambert50SG_normal.png
+
+newmtl lambert51SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lambert51SG_baseColor.jpeg
+map_Bump -bm 1.000000 lambert51SG_normal.png
+
+newmtl lambert52SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lambert52SG_baseColor.jpeg
+map_Bump -bm 1.000000 lambert52SG_normal.png
+
+newmtl lambert9SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lambert9SG_baseColor.jpeg
+map_Bump -bm 1.000000 lambert9SG_normal.png
