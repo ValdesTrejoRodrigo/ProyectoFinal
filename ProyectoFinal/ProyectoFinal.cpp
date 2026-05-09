@@ -61,7 +61,10 @@ Model PiernaIzq;
 Model excalibur;
 Model piedra;
 
-
+//vehiculos
+Model Dirigible;
+Model AspaDirigible;
+Model ColaDirigible;
 
 //estrcuturas
 Model Molino;
@@ -220,6 +223,13 @@ int main()
 	piedra = Model();
 	piedra.LoadModel("Models/piedra.obj");
 
+	//vehiculos
+	Dirigible = Model();
+	Dirigible.LoadModel("Models/DirigibleSteampunk.obj");
+	AspaDirigible = Model();
+	AspaDirigible.LoadModel("Models/AspaDirigible.obj");
+	ColaDirigible = Model();
+	ColaDirigible.LoadModel("Models/ColaDirigible.obj");
 
 	//estructuras
 	Molino = Model();
@@ -464,7 +474,33 @@ int main()
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		piedra.RenderModel();
 
-		//modelo de barco voladro
+		//modelo de barco volador
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(0.0f, 5.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		modelaux = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Dirigible.RenderModel();
+		// Aspa del dirigible
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(2.5f, -0.2f, 1.25f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		AspaDirigible.RenderModel();
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-2.5f, -0.2f, 1.25f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		AspaDirigible.RenderModel();
+		
+		// Cola del dirigible
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 3.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		ColaDirigible.RenderModel();
 
 		//modelo de molinos
 		model = glm::mat4(1.0);
