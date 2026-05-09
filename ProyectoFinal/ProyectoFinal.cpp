@@ -95,7 +95,8 @@ Model Iglesia;
 Model EngranajesIglesia;
 
 
-Skybox skybox;
+Skybox skyboxDia;
+Skybox skyboxNoche;
 
 //materiales
 Material Material_brillante;
@@ -298,16 +299,25 @@ int main()
 	EngranajesIglesia.LoadModel("Models/EngranajesIglesia.obj");
 
 
-	std::vector<std::string> skyboxFaces;
 	
-	skyboxFaces.push_back("Textures/Skybox/Monte_right.jpeg");
-	skyboxFaces.push_back("Textures/Skybox/Monte_left.jpeg");
-	skyboxFaces.push_back("Textures/Skybox/Monte_down.jpeg");
-	skyboxFaces.push_back("Textures/Skybox/Monte_up.jpeg");
-	skyboxFaces.push_back("Textures/Skybox/Monte_back.jpeg");
-	skyboxFaces.push_back("Textures/Skybox/Monte_front.jpeg");
+	std::vector<std::string> skyboxFacesDia;
+	skyboxFacesDia.push_back("Textures/Skybox/Monte_right.jpeg");
+	skyboxFacesDia.push_back("Textures/Skybox/Monte_left.jpeg");
+	skyboxFacesDia.push_back("Textures/Skybox/Monte_down.jpeg");
+	skyboxFacesDia.push_back("Textures/Skybox/Monte_up.jpeg");
+	skyboxFacesDia.push_back("Textures/Skybox/Monte_back.jpeg");
+	skyboxFacesDia.push_back("Textures/Skybox/Monte_front.jpeg");
+	skyboxDia = Skybox(skyboxFacesDia);
+
+	std::vector<std::string> skyboxFacesNoche;
+	skyboxFacesNoche.push_back("Textures/Skybox/MonteN_right.jpeg");
+	skyboxFacesNoche.push_back("Textures/Skybox/MonteN_left.jpeg");
+	skyboxFacesNoche.push_back("Textures/Skybox/MonteN_down.jpeg");
+	skyboxFacesNoche.push_back("Textures/Skybox/MonteN_up.jpeg");
+	skyboxFacesNoche.push_back("Textures/Skybox/MonteN_back.jpeg");
+	skyboxFacesNoche.push_back("Textures/Skybox/MonteN_front.jpeg");
+	skyboxNoche = Skybox(skyboxFacesNoche);
 	
-	skybox = Skybox(skyboxFaces);
 
 	Material_brillante = Material(4.0f, 256);
 	Material_opaco = Material(0.3f, 4);
@@ -435,7 +445,16 @@ int main()
 		// Clear the window
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		skybox.DrawSkybox(camera.calculateViewMatrix(), projection);
+		
+		if (sunHeight > 0.0f) // Noche
+		{
+			skyboxNoche.DrawSkybox(camera.calculateViewMatrix(), projection);
+		}
+		else // Día 
+		{
+			skyboxDia.DrawSkybox(camera.calculateViewMatrix(), projection);
+		}
+
 		shaderList[0].UseShader();
 		uniformModel = shaderList[0].GetModelLocation();
 		uniformProjection = shaderList[0].GetProjectionLocation();
@@ -727,7 +746,7 @@ int main()
 		Iglesia.RenderModel();
 
 		modelaux = model;
-		model = glm::translate(model, glm::vec3(4.0f, 14.0f, 7.0f));
+		model = glm::translate(model, glm::vec3(3.0f, 8.2f, 2.7f));
 		model = glm::rotate(model, glm::radians(angulovaria), glm::vec3(0.0f, 0.0f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);

@@ -375,28 +375,6 @@ illum 2
 map_Kd lambert48SG_baseColor.jpeg
 map_Bump -bm 1.000000 lambert48SG_normal.png
 
-newmtl lambert49SG
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd lambert49SG_baseColor.jpeg
-map_Bump -bm 1.000000 lambert49SG_normal.png
-
-newmtl lambert50SG
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd lambert50SG_baseColor.jpeg
-map_Bump -bm 1.000000 lambert50SG_normal.png
-
 newmtl lambert51SG
 Ns 250.000000
 Ka 1.000000 1.000000 1.000000
