@@ -299,13 +299,14 @@ int main()
 
 
 	std::vector<std::string> skyboxFaces;
-	skyboxFaces.push_back("Textures/Skybox/cupertin-lake_rt.tga");
-	skyboxFaces.push_back("Textures/Skybox/cupertin-lake_lf.tga");
-	skyboxFaces.push_back("Textures/Skybox/cupertin-lake_dn.tga");
-	skyboxFaces.push_back("Textures/Skybox/cupertin-lake_up.tga");
-	skyboxFaces.push_back("Textures/Skybox/cupertin-lake_bk.tga");
-	skyboxFaces.push_back("Textures/Skybox/cupertin-lake_ft.tga");
-
+	
+	skyboxFaces.push_back("Textures/Skybox/Monte_right.jpeg");
+	skyboxFaces.push_back("Textures/Skybox/Monte_left.jpeg");
+	skyboxFaces.push_back("Textures/Skybox/Monte_down.jpeg");
+	skyboxFaces.push_back("Textures/Skybox/Monte_up.jpeg");
+	skyboxFaces.push_back("Textures/Skybox/Monte_back.jpeg");
+	skyboxFaces.push_back("Textures/Skybox/Monte_front.jpeg");
+	
 	skybox = Skybox(skyboxFaces);
 
 	Material_brillante = Material(4.0f, 256);
