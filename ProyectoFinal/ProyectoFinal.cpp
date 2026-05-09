@@ -48,6 +48,10 @@ Texture dirtTexture;
 Texture plainTexture;
 Texture pisoTexture;
 
+// Variables para control de farolas
+int numFarolasActivas = 0; // Número de farolas actualmente encendidas
+bool farolasEncendidas = false; // Estado de las farolas
+
 //personajes
 //Avtara ligado a la camara
 Model Cuerpo;
@@ -316,11 +320,33 @@ int main()
 	//contador de luces puntuales
 	unsigned int pointLightCount = 0;
 	//Declaración de primer luz puntual
-	pointLights[0] = PointLight(1.0f, 0.0f, 0.0f,
-		0.0f, 1.0f,
-		0.0f, 2.5f, 1.5f,
-		0.3f, 0.2f, 0.1f);
-	pointLightCount++;
+// Farola 1
+	pointLights[pointLightCount] = PointLight(1.0f, 0.6f, 0.2f,  // Color naranja cálido
+		0.5f, 2.5f,  // Intensidad ambiental y difusa AUMENTADAS
+		10.0f, 3.0f, 10.0f,  // Posición
+		1.0f, 0.022f, 0.0019f);  // Atenuación REDUCIDA (mayor alcance)
+
+	// Farola 2
+	pointLights[pointLightCount + 1] = PointLight(1.0f, 0.6f, 0.2f,
+		0.5f, 2.5f,
+		-10.0f, 3.0f, 10.0f,
+		1.0f, 0.022f, 0.0019f);
+
+	// Farola 3
+	pointLights[pointLightCount + 2] = PointLight(1.0f, 0.6f, 0.2f,
+		0.5f, 2.5f,
+		10.0f, 3.0f, -10.0f,
+		1.0f, 0.022f, 0.0019f);
+
+	// Farola 4
+	pointLights[pointLightCount + 3] = PointLight(1.0f, 0.6f, 0.2f,
+		0.5f, 2.5f,
+		-10.0f, 3.0f, -10.0f,
+		1.0f, 0.022f, 0.0019f);
+	// Guardar el número base de luces sin farolas
+	unsigned int baseLightCount = pointLightCount;
+	numFarolasActivas = 4; // Número total de farolas
+
 
 	unsigned int spotLightCount = 0;
 	//linterna
@@ -366,6 +392,22 @@ int main()
 		angulovaria += 0.5f*deltaTime;
 		// Actualizar ciclo día/noche
 		mainLight.UpdateCycle(deltaTime);
+
+		GLfloat sunHeight = mainLight.getDirection().y; // Obtener altura del sol
+
+		if (sunHeight > 0.0f && !farolasEncendidas) // Es de noche y farolas apagadas
+		{
+			// Encender farolas
+			farolasEncendidas = true;
+			pointLightCount = baseLightCount + numFarolasActivas;
+		}
+		else if (sunHeight <= 0.0f && farolasEncendidas) // Es de día y farolas encendidas
+		{
+			// Apagar farolas
+			farolasEncendidas = false;
+			pointLightCount = baseLightCount;
+		}
+
 
 		// Animar el dirigible
 		animacionDirigible(deltaTime, posicionDirigible, rotYDirigible, dirigibleTime);
@@ -565,6 +607,8 @@ int main()
 			}
 		}
 
+
+
 		//espada en la piedra punto de interes 1
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(36.0f, excaliburY, 36.0f)); // Usar altura animada
@@ -579,7 +623,6 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		piedra.RenderModel();
-
 
 
 		//modelo de barco volador
@@ -621,6 +664,41 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		ColaDirigible.RenderModel();
+
+
+		/*
+		
+		// Farolas (renderizar donde quieras en tu escenario)
+		// Farola 1
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(10.0f, 0.0f, 10.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Farola.RenderModel(); // Tu modelo de farola
+
+		// Farola 2
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-10.0f, 0.0f, 10.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Farola.RenderModel();
+
+		// Farola 3
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(10.0f, 0.0f, -10.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Farola.RenderModel();
+
+		// Farola 4
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-10.0f, 0.0f, -10.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Farola.RenderModel();
+		
+		*/
+
 
 		//modelo de molinos
 		model = glm::mat4(1.0);

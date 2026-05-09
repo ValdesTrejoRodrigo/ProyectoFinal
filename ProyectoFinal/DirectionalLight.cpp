@@ -9,7 +9,7 @@ DirectionalLight::DirectionalLight() : Light()
 void DirectionalLight::UpdateCycle(GLfloat deltaTime)
 {
 	// Actualizar el tiempo del ciclo (120 segundos = 2 minutos)
-	cicloDyN += deltaTime/240.0f;
+	cicloDyN += deltaTime / 240.0f;//240 para que el ciclo completo dure 2 minutos
 	if (cicloDyN >= 120.0f)
 	{
 		cicloDyN = 0.0f;
@@ -47,12 +47,19 @@ void DirectionalLight::UpdateCycle(GLfloat deltaTime)
 	}
 	else  // Noche (sol abajo)
 	{
-		// Color azul oscuro
-		color = glm::vec3(0.1f, 0.1f, 0.3f);
-		ambientIntensity = 0.15f;
-		diffuseIntensity = 0.2f;
+		color = glm::vec3(0.5f, 0.5f, 0.7f);
+		ambientIntensity = 0.5f;
+		diffuseIntensity = 0.6f;
 	}
 }
+
+glm::vec3 DirectionalLight::getDirection()
+{
+	return direction;
+}
+
+DirectionalLight::~DirectionalLight()
+{}
 
 DirectionalLight::DirectionalLight(GLfloat red, GLfloat green, GLfloat blue,
 									GLfloat aIntensity, GLfloat dIntensity,
@@ -72,6 +79,4 @@ void DirectionalLight::UseLight(GLfloat ambientIntensityLocation, GLfloat ambien
 	glUniform1f(diffuseIntensityLocation, diffuseIntensity);
 }
 
-DirectionalLight::~DirectionalLight()
-{
-}
+

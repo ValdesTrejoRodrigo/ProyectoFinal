@@ -15,6 +15,8 @@ public:
 
 	void UpdateCycle(GLfloat deltaTime);  // Nuevo método
 
+	glm::vec3 getDirection(); // Obtener dirección del sol
+
 	~DirectionalLight();
 
 private:
