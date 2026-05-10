@@ -68,7 +68,9 @@ Model Reines;
 
 //elementos del entorno
 Model excalibur;
-Model piedra;
+Model piedra;//piedra donde esta incrustada excalibur
+Model roca; // roca detras de la espada en la piedra
+Model robotLampara; //sentado en la roca
 
 //Decoraciones
 Model Farola;
@@ -239,6 +241,17 @@ std::vector<glm::vec3> posicionArboles = {
 
 };
 
+std::vector<glm::vec3> posicionArboles2 = {
+	//arboles iglesia
+	glm::vec3(116.0f, 0.0f, 66.0f),
+	glm::vec3(116.0f, 0.0f, 76.0f),
+	glm::vec3(116.0f, 0.0f, 86.0f),
+	glm::vec3(96.0f, 0.0f, 66.0f),
+	glm::vec3(96.0f, 0.0f, 76.0f),
+	glm::vec3(96.0f, 0.0f, 86.0f),
+
+};
+
 
 std::vector<ObjetoEscena> bancoPositions = {
 	{glm::vec3(-110.0f, -1.5f, 157.0f), 0.0f},
@@ -334,6 +347,10 @@ int main()
 	excalibur.LoadModel("Models/excalibur.obj");
 	piedra = Model();
 	piedra.LoadModel("Models/piedra.obj");
+	roca = Model();
+	roca.LoadModel("Models/Roca.obj");
+	robotLampara = Model();
+	robotLampara.LoadModel("Models/RobotLampara.obj");
 
 	//decoraciones
 	Farola = Model();
@@ -435,7 +452,7 @@ int main()
 	//luz sobre la espada
 	spotLights[1] = SpotLight(1.0f, 1.0f, 0.0f,
 		0.0f, 2.0f,
-		36.0f, 10.0f, 36.0f,
+		106.0f, 10.0f, 76.0f,
 		0.0f, -1.0f, 0.0f,
 		1.0f, 0.0031f, 0.0031f,
 		20.0f);
@@ -715,7 +732,7 @@ int main()
 
 		//espada en la piedra punto de interes 1
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(36.0f, excaliburY, 36.0f)); // Usar altura animada
+		model = glm::translate(model, glm::vec3(106.0f, excaliburY, 76.0f)); // Usar altura animada
 		model = glm::rotate(model, glm::radians(rotExcalibur), glm::vec3(0.0f, 1.0f, 0.0f)); // Rotar en Y
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
@@ -723,11 +740,22 @@ int main()
 
 		//piedra en la que esta clavada (sin cambios)
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(35.0f, -1.53f, 35.0f));
+		model = glm::translate(model, glm::vec3(106.0f, -1.53f, 76.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		piedra.RenderModel();
-
+		//roca detras de la piedra para dar sensación de profundidad al punto de interés
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(106.0f, 0.0f, 83.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		roca.RenderModel();
+		//robot sentado en la roca
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(106.0f, 5.5f, 82.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		robotLampara.RenderModel();
 
 		//modelo de barco volador
 		model = glm::mat4(1.0);
@@ -787,42 +815,9 @@ int main()
 		Vagon.RenderModel();
 		*/
 		
-		
-		// Farolas
-		for (const auto& pos : posicionFarolas) {
-			model = glm::mat4(1.0f);
-			model = glm::translate(model, pos);
-			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-
-			// Usamos el material brillante para todas las farolas
-			Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
-			Farola.RenderModel();
-		}
-
-		//arboleslowPoly
-		for (const auto& pos : posicionArboles) {
-			model = glm::mat4(1.0f);
-			model = glm::translate(model, pos);
-			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-
-			Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
-			Arbol1.RenderModel();
-		}
-		//arbolesAbeto
-
-		//Bancos
-		for (const auto& banco : bancoPositions) {
-			model = glm::mat4(1.0f);
-			model = glm::translate(model, banco.posicion);
-			model = glm::rotate(model, glm::radians(banco.rotacionY), glm::vec3(0.0f, 1.0f, 0.0f));
-			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-			Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
-			Bancos.RenderModel();
-		}
-
 		//botes de basura
 
-
+		//ESTRUCTURAS
 
 		//modelo de molinos
 		model = glm::mat4(1.0);
@@ -856,11 +851,57 @@ int main()
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		EngranajesIglesia.RenderModel();
 
-		/*
+		// Farolas
+		for (const auto& pos : posicionFarolas) {
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, pos);
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+
+			// Usamos el material brillante para todas las farolas
+			Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+			Farola.RenderModel();
+		}
+
+		//arboleslowPoly
+		for (const auto& pos : posicionArboles) {
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, pos);
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+
+			Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+			Arbol1.RenderModel();
+		}
+		
+		//Bancos
+		for (const auto& banco : bancoPositions) {
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, banco.posicion);
+			model = glm::rotate(model, glm::radians(banco.rotacionY), glm::vec3(0.0f, 1.0f, 0.0f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+			Bancos.RenderModel();
+		}
+
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		//arbolesAbeto
+		for (const auto& pos : posicionArboles2) {
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, pos);
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+
+			Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+			Arbol2.RenderModel();
+		}
+
+
+
+
+
+		
+		
 		glDisable(GL_BLEND);
-		*/
+		
 		glUseProgram(0);
 
 		mainWindow.swapBuffers();

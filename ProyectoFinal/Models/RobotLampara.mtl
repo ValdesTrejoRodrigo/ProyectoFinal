@@ -1,0 +1,76 @@
+# Blender 5.0.1 MTL File: 'None'
+# www.blender.org
+
+newmtl BlackMetal
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd BlackMetal_baseColor.png
+map_Ke BlackMetal_emissive.png
+map_Bump -bm 1.000000 BlackMetal_normal.png
+
+newmtl Brass
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ni 1.500000
+illum 2
+map_Kd Brass_baseColor.png
+map_Ke Brass_emissive.png
+map_d Brass_baseColor.png
+map_Bump -bm 1.000000 Brass_normal.png
+
+newmtl GlassVolume
+Ns 1000.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 0.132572
+illum 9
+
+newmtl LED_light
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 1.000000 1.000000 1.000000
+Ni 1.500000
+d 1.000000
+illum 3
+
+newmtl LampScrews
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ni 1.500000
+illum 2
+map_Kd LampScrews_baseColor.png
+map_Ke LampScrews_emissive.png
+map_d LampScrews_baseColor.png
+map_Bump -bm 1.000000 LampScrews_normal.png
+
+newmtl Metalic
+Ns 528.926025
+Ka 0.963636 0.963636 0.963636
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 3
+
+newmtl WhitePlastic
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ni 1.500000
+illum 2
+map_Kd WhitePlastic_baseColor.png
+map_Ke WhitePlastic_emissive.png
+map_d WhitePlastic_baseColor.png
+map_Bump -bm 1.000000 WhitePlastic_normal.png
