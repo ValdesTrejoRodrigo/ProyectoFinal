@@ -70,6 +70,14 @@ Model Reines;
 Model excalibur;
 Model piedra;
 
+//Decoraciones
+Model Farola;
+Model Arbol1; //low poly
+Model Arbol2; //abeto?
+Model Bancos;
+Model BotesBasura;
+
+
 // Variables para animación de Excalibur
 bool excaliburSacada = false;
 float excaliburTiempoAnimado = 0.0f;
@@ -206,7 +214,36 @@ void CreateObjects()
 	meshList.push_back(obj3);
 
 }
+struct ObjetoEscena {
+	glm::vec3 posicion;
+	float rotacionY; // Ángulo en grados
+};
 
+//arreglos de posiciones para las decoraciones (farolas, los arboles...)
+std::vector<glm::vec3> posicionFarolas = {
+	glm::vec3(-80.0f, 2.5f, 156.0f),
+	glm::vec3(-80.0f, 2.5f, 112.0f),
+	glm::vec3(10.0f, 0.0f, -10.0f)
+};
+
+std::vector<glm::vec3> posicionArboles = {
+	//arboles iglesia
+	glm::vec3(-90.0f, 4.0f, 166.0f),
+	glm::vec3(-110.0f, 4.0f, 166.0f),
+	glm::vec3(-130.0f, 4.0f, 166.0f),
+	glm::vec3(-150.0f, 4.0f, 166.0f),
+	glm::vec3(-90.0f, 4.0f, 105.0f),
+	glm::vec3(-110.0f, 4.0f, 105.0f),
+	glm::vec3(-130.0f, 4.05f, 105.0f),
+	glm::vec3(-150.0f, 4.0f, 105.0f),
+
+};
+
+
+std::vector<ObjetoEscena> bancoPositions = {
+	{glm::vec3(-110.0f, -1.5f, 157.0f), 0.0f},
+	{glm::vec3(-110.0f, -1.5f, 113.0f), 180.0f},
+};
 
 void CreateShaders()
 {
@@ -298,6 +335,19 @@ int main()
 	piedra = Model();
 	piedra.LoadModel("Models/piedra.obj");
 
+	//decoraciones
+	Farola = Model();
+	Farola.LoadModel("Models/Farola.obj");
+	Arbol1 = Model();
+	Arbol1.LoadModel("Models/ArbolLowPoly.obj");
+	Arbol2 = Model();
+	Arbol2.LoadModel("Models/Abeto.obj");
+	Bancos = Model();
+	Bancos.LoadModel("Models/BancosSentar.obj");
+	BotesBasura = Model();
+	BotesBasura.LoadModel("Models/BotesBasura.obj");
+
+
 	//vehiculos
 	Dirigible = Model();
 	Dirigible.LoadModel("Models/DirigibleSteampunk.obj");
@@ -354,13 +404,13 @@ int main()
 // Farola 1
 	pointLights[pointLightCount] = PointLight(1.0f, 0.6f, 0.2f,  // Color naranja cálido
 		0.5f, 2.5f,  // Intensidad ambiental y difusa AUMENTADAS
-		10.0f, 3.0f, 10.0f,  // Posición
+		-80.0f, 7.0f, 156.0f,  // Posición
 		1.0f, 0.022f, 0.0019f);  // Atenuación REDUCIDA (mayor alcance)
 
 	// Farola 2
 	pointLights[pointLightCount + 1] = PointLight(1.0f, 0.6f, 0.2f,
 		0.5f, 2.5f,
-		-10.0f, 3.0f, 10.0f,
+		-80.0f, 7.0f, 112.0f,
 		1.0f, 0.022f, 0.0019f);
 
 	// Farola 3
@@ -369,12 +419,6 @@ int main()
 		10.0f, 3.0f, -10.0f,
 		1.0f, 0.022f, 0.0019f);
 
-	// Farola 4
-	pointLights[pointLightCount + 3] = PointLight(1.0f, 0.6f, 0.2f,
-		0.5f, 2.5f,
-		-10.0f, 3.0f, -10.0f,
-		1.0f, 0.022f, 0.0019f);
-	// Guardar el número base de luces sin farolas
 	unsigned int baseLightCount = pointLightCount;
 	numFarolasActivas = 4; // Número total de farolas
 
@@ -742,38 +786,42 @@ int main()
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Vagon.RenderModel();
 		*/
-		/*
 		
-		// Farolas (renderizar donde quieras en tu escenario)
-		// Farola 1
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(10.0f, 0.0f, 10.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		Farola.RenderModel(); // Tu modelo de farola
-
-		// Farola 2
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(-10.0f, 0.0f, 10.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		Farola.RenderModel();
-
-		// Farola 3
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(10.0f, 0.0f, -10.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		Farola.RenderModel();
-
-		// Farola 4
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(-10.0f, 0.0f, -10.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		Farola.RenderModel();
 		
-		*/
+		// Farolas
+		for (const auto& pos : posicionFarolas) {
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, pos);
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+
+			// Usamos el material brillante para todas las farolas
+			Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+			Farola.RenderModel();
+		}
+
+		//arboleslowPoly
+		for (const auto& pos : posicionArboles) {
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, pos);
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+
+			Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+			Arbol1.RenderModel();
+		}
+		//arbolesAbeto
+
+		//Bancos
+		for (const auto& banco : bancoPositions) {
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, banco.posicion);
+			model = glm::rotate(model, glm::radians(banco.rotacionY), glm::vec3(0.0f, 1.0f, 0.0f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+			Bancos.RenderModel();
+		}
+
+		//botes de basura
+
 
 
 		//modelo de molinos
@@ -794,7 +842,7 @@ int main()
 
 		//Ilgesia
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(-106.0f, 9.0f, 106.0f));
+		model = glm::translate(model, glm::vec3(-146.0f, 9.0f, 136.0f));
 		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, -1.0f, 0.0f));
 		modelaux = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));

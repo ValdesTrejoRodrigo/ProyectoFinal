@@ -9,7 +9,7 @@ DirectionalLight::DirectionalLight() : Light()
 void DirectionalLight::UpdateCycle(GLfloat deltaTime)
 {
 	// Actualizar el tiempo del ciclo (120 segundos = 2 minutos)
-	cicloDyN += deltaTime / 240.0f;//240 para que el ciclo completo dure 2 minutos
+	cicloDyN += deltaTime / 20.0f;//240 para que el ciclo completo dure 2 minutos
 	if (cicloDyN >= 120.0f)
 	{
 		cicloDyN = 0.0f;
