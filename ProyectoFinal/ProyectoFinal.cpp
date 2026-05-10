@@ -118,7 +118,7 @@ Model EngranajesIglesia;
 Model EdificioGrande;
 Model Edificio2;
 Model Edificio3;
-
+Model Edificio4;
 
 Model fabrica;
 
@@ -391,6 +391,8 @@ int main()
 	Edificio2.LoadModel("Models/Edificio2.obj");
 	Edificio3 = Model();
 	Edificio3.LoadModel("Models/Edificio3.obj");
+	Edificio4 = Model();
+	Edificio4.LoadModel("Models/Edificio4.obj");
 
 	RocasFlotantes = Model();
 	RocasFlotantes.LoadModel("Models/RocasFlotantes.obj");
@@ -423,9 +425,10 @@ int main()
 	Arbol2.LoadModel("Models/Abeto.obj");
 	Bancos = Model();
 	Bancos.LoadModel("Models/BancosSentar.obj");
+	/*
 	BotesBasura = Model();
 	BotesBasura.LoadModel("Models/BotesBasura.obj");
-
+	*/
 
 	//vehiculos
 	Dirigible = Model();
@@ -873,6 +876,13 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Edificio3.RenderModel();
+
+		//Edificio 4
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(176.0f, -2.0f, 50.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Edificio4.RenderModel();
 
 		//fabricas
 		for (const auto& molino : posicionesFabricas) {
