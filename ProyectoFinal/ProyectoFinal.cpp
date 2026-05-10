@@ -60,6 +60,11 @@ Model BraIzq;
 Model PiernaDer;
 Model PiernaIzq;
 
+//NPC
+Model Sherlock;
+Model Waver;
+Model Reines;
+
 
 //elementos del entorno
 Model excalibur;
@@ -79,12 +84,18 @@ Model Dirigible;
 Model AspaDirigible;
 Model ColaDirigible;
 
+Model Locomotora;
+Model Vagon;
+Model RuedaLocomotora;
+
 // Variables para animación del dirigible
 float dirigibleTime = 0.0f;
-glm::vec3 posicionDirigible(130.0f, 35.0f, -130.0f); // Posición central del recorrido
+glm::vec3 posicionDirigible(130.0f, 70.0f, -130.0f); // Posición central del recorrido
 float rotYDirigible = 180.0f;
 float inclinacionDirigible = 0.0f;
 float rotColaDirigible = 0.0f;
+
+
 
 //estrcuturas
 Model Molino;
@@ -271,6 +282,14 @@ int main()
 	PiernaIzq = Model();
 	PiernaIzq.LoadModel("Models/PersonajeGray/PiernaIzqGray.obj");
 
+	//NPC
+	Sherlock = Model();
+	Sherlock.LoadModel("Models/NPC/SherlockFGO.obj");
+	Waver = Model();
+	Waver.LoadModel("Models/NPC/WaverFGO.obj");
+	Reines = Model();
+	Reines.LoadModel("Models/NPC/ReinesFGO.obj");
+
 	//elementos del entorno
 
 	//modelo de la espada en la piedra
@@ -286,6 +305,7 @@ int main()
 	AspaDirigible.LoadModel("Models/AspaDirigible.obj");
 	ColaDirigible = Model();
 	ColaDirigible.LoadModel("Models/ColaDirigible.obj");
+
 
 	//estructuras
 	Molino = Model();
@@ -422,6 +442,7 @@ int main()
 
 		// Animar el dirigible
 		animacionDirigible(deltaTime, posicionDirigible, rotYDirigible, dirigibleTime);
+
 
 		//Recibir eventos del usuario
 		glfwPollEvents();
@@ -580,6 +601,25 @@ int main()
 		}//Fin del if de avatar ligado a la camara
 
 
+		//NPC
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(20.0f, 1.0f, 20.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Sherlock.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(25.0f, 1.1f, 25.0f));		
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Waver.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(30.0f, 0.5f, 30.0f));		
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Reines.RenderModel();
+
 		// Activar/desactivar animación de Excalibur con tecla E
 		if (mainWindow.getsKeys()[GLFW_KEY_E])
 		{
@@ -684,8 +724,24 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		ColaDirigible.RenderModel();
-
-
+/*
+		//modelo de locomotora
+		model = glm::mat4(1.0);
+		model = glm::translate(model, trenPosition);
+		model = glm::rotate(model, glm::radians(trenRotationY+90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		modelaux = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Locomotora.RenderModel();
+/*
+		/*
+		model = modelaux;
+		model = glm::translate(model, trenPosition);
+		//model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Vagon.RenderModel();
+		*/
 		/*
 		
 		// Farolas (renderizar donde quieras en tu escenario)

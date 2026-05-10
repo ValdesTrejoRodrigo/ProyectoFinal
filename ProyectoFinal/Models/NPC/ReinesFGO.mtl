@@ -1,0 +1,454 @@
+# Blender 5.0.1 MTL File: 'None'
+# www.blender.org
+
+newmtl mt_Shoe_sole
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01_SVT_0138_S01_cloth.png
+map_Bump -bm 1.000000 svt_0138_s01_SVT_0138_S01_cloth_n0.png
+
+newmtl mt_Shoe_sole.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01_SVT_0138_S01_cloth.png
+map_Bump -bm 1.000000 svt_0138_s01_SVT_0138_S01_cloth_n0.png
+
+newmtl mt_cheek
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01__ramp0100cc8e7c5adcb3a7a2f1e0dbffffffff.png
+
+newmtl mt_cheek.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01__ramp0100cc8e7c5adcb3a7a2f1e0dbffffffff.png
+
+newmtl mt_cloth_black
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01_SVT_0138_S01_cloth.png
+map_Bump -bm 1.000000 svt_0138_s01_SVT_0138_S01_cloth_n0.png
+
+newmtl mt_cloth_black.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01_SVT_0138_S01_cloth.png
+map_Bump -bm 1.000000 svt_0138_s01_SVT_0138_S01_cloth_n0.png
+
+newmtl mt_cloth_blown
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01_SVT_0138_S01_cloth.png
+map_Bump -bm 1.000000 svt_0138_s01_SVT_0138_S01_cloth_n0.png
+
+newmtl mt_cloth_blown.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01_SVT_0138_S01_cloth.png
+map_Bump -bm 1.000000 svt_0138_s01_SVT_0138_S01_cloth_n0.png
+
+newmtl mt_cloth_flower
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01_SVT_0138_S01_cloth_komono.png
+map_Bump -bm 1.000000 svt_0138_s01_SVT_0138_S01_cloth_komono_n0.png
+
+newmtl mt_cloth_flower.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01_SVT_0138_S01_cloth_komono.png
+map_Bump -bm 1.000000 svt_0138_s01_SVT_0138_S01_cloth_komono_n0.png
+
+newmtl mt_cloth_hat
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01_SVT_0138_S01_cloth_komono.png
+map_Bump -bm 1.000000 svt_0138_s01_SVT_0138_S01_cloth_komono_n0.png
+
+newmtl mt_cloth_hat.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01_SVT_0138_S01_cloth_komono.png
+map_Bump -bm 1.000000 svt_0138_s01_SVT_0138_S01_cloth_komono_n0.png
+
+newmtl mt_cloth_himo
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01_SVT_0138_S01_cloth.png
+map_Bump -bm 1.000000 svt_0138_s01_SVT_0138_S01_cloth_n0.png
+
+newmtl mt_cloth_himo.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01_SVT_0138_S01_cloth.png
+map_Bump -bm 1.000000 svt_0138_s01_SVT_0138_S01_cloth_n0.png
+
+newmtl mt_cloth_komono
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01_SVT_0138_S01_cloth_komono.png
+map_Bump -bm 1.000000 svt_0138_s01_SVT_0138_S01_cloth_komono_n0.png
+
+newmtl mt_cloth_komono.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01_SVT_0138_S01_cloth_komono.png
+map_Bump -bm 1.000000 svt_0138_s01_SVT_0138_S01_cloth_komono_n0.png
+
+newmtl mt_cloth_main
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01_SVT_0138_S01_cloth.png
+map_Bump -bm 1.000000 svt_0138_s01_SVT_0138_S01_cloth_n0.png
+
+newmtl mt_cloth_main.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01_SVT_0138_S01_cloth.png
+map_Bump -bm 1.000000 svt_0138_s01_SVT_0138_S01_cloth_n0.png
+
+newmtl mt_cloth_main_ura
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01_SVT_0138_S01_cloth_ura.png
+map_Bump -bm 1.000000 svt_0138_s01_SVT_0138_S01_cloth_ura_n0.png
+
+newmtl mt_cloth_main_ura.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01_SVT_0138_S01_cloth_ura.png
+map_Bump -bm 1.000000 svt_0138_s01_SVT_0138_S01_cloth_ura_n0.png
+
+newmtl mt_cloth_scarf
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01_SVT_0138_S01_cloth.png
+map_Bump -bm 1.000000 svt_0138_s01_SVT_0138_S01_cloth_n0.png
+
+newmtl mt_cloth_scarf.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01_SVT_0138_S01_cloth.png
+map_Bump -bm 1.000000 svt_0138_s01_SVT_0138_S01_cloth_n0.png
+
+newmtl mt_cloth_silver
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01_SVT_0138_S01_cloth.png
+map_Bump -bm 1.000000 svt_0138_s01_SVT_0138_S01_cloth_n0.png
+
+newmtl mt_cloth_silver.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01_SVT_0138_S01_cloth.png
+map_Bump -bm 1.000000 svt_0138_s01_SVT_0138_S01_cloth_n0.png
+
+newmtl mt_eye_l
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01_SVT_0138_eye_left.png
+map_Bump -bm 1.000000 svt_0138_s01_SVT_0138_eye_left_n.png
+
+newmtl mt_eye_l.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01_SVT_0138_eye_left.png
+map_Bump -bm 1.000000 svt_0138_s01_SVT_0138_eye_left_n.png
+
+newmtl mt_eye_r
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01_SVT_0138_eye_right.png
+map_Bump -bm 1.000000 svt_0138_s01_SVT_0138_eye_right_n.png
+
+newmtl mt_eye_r.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01_SVT_0138_eye_right.png
+map_Bump -bm 1.000000 svt_0138_s01_SVT_0138_eye_right_n.png
+
+newmtl mt_face
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01_SVT_0138_face.png
+
+newmtl mt_face.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01_SVT_0138_face.png
+
+newmtl mt_face_bs
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01_SVT_0138_face.png
+
+newmtl mt_face_bs.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01_SVT_0138_face.png
+
+newmtl mt_faceparts_bs
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01_SVT_0138_face.png
+
+newmtl mt_faceparts_bs.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01_SVT_0138_face.png
+
+newmtl mt_fur
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01_SVT_0138_S01_cloth_komono.png
+map_Bump -bm 1.000000 svt_0138_s01_SVT_0138_S01_cloth_komono_n0.png
+
+newmtl mt_fur.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01_SVT_0138_S01_cloth_komono.png
+map_Bump -bm 1.000000 svt_0138_s01_SVT_0138_S01_cloth_komono_n0.png
+
+newmtl mt_hair_S01
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01_SVT_0138_S01_hair.png
+map_Bump -bm 1.000000 svt_0138_s01_SVT_0138_S01_hair_n0.png
+
+newmtl mt_hair_S01.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01_SVT_0138_S01_hair.png
+map_Bump -bm 1.000000 svt_0138_s01_SVT_0138_S01_hair_n0.png
+
+newmtl mt_moyou
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01_SVT_0138_moyou.png
+map_Bump -bm 1.000000 svt_0138_s01_SVT_0138_moyou_n0.png
+
+newmtl mt_moyou.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01_SVT_0138_moyou.png
+map_Bump -bm 1.000000 svt_0138_s01_SVT_0138_moyou_n0.png
+
+newmtl mt_skin
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01_SVT_0138_skin.png
+
+newmtl mt_skin.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd svt_0138_s01_SVT_0138_skin.png
