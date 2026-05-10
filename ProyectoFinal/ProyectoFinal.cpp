@@ -65,12 +65,14 @@ Model Sherlock;
 Model Waver;
 Model Reines;
 
-
 //elementos del entorno
 Model excalibur;
 Model piedra;//piedra donde esta incrustada excalibur
 Model roca; // roca detras de la espada en la piedra
 Model robotLampara; //sentado en la roca
+
+//EDIFICIOS
+Model EdificioGrande;
 
 //Decoraciones
 Model Farola;
@@ -258,6 +260,16 @@ std::vector<ObjetoEscena> bancoPositions = {
 	{glm::vec3(-110.0f, -1.5f, 113.0f), 180.0f},
 };
 
+//edicios iguales al molino pero con diferentes posiciones y rotaciones para dar variedad al escenario
+
+std::vector<ObjetoEscena> molinoPositions = {
+	{glm::vec3(-205.0f, -2.0f, -240.0f), 180.0f}, // molino original
+	{glm::vec3(-220.0f, -2.0f, -220.0f), 180.0f}, // Molino 2
+	{glm::vec3(-190.0f, -2.0f, -220.0f), 180.0f},  // Molino 3 
+	{glm::vec3(-235.0f, -2.0f, -250.0f), 180.0f},   // Molino 4
+	{glm::vec3(-250.0f,  -2.0f, -240.0f), 180.0f}  // Molino 5
+};
+
 void CreateShaders()
 {
 	Shader *shader1 = new Shader();
@@ -351,6 +363,10 @@ int main()
 	roca.LoadModel("Models/Roca.obj");
 	robotLampara = Model();
 	robotLampara.LoadModel("Models/RobotLampara.obj");
+
+	//EDIFICIOS
+	EdificioGrande = Model();
+	EdificioGrande.LoadModel("Models/EdificioGrande.obj");
 
 	//decoraciones
 	Farola = Model();
@@ -796,44 +812,38 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		ColaDirigible.RenderModel();
-/*
-		//modelo de locomotora
-		model = glm::mat4(1.0);
-		model = glm::translate(model, trenPosition);
-		model = glm::rotate(model, glm::radians(trenRotationY+90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		modelaux = model;
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		Locomotora.RenderModel();
-/*
-		/*
-		model = modelaux;
-		model = glm::translate(model, trenPosition);
-		//model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		Vagon.RenderModel();
-		*/
+
 		
 		//botes de basura
 
 		//ESTRUCTURAS
 
-		//modelo de molinos
+		//Edificio grande
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(-106.0f, -2.0f, -106.0f));
-		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		modelaux = model;
+		model = glm::translate(model, glm::vec3(-40.0f, 5.0f, -100.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		Molino.RenderModel();
+		EdificioGrande.RenderModel();
 
-		modelaux = model;
-		model = glm::translate(model, glm::vec3(-4.6f, 12.0f, 0.0f));
-		model = glm::rotate(model, glm::radians(angulovaria), glm::vec3(1.0f, 0.0f, 0.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		AspaMolino.RenderModel();
+		//molinos, renderizados en un loop para aplicar animación a las aspas de cada molino
+		for (const auto& molino : molinoPositions) {
+			// 1. Renderizar la base del Molino
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, molino.posicion);
+			model = glm::rotate(model, glm::radians(molino.rotacionY), glm::vec3(0.0f, 1.0f, 0.0f));
+			modelaux = model;
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+			Molino.RenderModel();
+
+			// 2. Renderizar las Aspas animadas
+			model = modelaux;
+			model = glm::translate(model, glm::vec3(-4.6f, 12.0f, 0.0f));
+			model = glm::rotate(model, glm::radians(angulovaria), glm::vec3(1.0f, 0.0f, 0.0f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+			AspaMolino.RenderModel();
+		}
 
 		//Ilgesia
 		model = glm::mat4(1.0);
