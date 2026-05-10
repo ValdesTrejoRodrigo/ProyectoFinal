@@ -73,6 +73,11 @@ Model robotLampara; //sentado en la roca
 
 //EDIFICIOS
 Model EdificioGrande;
+Model Edificio2;
+Model RocasFlotantes;
+Model Brazo1CasaMobileSteampunk;
+Model Brazo2CasaMobileSteampunk;
+Model CasaMobileSteampunk;
 
 //Decoraciones
 Model Farola;
@@ -95,11 +100,11 @@ float giroEspada = 0.0f;
 Model Dirigible;
 Model AspaDirigible;
 Model ColaDirigible;
-
+/*
 Model Locomotora;
 Model Vagon;
 Model RuedaLocomotora;
-
+*/
 // Variables para animación del dirigible
 float dirigibleTime = 0.0f;
 glm::vec3 posicionDirigible(130.0f, 70.0f, -130.0f); // Posición central del recorrido
@@ -367,6 +372,17 @@ int main()
 	//EDIFICIOS
 	EdificioGrande = Model();
 	EdificioGrande.LoadModel("Models/EdificioGrande.obj");
+	Edificio2 = Model();
+	Edificio2.LoadModel("Models/Edificio2.obj");
+
+	RocasFlotantes = Model();
+	RocasFlotantes.LoadModel("Models/RocasFlotantes.obj");
+	Brazo1CasaMobileSteampunk = Model();
+	Brazo1CasaMobileSteampunk.LoadModel("Models/Brazo1CasaMobileSteampunk.obj");
+	Brazo2CasaMobileSteampunk = Model();
+	Brazo2CasaMobileSteampunk.LoadModel("Models/Brazo2CasaMobileSteampunk.obj");	
+	CasaMobileSteampunk = Model();
+	CasaMobileSteampunk.LoadModel("Models/CasaMobileSteampunk.obj");
 
 	//decoraciones
 	Farola = Model();
@@ -486,6 +502,7 @@ int main()
 	glm::mat4 model(1.0);
 	glm::mat4 modelaux(1.0);
 	glm::mat4 modelaux2(1.0);
+	glm::mat4 modelaux3(1.0);
 	glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec2 toffset = glm::vec2(0.0f, 0.0f);
 
@@ -824,6 +841,45 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		EdificioGrande.RenderModel();
+
+		//Edificio 2
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(30.0f, 7.0f, -100.0f));
+		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Edificio2.RenderModel();
+
+		//Casa mobile Steampunk
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(0.0f, 40.0f, 220.0f));
+		modelaux = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		RocasFlotantes.RenderModel();
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-1.0f, 6.0f, -4.0f));
+		model = glm::rotate(model, glm::radians(45.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		modelaux2 = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Brazo1CasaMobileSteampunk.RenderModel();
+
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(11.0f, -1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(-45.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		modelaux3 = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Brazo2CasaMobileSteampunk.RenderModel();
+
+		model = modelaux3;
+		model = glm::translate(model, glm::vec3(-6.0f, 7.5f, -1.0f));
+	//	model = glm::rotate(model, glm::radians(45.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		CasaMobileSteampunk.RenderModel();
 
 		//molinos, renderizados en un loop para aplicar animación a las aspas de cada molino
 		for (const auto& molino : molinoPositions) {

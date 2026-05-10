@@ -1,0 +1,112 @@
+# Blender 5.0.1 MTL File: 'None'
+# www.blender.org
+
+newmtl BlackMetal_01
+Ns 0.016971
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd gray-empty-blur-template-circle.jpg
+
+newmtl Brick_01
+Ns 159.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd Brick_01_diffuse.jpeg
+
+newmtl Concrete_01
+Ns 159.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd Concrete_01_diffuse.png
+
+newmtl Decal_01
+Ns 159.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 2
+map_Kd Decal_01_diffuse.png
+map_d Decal_01_diffuse.png
+
+newmtl Glass_02
+Ns 316.620667
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd gray-empty-blur-template-circle.jpg
+
+newmtl Glass_03
+Ns 276.786652
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd gray-empty-blur-template-circle.jpg
+
+newmtl Metal_02
+Ns 63.360416
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd gray-empty-blur-template-circle.jpg
+
+newmtl RastMetal_01
+Ns 289.767181
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd Metal_02_diffuse.jpeg
+
+newmtl YardMat_01
+Ns 159.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd YardMat_01_diffuse.jpeg
+
+newmtl pasted__RastMetal_01
+Ns 159.999985
+Ka 1.000000 1.000000 1.000000
+Kd 0.027000 0.018569 0.017469
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+
+newmtl pasted__RastMetal_02
+Ns 159.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd gray-empty-blur-template-circle.jpg
