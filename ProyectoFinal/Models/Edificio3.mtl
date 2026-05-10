@@ -1,0 +1,442 @@
+# Blender 5.0.1 MTL File: 'None'
+# www.blender.org
+
+newmtl brick
+Ns 224.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd Wall_Stone_020_basecolor.jpeg
+map_Bump -bm 10.000000 Wall_Stone_020_normal.jpeg
+
+newmtl brick.001
+Ns 224.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd Wall_Stone_020_basecolor.jpeg
+map_Bump -bm 10.000000 Wall_Stone_020_normal.jpeg
+
+newmtl brick.002
+Ns 224.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd Wall_Stone_020_basecolor.jpeg
+map_Bump -bm 10.000000 Wall_Stone_020_normal.jpeg
+
+newmtl brick.003
+Ns 224.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd Wall_Stone_020_basecolor.jpeg
+map_Bump -bm 10.000000 Wall_Stone_020_normal.jpeg
+
+newmtl chimney
+Ns 224.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd Metal_Iron_Guard_004_basecolor.jpeg
+map_Bump -bm 7.000000 Plaster_002_NORM.jpg
+
+newmtl chimney.001
+Ns 224.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd Metal_Iron_Guard_004_basecolor.jpeg
+map_Bump -bm 7.000000 Plaster_002_NORM.jpg
+
+newmtl chimney.002
+Ns 224.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd Metal_Iron_Guard_004_basecolor.jpeg
+map_Bump -bm 7.000000 Plaster_002_NORM.jpg
+
+newmtl chimney.003
+Ns 224.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd Metal_Iron_Guard_004_basecolor.jpeg
+map_Bump -bm 7.000000 Plaster_002_NORM.jpg
+
+newmtl copper
+Ns 224.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd Metal_Iron_Guard_004_basecolor.jpeg
+map_Bump -bm 7.000000 Metal_grunge_001_NRM.jpg
+
+newmtl copper.001
+Ns 224.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd Metal_Iron_Guard_004_basecolor.jpeg
+map_Bump -bm 7.000000 Metal_grunge_001_NRM.jpg
+
+newmtl copper.002
+Ns 224.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd Metal_Iron_Guard_004_basecolor.jpeg
+map_Bump -bm 7.000000 Metal_grunge_001_NRM.jpg
+
+newmtl copper.003
+Ns 224.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd Metal_Iron_Guard_004_basecolor.jpeg
+map_Bump -bm 7.000000 Metal_grunge_001_NRM.jpg
+
+newmtl glass
+Ns 899.999939
+Ka 1.000000 1.000000 1.000000
+Kd 0.282234 0.282234 0.282234
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+
+newmtl glass.001
+Ns 899.999939
+Ka 1.000000 1.000000 1.000000
+Kd 0.282234 0.282234 0.282234
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+
+newmtl glass.002
+Ns 899.999939
+Ka 1.000000 1.000000 1.000000
+Kd 0.282234 0.282234 0.282234
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+
+newmtl glass.003
+Ns 899.999939
+Ka 1.000000 1.000000 1.000000
+Kd 0.282234 0.282234 0.282234
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+
+newmtl granite_
+Ns 224.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd Granite_002_COLOR_COLOR.jpeg
+map_Bump -bm 7.000000 Granite_002_COLOR_NORM.jpg
+
+newmtl granite_.001
+Ns 224.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd Granite_002_COLOR_COLOR.jpeg
+map_Bump -bm 7.000000 Granite_002_COLOR_NORM.jpg
+
+newmtl granite_.002
+Ns 224.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd Granite_002_COLOR_COLOR.jpeg
+map_Bump -bm 7.000000 Granite_002_COLOR_NORM.jpg
+
+newmtl granite_.003
+Ns 224.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd Granite_002_COLOR_COLOR.jpeg
+map_Bump -bm 7.000000 Granite_002_COLOR_NORM.jpg
+
+newmtl granite_windows
+Ns 224.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd Granite_002_COLOR_COLOR.jpeg
+map_Bump -bm 7.000000 Granite_002_COLOR_NORM.jpg
+
+newmtl granite_windows.001
+Ns 224.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd Granite_002_COLOR_COLOR.jpeg
+map_Bump -bm 7.000000 Granite_002_COLOR_NORM.jpg
+
+newmtl granite_windows.002
+Ns 224.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd Granite_002_COLOR_COLOR.jpeg
+map_Bump -bm 7.000000 Granite_002_COLOR_NORM.jpg
+
+newmtl granite_windows.003
+Ns 224.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd Granite_002_COLOR_COLOR.jpeg
+map_Bump -bm 7.000000 Granite_002_COLOR_NORM.jpg
+
+newmtl grid
+Ns 224.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 1
+map_Kd Metal_Iron_Guard_004_basecolor.jpeg
+map_refl Metal_Iron_Guard_004_metallic.jpg
+map_d Metal_Iron_Guard_004_opacity.jpg
+map_Bump -bm 10.000000 Metal_Iron_Guard_004_normal.jpg
+
+newmtl grid.001
+Ns 224.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 1
+map_Kd Metal_Iron_Guard_004_basecolor.jpeg
+map_refl Metal_Iron_Guard_004_metallic.jpg
+map_d Metal_Iron_Guard_004_opacity.jpg
+map_Bump -bm 10.000000 Metal_Iron_Guard_004_normal.jpg
+
+newmtl grid.002
+Ns 224.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 1
+map_Kd Metal_Iron_Guard_004_basecolor.jpeg
+map_refl Metal_Iron_Guard_004_metallic.jpg
+map_d Metal_Iron_Guard_004_opacity.jpg
+map_Bump -bm 10.000000 Metal_Iron_Guard_004_normal.jpg
+
+newmtl grid.003
+Ns 224.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 1
+map_Kd Metal_Iron_Guard_004_basecolor.jpeg
+map_refl Metal_Iron_Guard_004_metallic.jpg
+map_d Metal_Iron_Guard_004_opacity.jpg
+map_Bump -bm 10.000000 Metal_Iron_Guard_004_normal.jpg
+
+newmtl plaster
+Ns 224.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd Plaster_002_COLOR.jpeg
+map_Bump -bm 7.000000 Plaster_002_NORM.jpg
+
+newmtl plaster.001
+Ns 224.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd Plaster_002_COLOR.jpeg
+map_Bump -bm 7.000000 Plaster_002_NORM.jpg
+
+newmtl plaster.002
+Ns 224.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd Plaster_002_COLOR.jpeg
+map_Bump -bm 7.000000 Plaster_002_NORM.jpg
+
+newmtl plaster.003
+Ns 224.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd Plaster_002_COLOR.jpeg
+map_Bump -bm 7.000000 Plaster_002_NORM.jpg
+
+newmtl roof
+Ns 224.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd Wood_Roof_Tiles_001_COLOR.jpeg
+map_Bump -bm 7.000000 Wood_Roof_Tiles_001_NORM.jpeg
+
+newmtl roof.001
+Ns 224.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd Wood_Roof_Tiles_001_COLOR.jpeg
+map_Bump -bm 7.000000 Wood_Roof_Tiles_001_NORM.jpeg
+
+newmtl roof.002
+Ns 224.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd Wood_Roof_Tiles_001_COLOR.jpeg
+map_Bump -bm 7.000000 Wood_Roof_Tiles_001_NORM.jpg
+
+newmtl roof.003
+Ns 224.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd Wood_Roof_Tiles_001_COLOR.jpeg
+map_Bump -bm 7.000000 Wood_Roof_Tiles_001_NORM.jpg
+
+newmtl wood
+Ns 224.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd Wood_Planks_009_COLOR.jpeg
+map_Bump -bm 7.000000 Wood_Planks_009_NORM.jpg
+
+newmtl wood.001
+Ns 224.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd Wood_Planks_009_COLOR.jpeg
+map_Bump -bm 7.000000 Wood_Planks_009_NORM.jpg
+
+newmtl wood.002
+Ns 224.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd Wood_Planks_009_COLOR.jpeg
+map_Bump -bm 7.000000 Wood_Planks_009_NORM.jpg
+
+newmtl wood.003
+Ns 224.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd Wood_Planks_009_COLOR.jpeg
+map_Bump -bm 7.000000 Wood_Planks_009_NORM.jpg
