@@ -71,14 +71,6 @@ Model piedra;//piedra donde esta incrustada excalibur
 Model roca; // roca detras de la espada en la piedra
 Model robotLampara; //sentado en la roca
 
-//EDIFICIOS
-Model EdificioGrande;
-Model Edificio2;
-Model RocasFlotantes;
-Model Brazo1CasaMobileSteampunk;
-Model Brazo2CasaMobileSteampunk;
-Model CasaMobileSteampunk;
-
 //Decoraciones
 Model Farola;
 Model Arbol1; //low poly
@@ -107,7 +99,7 @@ Model RuedaLocomotora;
 */
 // Variables para animación del dirigible
 float dirigibleTime = 0.0f;
-glm::vec3 posicionDirigible(130.0f, 70.0f, -130.0f); // Posición central del recorrido
+glm::vec3 posicionDirigible(130.0f, 90.0f, -130.0f); // Posición central del recorrido
 float rotYDirigible = 180.0f;
 float inclinacionDirigible = 0.0f;
 float rotColaDirigible = 0.0f;
@@ -122,6 +114,17 @@ Model AspaMolino;
 Model Iglesia;
 Model EngranajesIglesia;
 
+//EDIFICIOS
+Model EdificioGrande;
+
+Model Edificio2;
+
+Model fabrica;
+
+Model RocasFlotantes;
+Model Brazo1CasaMobileSteampunk;
+Model Brazo2CasaMobileSteampunk;
+Model CasaMobileSteampunk;
 
 Skybox skyboxDia;
 Skybox skyboxNoche;
@@ -267,12 +270,23 @@ std::vector<ObjetoEscena> bancoPositions = {
 
 //edicios iguales al molino pero con diferentes posiciones y rotaciones para dar variedad al escenario
 
-std::vector<ObjetoEscena> molinoPositions = {
+std::vector<ObjetoEscena> posicionesMolinos = {
 	{glm::vec3(-205.0f, -2.0f, -240.0f), 180.0f}, // molino original
 	{glm::vec3(-220.0f, -2.0f, -220.0f), 180.0f}, // Molino 2
 	{glm::vec3(-190.0f, -2.0f, -220.0f), 180.0f},  // Molino 3 
 	{glm::vec3(-235.0f, -2.0f, -250.0f), 180.0f},   // Molino 4
 	{glm::vec3(-250.0f,  -2.0f, -240.0f), 180.0f}  // Molino 5
+};
+
+std::vector<ObjetoEscena> posicionesFabricas = {
+	{glm::vec3(260.0f, 12.0f, -270.0f), 180.0f}, 
+	{glm::vec3(260.0f, 12.0f, -190.0f), 180.0f}, 
+	{glm::vec3(195.0f, 12.0f, -270.0f), 180.0f}, 
+	{glm::vec3(195.0f, 12.0f, -190.0f), 180.0f},   
+	{glm::vec3(130.0f, 12.0f, -270.0f), 180.0f},
+	{glm::vec3(130.0f, 12.0f, -190.0f), 180.0f},
+	{glm::vec3(65.0f, 12.0f, -270.0f), 180.0f},
+	{glm::vec3(65.0f, 12.0f, -190.0f), 180.0f},
 };
 
 void CreateShaders()
@@ -289,7 +303,7 @@ void animacionDirigible(float deltaTime, glm::vec3& posicionBase, float& rotacio
 	timeAccum += deltaTime/16;
 
 	// Movimiento en forma de 8 (lemniscata) en el plano XZ
-	float tamañoRecorrido = 30.0f; // Tamaño de la trayectoria
+	float tamañoRecorrido = 50.0f; // Tamaño de la trayectoria
 	float velocidad = 0.2f;  // Velocidad de recorrido
 
 	float t = timeAccum * velocidad;
@@ -384,6 +398,19 @@ int main()
 	CasaMobileSteampunk = Model();
 	CasaMobileSteampunk.LoadModel("Models/CasaMobileSteampunk.obj");
 
+	fabrica = Model();
+	fabrica.LoadModel("Models/Fabrica.obj");
+
+	Molino = Model();
+	Molino.LoadModel("Models/Molino.obj");
+	AspaMolino = Model();
+	AspaMolino.LoadModel("Models/AspaMolino.obj");
+
+	Iglesia = Model();
+	Iglesia.LoadModel("Models/Iglesia.obj");
+	EngranajesIglesia = Model();
+	EngranajesIglesia.LoadModel("Models/EngranajesIglesia.obj");
+
 	//decoraciones
 	Farola = Model();
 	Farola.LoadModel("Models/Farola.obj");
@@ -404,19 +431,6 @@ int main()
 	AspaDirigible.LoadModel("Models/AspaDirigible.obj");
 	ColaDirigible = Model();
 	ColaDirigible.LoadModel("Models/ColaDirigible.obj");
-
-
-	//estructuras
-	Molino = Model();
-	Molino.LoadModel("Models/Molino.obj");
-	AspaMolino = Model();
-	AspaMolino.LoadModel("Models/AspaMolino.obj");
-
-	Iglesia = Model();
-	Iglesia.LoadModel("Models/Iglesia.obj");
-	EngranajesIglesia = Model();
-	EngranajesIglesia.LoadModel("Models/EngranajesIglesia.obj");
-
 
 	
 	std::vector<std::string> skyboxFacesDia;
@@ -850,6 +864,19 @@ int main()
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Edificio2.RenderModel();
 
+		//fabricas
+		for (const auto& molino : posicionesFabricas) {
+			// 1. Renderizar la base del Molino
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, molino.posicion);
+			model = glm::rotate(model, glm::radians(molino.rotacionY), glm::vec3(0.0f, 1.0f, 0.0f));
+			modelaux = model;
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+			fabrica.RenderModel();
+		}
+
+
 		//Casa mobile Steampunk
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(0.0f, 40.0f, 220.0f));
@@ -882,7 +909,7 @@ int main()
 		CasaMobileSteampunk.RenderModel();
 
 		//molinos, renderizados en un loop para aplicar animación a las aspas de cada molino
-		for (const auto& molino : molinoPositions) {
+		for (const auto& molino : posicionesMolinos) {
 			// 1. Renderizar la base del Molino
 			model = glm::mat4(1.0f);
 			model = glm::translate(model, molino.posicion);
