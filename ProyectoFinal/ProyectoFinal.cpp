@@ -151,6 +151,14 @@ Model Brazo1CasaMobileSteampunk;
 Model Brazo2CasaMobileSteampunk;
 Model CasaMobileSteampunk;
 
+// Variables para la Casa Mobile Steampunk
+bool animarCasa = false;
+bool presionoQ = false;
+float progresoCasa = 0.0f;
+int direccionCasa = 1;
+float velocidadCasa = 0.1f;
+int faseCasa = 0; // <-- NUEVA VARIABLE: Controla en qué parte del recorrido va
+
 Skybox skyboxDia;
 Skybox skyboxNoche;
 
@@ -1139,9 +1147,74 @@ int main()
 			fabrica.RenderModel();
 		}
 
+		//animacion por teclado para el movimiento de los brazo y la casa
+		// ---------------------------------------------------------
+		// LÓGICA DE ACTIVACIÓN DE LA CASA (Tecla Q)
+		// ---------------------------------------------------------
+		if (mainWindow.getsKeys()[GLFW_KEY_Q])
+		{
+			if (!presionoQ) // Solo cambia el estado una vez por pulsación
+			{
+				animarCasa = !animarCasa;
+				presionoQ = true;
+			}
+		}
+		else
+		{
+			presionoQ = false;
+		}
+		// ---------------------------------------------------------
+		// CÁLCULO DE ÁNGULOS DE LA CASA
+		// ---------------------------------------------------------
+		if (animarCasa)
+		{
+			progresoCasa += velocidadCasa * (deltaTime / 2) * direccionCasa;
+
+			// FASE 0: Del centro a la derecha
+			if (direccionCasa == 1 && progresoCasa >= 1.0f)
+			{
+				progresoCasa = 1.0f;
+				direccionCasa = -1; // Cambiamos dirección
+				faseCasa = 1;       // Pasamos a la siguiente fase
+			}
+			// FASE 1: De la derecha a la izquierda (cruzando el centro)
+			else if (direccionCasa == -1 && progresoCasa <= -1.0f)
+			{
+				progresoCasa = -1.0f;
+				direccionCasa = 1; // Cambiamos dirección para volver
+				faseCasa = 2;      // Pasamos a la fase final
+			}
+			// FASE 2: De la izquierda de regreso al centro EXACTO
+			else if (faseCasa == 2 && direccionCasa == 1 && progresoCasa >= 0.0f)
+			{
+				progresoCasa = 0.0f; // La fijamos exactamente en el centro (posición inicial)
+				animarCasa = false;  // ¡AQUÍ ES DONDE SE DETIENE COMO EXCALIBUR!
+				faseCasa = 0;        // Lista para la próxima vez que presiones Q
+			}
+		
+		}
+
+		// Variables temporales para aplicar en los modelos
+		float angBrazo1, angBrazo2, angCasa;
+
+		// Interpolación lineal entre los extremos y el centro
+		if (progresoCasa < 0.0f) // Lado Izquierdo (de -1 a 0)
+		{
+			float t = progresoCasa + 1.0f; // Normalizamos de 0 a 1
+			angBrazo1 = 0.0f + (45.0f - 0.0f) * t;
+			angBrazo2 = -90.0f + (-45.0f - (-90.0f)) * t;
+			angCasa = 90.0f + (0.0f - 90.0f) * t;
+		}
+		else // Lado Derecho (de 0 a 1)
+		{
+			float t = progresoCasa; // Ya está de 0 a 1
+			angBrazo1 = 45.0f + (135.0f - 45.0f) * t;
+			angBrazo2 = -45.0f + (0.0f - (-45.0f)) * t; // Asumí 0.0f para extremo derecho
+			angCasa = 0.0f + (-45.0f - 0.0f) * t;
+		}
 
 		//Casa mobile Steampunk
-		model = glm::mat4(1.0);
+		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(0.0f, 40.0f, 220.0f));
 		modelaux = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
@@ -1150,7 +1223,7 @@ int main()
 
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(-1.0f, 6.0f, -4.0f));
-		model = glm::rotate(model, glm::radians(45.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::rotate(model, glm::radians(angBrazo1), glm::vec3(0.0f, 0.0f, 1.0f));
 		modelaux2 = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
@@ -1158,7 +1231,7 @@ int main()
 
 		model = modelaux2;
 		model = glm::translate(model, glm::vec3(11.0f, -1.0f, 0.0f));
-		model = glm::rotate(model, glm::radians(-45.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::rotate(model, glm::radians(angBrazo2), glm::vec3(0.0f, 0.0f, 1.0f));
 		modelaux3 = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
@@ -1166,7 +1239,7 @@ int main()
 
 		model = modelaux3;
 		model = glm::translate(model, glm::vec3(-6.0f, 7.5f, -1.0f));
-	//	model = glm::rotate(model, glm::radians(45.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::rotate(model, glm::radians(angCasa), glm::vec3(0.0f, 0.0f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		CasaMobileSteampunk.RenderModel();
