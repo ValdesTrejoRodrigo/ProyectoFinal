@@ -136,6 +136,8 @@ FRAME_TREN KeyFrameTren[MAX_FRAMES];
 int FrameIndexTren = 0;
 bool playTren = false;
 int playIndexTren = 0;
+int	reinicioFrame,guardoFrame = 0;
+		
 
 //motocicleta
 Model CuerpoMoto;
@@ -183,6 +185,7 @@ int faseCasa = 0;
 float angBrazo1, angBrazo2, angCasa, t;
 
 Model TunelTren;
+Model ViasTren;
 
 Skybox skyboxDia;
 Skybox skyboxNoche;
@@ -345,6 +348,18 @@ std::vector<ObjetoEscena> posicionesFabricas = {
 	{glm::vec3(65.0f, 12.0f, -190.0f), 180.0f},
 };
 
+std::vector<glm::vec3> posicionesVias = {
+	glm::vec3(270.0f, 0.0f, -15.0f),
+	glm::vec3(210.0f, 0.0f, -15.0f),
+	glm::vec3(150.0f, 0.0f, -15.0f),
+	glm::vec3(90.0f, 0.0f, -15.0f),
+	glm::vec3(30.0f, 0.0f, -15.0f),
+	glm::vec3(-30.0f, 0.0f, -15.0f),
+	glm::vec3(-90.0f, 0.0f, -15.0f),
+	glm::vec3(-150.0f, 0.0f, -15.0f),
+	glm::vec3(-210.0f, 0.0f, -15.0f),
+	glm::vec3(-270.0f, 0.0f, -15.0f),
+};
 void CreateShaders()
 {
 	Shader *shader1 = new Shader();
@@ -649,6 +664,8 @@ int main()
 	Locomotora.LoadModel("Models/Locomotora.obj");
 	Vagon = Model();
 	Vagon.LoadModel("Models/Vagon.obj");
+	ViasTren = Model();
+	ViasTren.LoadModel("Models/ViasTren.obj");
 
 	// Keyframes inicializados del tren con valores por defecto
 	// Keyframe 0: posición inicial
@@ -1229,7 +1246,22 @@ int main()
 		// Controles del tren con keyframes
 		if (mainWindow.getsKeys()[GLFW_KEY_K]) // Guardar keyframe
 		{
-			saveFrameTren();
+			if (guardoFrame < 1)
+			{
+				saveFrameTren();
+				printf("Frame guardado con exito. Presiona 'L' para habilitar el siguiente.\n");
+				guardoFrame++;
+				reinicioFrame = 0;
+			}
+		}
+		if (mainWindow.getsKeys()[GLFW_KEY_L]) // Guardar keyframe
+		{
+			if (reinicioFrame < 1)
+			{
+				guardoFrame = 0;
+				reinicioFrame++;
+				printf("Habilitado: Ya puedes guardar otro frame con 'K'\n");
+			}
 		}
 		if (mainWindow.getsKeys()[GLFW_KEY_P]) // Reproducir animación
 		{
@@ -1338,6 +1370,15 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		TunelTren.RenderModel();
+
+		//vias
+		for (const auto& via : posicionesVias) {
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, via);
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+			ViasTren.RenderModel();
+		}
 
 		//animacion por teclado para el movimiento de los brazo y la casa
 		if (mainWindow.getsKeys()[GLFW_KEY_Q])
