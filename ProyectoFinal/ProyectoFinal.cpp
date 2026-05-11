@@ -64,6 +64,18 @@ Model PiernaIzq;
 Model Sherlock;
 Model Waver;
 Model Reines;
+Model Mario64Cuerpo;
+Model Mario64Cabeza;
+Model Mario64BrazoDer;
+Model Mario64BrazoIzq;
+Model Mario64AntebrazoDer;
+Model Mario64AntebrazoIzq;
+Model Mario64PiernaDer;
+Model Mario64MusloDer;
+Model Mario64PieDer;
+Model Mario64PiernaIzq;
+Model Mario64MusloIzq;
+Model Mario64PieIzq;
 
 //elementos del entorno
 Model excalibur;
@@ -350,7 +362,7 @@ int main()
 	plainTexture.LoadTextureA();
 	pisoTexture = Texture("Textures/piso.tga");
 	pisoTexture.LoadTextureA();
-	
+
 
 	//avatar ligado a la camara
 	Cuerpo = Model();
@@ -371,6 +383,31 @@ int main()
 	Waver.LoadModel("Models/NPC/WaverFGO.obj");
 	Reines = Model();
 	Reines.LoadModel("Models/NPC/ReinesFGO.obj");
+	Mario64Cuerpo = Model();
+	Mario64Cuerpo.LoadModel("Models/NPC/PersonajeMario64/Mario64Cuerpo.obj");
+	Mario64Cabeza = Model();
+	Mario64Cabeza.LoadModel("Models/NPC/PersonajeMario64/Mario64Cabeza.obj");
+	Mario64BrazoDer = Model();
+	Mario64BrazoDer.LoadModel("Models/NPC/PersonajeMario64/Mario64BrazoDer.obj");
+	Mario64BrazoIzq = Model();
+	Mario64BrazoIzq.LoadModel("Models/NPC/PersonajeMario64/Mario64BrazoIzq.obj");
+	Mario64AntebrazoDer = Model();
+	Mario64AntebrazoDer.LoadModel("Models/NPC/PersonajeMario64/Mario64AntebrazoDer.obj");
+	Mario64AntebrazoIzq = Model();
+	Mario64AntebrazoIzq.LoadModel("Models/NPC/PersonajeMario64/Mario64AntebrazoIzq.obj");
+	Mario64PiernaDer = Model();
+	Mario64PiernaDer.LoadModel("Models/NPC/PersonajeMario64/Mario64PiernaDer.obj");
+	Mario64MusloDer = Model();
+	Mario64MusloDer.LoadModel("Models/NPC/PersonajeMario64/Mario64MusloDer.obj");
+	Mario64PieDer = Model();
+	Mario64PieDer.LoadModel("Models/NPC/PersonajeMario64/Mario64PieDer.obj");
+	Mario64PiernaIzq = Model();
+	Mario64PiernaIzq.LoadModel("Models/NPC/PersonajeMario64/Mario64PiernaIzq.obj");
+	Mario64MusloIzq = Model();
+	Mario64MusloIzq.LoadModel("Models/NPC/PersonajeMario64/Mario64MusloIzq.obj");
+	Mario64PieIzq = Model();
+	Mario64PieIzq.LoadModel("Models/NPC/PersonajeMario64/Mario64PieIzq.obj");
+
 
 	//elementos del entorno
 
@@ -438,7 +475,7 @@ int main()
 	ColaDirigible = Model();
 	ColaDirigible.LoadModel("Models/ColaDirigible.obj");
 
-	
+
 	std::vector<std::string> skyboxFacesDia;
 	skyboxFacesDia.push_back("Textures/Skybox/Monte_right.jpeg");
 	skyboxFacesDia.push_back("Textures/Skybox/Monte_left.jpeg");
@@ -456,7 +493,7 @@ int main()
 	skyboxFacesNoche.push_back("Textures/Skybox/MonteN_back.jpeg");
 	skyboxFacesNoche.push_back("Textures/Skybox/MonteN_front.jpeg");
 	skyboxNoche = Skybox(skyboxFacesNoche);
-	
+
 
 	Material_brillante = Material(4.0f, 256);
 	Material_opaco = Material(0.3f, 4);
@@ -512,12 +549,12 @@ int main()
 
 
 	GLuint uniformProjection = 0, uniformModel = 0, uniformView = 0, uniformEyePosition = 0,
-		uniformSpecularIntensity = 0, uniformShininess = 0, uniformTextureOffset=0;
+		uniformSpecularIntensity = 0, uniformShininess = 0, uniformTextureOffset = 0;
 	GLuint uniformColor = 0;
 	glm::mat4 projection = glm::perspective(45.0f, (GLfloat)mainWindow.getBufferWidth() / mainWindow.getBufferHeight(), 0.1f, 1000.0f);
-	
 
-	glm::vec3 lowerLight(0.0f,0.0f,0.0f);
+
+	glm::vec3 lowerLight(0.0f, 0.0f, 0.0f);
 
 	glm::mat4 model(1.0);
 	glm::mat4 modelaux(1.0);
@@ -534,7 +571,7 @@ int main()
 		deltaTime += (now - lastTime) / limitFPS;
 		lastTime = now;
 
-		angulovaria += 0.5f*deltaTime;
+		angulovaria += 0.5f * deltaTime;
 		// Actualizar ciclo día/noche
 		mainLight.UpdateCycle(deltaTime);
 
@@ -588,7 +625,7 @@ int main()
 		// Clear the window
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		
+
 		if (sunHeight > 0.0f) // Noche
 		{
 			skyboxNoche.DrawSkybox(camera.calculateViewMatrix(), projection);
@@ -626,8 +663,8 @@ int main()
 
 
 		//Reinicializando variables cada ciclo de reloj
-		model= glm::mat4(1.0);
-		modelaux= glm::mat4(1.0);
+		model = glm::mat4(1.0);
+		modelaux = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		toffset = glm::vec2(0.0f, 0.0f);
 		glUniform2fv(uniformTextureOffset, 1, glm::value_ptr(toffset));
@@ -722,7 +759,7 @@ int main()
 
 		}//Fin del if de avatar ligado a la camara
 
-
+		//========================================================================
 		//NPC
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(20.0f, 1.0f, 20.0f));
@@ -731,17 +768,90 @@ int main()
 		Sherlock.RenderModel();
 
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(25.0f, 1.1f, 25.0f));		
+		model = glm::translate(model, glm::vec3(25.0f, 1.1f, 25.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Waver.RenderModel();
 
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(30.0f, 0.5f, 30.0f));		
+		model = glm::translate(model, glm::vec3(30.0f, 0.5f, 30.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Reines.RenderModel();
 
+		//Mario (NPC)
+		//El cuerpo es el modelo padre del resto de las partes del cuerpo.
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(0.0f, -2.0f, 0.0f));
+		modelaux2 = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Mario64Cuerpo.RenderModel();
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(0.0f, 2.5f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Mario64Cabeza.RenderModel();
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(0.45f, 2.0f, 0.0f));
+		modelaux3 = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Mario64BrazoIzq.RenderModel();
+		model = modelaux3;
+		model = glm::translate(model, glm::vec3(0.42f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Mario64AntebrazoIzq.RenderModel();
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-0.45f, 2.0f, 0.0f));
+		modelaux3 = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Mario64BrazoDer.RenderModel();
+		model = modelaux3;
+		model = glm::translate(model, glm::vec3(-0.42f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Mario64AntebrazoDer.RenderModel();
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(0.28f, 1.3f, 0.0f));
+		modelaux3 = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Mario64PiernaIzq.RenderModel();
+		model = modelaux3;
+		model = glm::translate(model, glm::vec3(0.0f, -0.5f, 0.0f));
+		modelaux3 = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Mario64MusloIzq.RenderModel();
+		model = modelaux3;
+		model = glm::translate(model, glm::vec3(0.0f, -0.55f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Mario64PieIzq.RenderModel();
+
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-0.28f, 1.3f, 0.0f));
+		modelaux3 = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Mario64PiernaDer.RenderModel();
+		model = modelaux3;
+		model = glm::translate(model, glm::vec3(0.0f, -0.5f, 0.0f));
+		modelaux3 = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Mario64MusloDer.RenderModel();
+		model = modelaux3;
+		model = glm::translate(model, glm::vec3(0.0f, -0.4f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Mario64PieDer.RenderModel();
+
+
+		//========================================================================
 		// Activar/desactivar animación de Excalibur con tecla E
 		if (mainWindow.getsKeys()[GLFW_KEY_E])
 		{
