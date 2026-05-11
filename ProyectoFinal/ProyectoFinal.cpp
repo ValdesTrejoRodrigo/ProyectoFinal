@@ -116,7 +116,19 @@ float rotYDirigible = 180.0f;
 float inclinacionDirigible = 0.0f;
 float rotColaDirigible = 0.0f;
 
+//motocicleta
+Model CuerpoMoto;
+Model LlantaDelanteraMoto;
+Model LlantaTraseraMoto;
 
+// Variables para animación de la motocicleta
+float motoTime = 0.0f;
+// Definimos el ancla o centro de la animación
+glm::vec3 centroRecorridoMoto(-20.0f, -1.0f, -185.0f);
+glm::vec3 motoPosition; // La función se encargará de darle valores a esto
+float motoRotationY = 0.0f;
+float anguloInclinacionMoto = 0.0f;
+float rotLlantasMoto = 0.0f;
 
 //estrcuturas
 Model Molino;
@@ -343,6 +355,72 @@ void animacionDirigible(float deltaTime, glm::vec3& posicionBase, float& rotacio
 	rotacionY = glm::degrees(atan2(dx, dz));
 }
 
+// Añadimos 'centroPista' a los parámetros
+void animacionMoto(float deltaTime, glm::vec3& position, glm::vec3 centroPista, float& rotationY, float& anguloInclinacion, float& wheelRotation, float& timeAccum)
+{
+	// Actualizar tiempo
+	timeAccum += deltaTime / 16;
+
+	// Dimensiones del cuadrado
+	float longitudLado = 60.0f;
+	float velocidadMoto = 8.0f;
+
+	// Perímetro total del cuadrado
+	float perimetro = 4.0f * longitudLado;
+	float distanciaMoto = fmod(timeAccum * velocidadMoto, perimetro);
+
+	wheelRotation = distanciaMoto * 10.0f;
+	bool hacerCaballito = false;
+
+	if (distanciaMoto < longitudLado)  // Lado 1 
+	{
+		// SUMAMOS EL CENTRO AQUÍ
+		position.x = centroPista.x + (-longitudLado / 2 + distanciaMoto);
+		position.z = centroPista.z + (-longitudLado / 2);
+		rotationY = 90.0f;
+
+		if (distanciaMoto > longitudLado * 0.4f && distanciaMoto < longitudLado * 0.6f)
+			hacerCaballito = true;
+	}
+	else if (distanciaMoto < 2 * longitudLado)  // Lado 2 
+	{
+		position.x = centroPista.x + (longitudLado / 2);
+		position.z = centroPista.z + (-longitudLado / 2 + (distanciaMoto - longitudLado));
+		rotationY = 0.0f;
+	}
+	else if (distanciaMoto < 3 * longitudLado)  // Lado 3 
+	{
+		position.x = centroPista.x + (longitudLado / 2 - (distanciaMoto - 2 * longitudLado));
+		position.z = centroPista.z + (longitudLado / 2);
+		rotationY = 270.0f;
+
+		if (distanciaMoto > (2 * longitudLado + longitudLado * 0.4f) && distanciaMoto < (2 * longitudLado + longitudLado * 0.6f))
+			hacerCaballito = true;
+	}
+	else  // Lado 4 
+	{
+		position.x = centroPista.x + (-longitudLado / 2);
+		position.z = centroPista.z + (longitudLado / 2 - (distanciaMoto - 3 * longitudLado));
+		rotationY = 180.0f;
+	}
+
+	// Altura base sobre el suelo (tomando en cuenta la altura del centro de la pista)
+	position.y = centroPista.y;
+
+	// Animación del caballito
+	if (hacerCaballito)
+	{
+		float caballitoProgress = sin((distanciaMoto - floor(distanciaMoto / longitudLado) * longitudLado) * 10.0f);
+		anguloInclinacion = -25.0f * abs(caballitoProgress);
+		// Sumamos el levantamiento a la altura base
+		position.y = centroPista.y + (abs(caballitoProgress) * 0.5f);
+	}
+	else
+	{
+		anguloInclinacion = anguloInclinacion * 0.9f;
+		if (abs(anguloInclinacion) < 0.1f) anguloInclinacion = 0.0f;
+	}
+}
 
 int main()
 {
@@ -475,6 +553,13 @@ int main()
 	ColaDirigible = Model();
 	ColaDirigible.LoadModel("Models/ColaDirigible.obj");
 
+	CuerpoMoto = Model();
+	CuerpoMoto.LoadModel("Models/CuerpoMoto.obj");
+	LlantaDelanteraMoto = Model();
+	LlantaDelanteraMoto.LoadModel("Models/LlantaDelanteraMoto.obj");
+	LlantaTraseraMoto = Model();
+	LlantaTraseraMoto.LoadModel("Models/LlantaTraseraMoto.obj");
+
 
 	std::vector<std::string> skyboxFacesDia;
 	skyboxFacesDia.push_back("Textures/Skybox/Monte_right.jpeg");
@@ -594,6 +679,8 @@ int main()
 		// Animar el dirigible
 		animacionDirigible(deltaTime, posicionDirigible, rotYDirigible, dirigibleTime);
 
+		// Actualizar animación de la motocicleta
+		animacionMoto(deltaTime, motoPosition, centroRecorridoMoto, motoRotationY, anguloInclinacionMoto, rotLlantasMoto, motoTime);
 
 		//Recibir eventos del usuario
 		glfwPollEvents();
@@ -759,7 +846,6 @@ int main()
 
 		}//Fin del if de avatar ligado a la camara
 
-		//========================================================================
 		//NPC
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(20.0f, 1.0f, 20.0f));
@@ -851,7 +937,6 @@ int main()
 		Mario64PieDer.RenderModel();
 
 
-		//========================================================================
 		// Activar/desactivar animación de Excalibur con tecla E
 		if (mainWindow.getsKeys()[GLFW_KEY_E])
 		{
@@ -968,7 +1053,47 @@ int main()
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		ColaDirigible.RenderModel();
 
-		
+		//modelo de motocicleta
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, motoPosition); // Usar posición animada (que ya tiene el offset)
+		model = glm::rotate(model, glm::radians(motoRotationY), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(anguloInclinacionMoto), glm::vec3(1.0f, 0.0f, 0.0f));
+		modelaux = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		CuerpoMoto.RenderModel();
+
+		// Llanta delantera izquierda con rotación de avance
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-0.675f, -0.55f, -2.6f));
+		model = glm::rotate(model, glm::radians(rotLlantasMoto), glm::vec3(1.0f, 0.0f, 0.0f)); // Rotación de la llanta
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		LlantaDelanteraMoto.RenderModel();
+
+		// Llanta delantera derecha con rotación de avance
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(0.675f, -0.55f, -2.6f));
+		model = glm::rotate(model, glm::radians(rotLlantasMoto), glm::vec3(1.0f, 0.0f, 0.0f)); // Rotación de la llanta
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		LlantaDelanteraMoto.RenderModel();
+
+		// Llanta trasera izquierda con rotación de avance
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(0.0f, -0.6f, 1.1f));
+		model = glm::rotate(model, glm::radians(rotLlantasMoto), glm::vec3(1.0f, 0.0f, 0.0f)); // Rotación de la llanta
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		LlantaTraseraMoto.RenderModel();
+
+		// Llanta trasera derecha con rotación de avance
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(0.0f, -0.6f, 2.55f));
+		model = glm::rotate(model, glm::radians(rotLlantasMoto), glm::vec3(1.0f, 0.0f, 0.0f)); // Rotación de la llanta
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		LlantaTraseraMoto.RenderModel();
 		//botes de basura
 
 		//ESTRUCTURAS
