@@ -294,7 +294,8 @@ struct ObjetoEscena {
 std::vector<glm::vec3> posicionFarolas = {
 	glm::vec3(-80.0f, 2.5f, 156.0f),
 	glm::vec3(-80.0f, 2.5f, 112.0f),
-	glm::vec3(10.0f, 0.0f, -120.0f)
+	glm::vec3(10.0f, 2.5f, -120.0f),
+	glm::vec3(145.0f, 2.5f, 30.0f)
 };
 
 std::vector<glm::vec3> posicionArboles = {
@@ -707,7 +708,7 @@ int main()
 	//contador de luces puntuales
 	unsigned int pointLightCount = 0;
 	//Declaración de primer luz puntual
-// Farola 1
+	// Farola 1
 	pointLights[pointLightCount] = PointLight(1.0f, 0.6f, 0.2f,  // Color naranja cálido
 		0.5f, 2.5f,  // Intensidad ambiental y difusa AUMENTADAS
 		-80.0f, 7.0f, 156.0f,  // Posición
@@ -725,9 +726,14 @@ int main()
 		10.0f, 7.0f, -120.0f,
 		1.0f, 0.022f, 0.0019f);
 
+	// Farola 4
+	pointLights[pointLightCount + 3] = PointLight(1.0f, 0.6f, 0.2f,
+		0.5f, 2.5f,
+		150.0f, 7.0f, 30.0f,
+		1.0f, 0.022f, 0.0019f);
+
 	unsigned int baseLightCount = pointLightCount;
 	numFarolasActivas = 4; // Número total de farolas
-
 
 	unsigned int spotLightCount = 0;
 	//linterna
@@ -746,7 +752,16 @@ int main()
 		1.0f, 0.0031f, 0.0031f,
 		20.0f);
 	spotLightCount++;
-
+	//luz del foco de la locomotora
+	spotLights[2] = SpotLight(
+		1.0f, 1.0f, 0.0f,      // Color: Amarillo puro 
+		0.2f, 5.0f,            
+		80.0f, 20.0f, 75.0f,  
+		0.0f, -1.0f, 0.0f,     
+		0.1f, 0.005f, 0.002f,  
+		25.0f                  
+	);
+	spotLightCount++;
 
 	GLuint uniformProjection = 0, uniformModel = 0, uniformView = 0, uniformEyePosition = 0,
 		uniformSpecularIntensity = 0, uniformShininess = 0, uniformTextureOffset = 0;
@@ -995,19 +1010,21 @@ int main()
 
 		//NPC
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(20.0f, 1.0f, 20.0f));
+		model = glm::translate(model, glm::vec3(10.0f, 1.0f, -80.0f));
+		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Sherlock.RenderModel();
 
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(25.0f, 1.1f, 25.0f));
+		model = glm::translate(model, glm::vec3(35.0f, 55.0f, 210.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Waver.RenderModel();
 
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(30.0f, 0.5f, 30.0f));
+		model = glm::translate(model, glm::vec3(-100.0f, 0.5f, 115.0f));
+		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Reines.RenderModel();
@@ -1311,11 +1328,17 @@ int main()
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(movTrenX, 3.0f, -15.0f)); // Centro del escenario
 		modelaux = model;
+		glm::vec3 posTren = glm::vec3(model[3][0], model[3][1], model[3][2]);
+		posTren.z += 2.0f; // Ajusta este valor según el largo de tu modelo para que salga por el frente
+		glm::vec3 dirTren = glm::vec3(-1.0f, 0.0f, 0.0f);
+		// 3. Actualizar la Spotlight (asumiendo que es la posición 2 del arreglo de spotlights)
+		// Parametros: Color, Ambiente, Difuso, Posicion, Direccion, Lineal, Cuadratico, Cutoff
+		spotLights[2].SetFlash(posTren, dirTren);
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Locomotora.RenderModel();
 		//faltan ruedas, pero no se alcanzó a modelar a tiempo, se hizo un modelo de tren muy simple para poder incluirlo en el escenario y mostrar la animación por keyframes
-		// Vagón (opcional, detrás de la locomotora)
+		// Vagón 
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));

@@ -22,7 +22,7 @@ Camera::Camera(glm::vec3 startPosition, glm::vec3 startUp, GLfloat startYaw, GLf
 
 	// Modo de cámara
 	cameraMode = 1; // Iniciar en modo tercera persona
-	aerialPosition = glm::vec3(0.0f, 35.0f, 0.0f); // Posición inicial aérea (35 unidades arriba)
+	aerialPosition = glm::vec3(0.0f, 90.0f, 0.0f); // Posición inicial aérea (50 unidades arriba)
 	fixedPosition = glm::vec3(106.0f, 2.5f, 56.0f); // Posición fija de la cámara   para la espada en la piedra
 	fixedTarget = glm::vec3(106.0f, 1.0f, 76.0f); 
 	fixedPosition2 = glm::vec3(-55.0f, 8.0f, 136.0f); // Cámara fija 2 (tecla 4)  iglesia
