@@ -23,7 +23,7 @@ public:
 	float getYaw(); // Para orientar el avatar
 	float getVelocidadAnimacion(); // Tiempo para animación de caminar
 	bool estaCaminando(); // Indica si el avatar está caminando
-	void setCameraMode(int mode); // Cambiar modo de cámara (1 = tercera persona, 2 = aérea, 3 = fija)
+	void setCameraMode(int mode); // Cambiar modo de cámara (1 = tercera persona, 2 = aérea, 3 = fija 1, 4 = cámara fija 2, 5 = cámara fija 3)
 	void setFixedCameraTarget(glm::vec3 targetPos); // Establecer objetivo de cámara fija
 	int getCameraMode(); // Obtener modo actual
 	glm::mat4 calculateViewMatrix();
@@ -51,8 +51,12 @@ private:
 
 	int cameraMode; // 1 = tercera persona con avatar, 2 = aérea, 3 = fija
 	glm::vec3 aerialPosition; // Posición de la cámara aérea
-	glm::vec3 fixedPosition; // Posición fija de la cámara
-	glm::vec3 fixedTarget; // Objetivo que mira la cámara fija
+	glm::vec3 fixedPosition; // Posición fija de la cámara 1 (tecla 3)    //espada en la piedra
+	glm::vec3 fixedTarget; // Objetivo que mira la cámara fija 1
+	glm::vec3 fixedPosition2; // Posición fija de la cámara 2 (tecla 4)   // iglesia
+	glm::vec3 fixedTarget2; // Objetivo que mira la cámara fija 2
+	glm::vec3 fixedPosition3; // Posición fija de la cámara 3 (tecla 5)   //casa en las rocas flotantes
+	glm::vec3 fixedTarget3; // Objetivo que mira la cámara fija 3
 
 	// Parámetros de cámara de tercera persona
 	GLfloat distanciaDetrasAvatar;  // Distancia de la cámara al avatar

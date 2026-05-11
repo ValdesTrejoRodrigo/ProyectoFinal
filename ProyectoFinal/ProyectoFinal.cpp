@@ -574,7 +574,15 @@ int main()
 		}
 		if (mainWindow.getsKeys()[GLFW_KEY_3])
 		{
-			camera.setCameraMode(3); // Modo cámara fija
+			camera.setCameraMode(3); // Modo cámara fija 1
+		}
+		if (mainWindow.getsKeys()[GLFW_KEY_4])
+		{
+			camera.setCameraMode(4); // Modo cámara fija 2
+		}
+		if (mainWindow.getsKeys()[GLFW_KEY_5])
+		{
+			camera.setCameraMode(5); // Modo cámara fija 3
 		}
 
 		// Clear the window

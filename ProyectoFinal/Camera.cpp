@@ -22,9 +22,13 @@ Camera::Camera(glm::vec3 startPosition, glm::vec3 startUp, GLfloat startYaw, GLf
 
 	// Modo de cámara
 	cameraMode = 1; // Iniciar en modo tercera persona
-	aerialPosition = glm::vec3(0.0f, 25.0f, 0.0f); // Posición inicial aérea (25 unidades arriba)
+	aerialPosition = glm::vec3(0.0f, 35.0f, 0.0f); // Posición inicial aérea (35 unidades arriba)
 	fixedPosition = glm::vec3(106.0f, 2.5f, 56.0f); // Posición fija de la cámara   para la espada en la piedra
-	fixedTarget = glm::vec3(106.0f, 1.0f, 76.0f); // Apunta al centro del escenario por defecto
+	fixedTarget = glm::vec3(106.0f, 1.0f, 76.0f); 
+	fixedPosition2 = glm::vec3(-55.0f, 8.0f, 136.0f); // Cámara fija 2 (tecla 4)  iglesia
+	fixedTarget2 = glm::vec3(-146.0f, 7.0f, 136.0f);
+	fixedPosition3 = glm::vec3(0.0f, 50.0f, 140.0f); // Cámara fija 3 (tecla 5)	  casa en las rocas flotantes
+	fixedTarget3 = glm::vec3(0.0f, 50.0f, 220.0f);
 
 
 	// Parámetros de cámara de tercera persona
@@ -138,13 +142,21 @@ void Camera::keyControl(bool* keys, GLfloat deltaTime)
 		// No hay animación de caminar en modo aéreo
 		caminando = false;
 		}
-	else if (cameraMode == 3) // Modo cámara fija
-	{
-		// La cámara fija no se mueve con teclas
-		// Permanece en su posición fija
-		position = fixedPosition;
-		caminando = false;
-	}
+		else if (cameraMode == 3) // Modo cámara fija 1
+		{
+			position = fixedPosition;
+			caminando = false;
+		}
+		else if (cameraMode == 4) // Modo cámara fija 2
+		{
+			position = fixedPosition2;
+			caminando = false;
+		}
+		else if (cameraMode == 5) // Modo cámara fija 3
+		{
+			position = fixedPosition3;
+			caminando = false;
+		}
 }
 
 void Camera::mouseControl(GLfloat xChange, GLfloat yChange)
@@ -201,11 +213,13 @@ void Camera::mouseControl(GLfloat xChange, GLfloat yChange)
 
 		update(); // Actualizar vectores front, right, up
 	}
-	else if (cameraMode == 3) // Modo cámara fija
+	else if (cameraMode == 3 || cameraMode == 4 || cameraMode == 5) // Cámaras fijas
 	{
-		// La cámara fija no responde al mouse
+		// Las cámaras fijas no responden al mouse
 		// No hacer nada
 	}
+
+
 }
 
 glm::mat4 Camera::calculateViewMatrix()
@@ -221,10 +235,17 @@ glm::mat4 Camera::calculateViewMatrix()
 		// La cámara mira hacia donde apunta el frente
 		return glm::lookAt(position, position + front, worldUp);
 	}
-	else // Cámara fija (modo 3)
+	else if (cameraMode == 3) // Cámara fija 1
 	{
-		// La cámara mira hacia el objetivo fijo
 		return glm::lookAt(fixedPosition, fixedTarget, worldUp);
+	}
+	else if (cameraMode == 4) // Cámara fija 2
+	{
+		return glm::lookAt(fixedPosition2, fixedTarget2, worldUp);
+	}
+	else // Cámara fija 3 (modo 5)
+	{
+		return glm::lookAt(fixedPosition3, fixedTarget3, worldUp);
 	}
 }
 
@@ -290,9 +311,17 @@ void Camera::setCameraMode(int mode)
 	{
 		updateCameraPosition();
 	}
-	else if (mode == 3) // Al cambiar a modo fijo
+	else if (mode == 3) // Al cambiar a modo fijo 1
 	{
 		position = fixedPosition;
+	}
+	else if (mode == 4) // Al cambiar a modo fijo 2
+	{
+		position = fixedPosition2;
+	}
+	else if (mode == 5) // Al cambiar a modo fijo 3
+	{
+		position = fixedPosition3;
 	}
 }
 
