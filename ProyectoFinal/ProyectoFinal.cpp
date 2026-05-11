@@ -103,17 +103,39 @@ float giroEspada = 0.0f;
 Model Dirigible;
 Model AspaDirigible;
 Model ColaDirigible;
-/*
-Model Locomotora;
-Model Vagon;
-Model RuedaLocomotora;
-*/
+
 // Variables para animación del dirigible
 float dirigibleTime = 0.0f;
 glm::vec3 posicionDirigible(130.0f, 90.0f, -130.0f); // Posición central del recorrido
 float rotYDirigible = 180.0f;
 float inclinacionDirigible = 0.0f;
 float rotColaDirigible = 0.0f;
+
+Model Locomotora;
+Model Vagon;
+/*
+Model RuedaGLocomotora;
+Model RuedaPLocomotora;
+*/
+
+// Variables para animación por keyframes del tren
+float movTrenX = 240.0f;  // Movimiento en X
+float rotRuedasTren = 0.0f;  // Rotación de las ruedas
+float ciclo, ciclo2 = 0.0f; // Variables para controlar el ciclo de animación
+#define MAX_FRAMES 50
+int i_max_steps = 60;  // Pasos de interpolación entre keyframes
+int i_curr_steps = 0;
+
+typedef struct _frameTren
+{
+	float movTrenX;      // Posición X del tren
+	float movTrenXInc;   // Incremento en X
+} FRAME_TREN;
+
+FRAME_TREN KeyFrameTren[MAX_FRAMES];
+int FrameIndexTren = 0;
+bool playTren = false;
+int playIndexTren = 0;
 
 //motocicleta
 Model CuerpoMoto;
@@ -159,6 +181,8 @@ float velocidadCasa = 0.05f;
 int faseCasa = 0; 
 // Variables temporales para aplicar en los modelos
 float angBrazo1, angBrazo2, angCasa, t;
+
+Model TunelTren;
 
 Skybox skyboxDia;
 Skybox skyboxNoche;
@@ -428,6 +452,58 @@ void animacionMoto(float deltaTime, glm::vec3& position, glm::vec3 centroPista, 
 		if (abs(anguloInclinacion) < 0.1f) anguloInclinacion = 0.0f;
 	}
 }
+// Función para guardar keyframes del tren (Tecla K)
+void saveFrameTren(void)
+{
+	printf("Guardando keyframe del tren %d\n", FrameIndexTren);
+	KeyFrameTren[FrameIndexTren].movTrenX = movTrenX;
+	FrameIndexTren++;
+}
+
+// Función para resetear el tren (Tecla 0)
+void resetTren(void)
+{
+	movTrenX = KeyFrameTren[0].movTrenX;
+	rotRuedasTren = 0.0f;
+}
+
+// Interpolación entre keyframes
+void interpolationTren(void)
+{
+	KeyFrameTren[playIndexTren].movTrenXInc =
+		(KeyFrameTren[playIndexTren + 1].movTrenX - KeyFrameTren[playIndexTren].movTrenX) / i_max_steps;
+}
+
+// Función de animación del tren
+void animateTren(void)
+{
+	if (playTren)
+	{
+		if (i_curr_steps >= i_max_steps) // ¿Terminó la interpolación entre frames?
+		{
+			playIndexTren++;
+
+			if (playIndexTren > FrameIndexTren - 2) // ¿Terminó la animación completa?
+			{
+				printf("Animación del tren completada\n");
+				playIndexTren = 0;
+				playTren = false;
+			}
+			else // Siguiente frame
+			{
+				i_curr_steps = 0;
+				interpolationTren();
+			}
+		}
+		else
+		{
+			// Animar
+			movTrenX += KeyFrameTren[playIndexTren].movTrenXInc;
+			rotRuedasTren += 2.0f; // Rotar ruedas
+			i_curr_steps++;
+		}
+	}
+}
 
 int main()
 {
@@ -537,6 +613,9 @@ int main()
 	EngranajesIglesia = Model();
 	EngranajesIglesia.LoadModel("Models/EngranajesIglesia.obj");
 
+	TunelTren = Model();
+	TunelTren.LoadModel("Models/TunelTren.obj");
+
 	//decoraciones
 	Farola = Model();
 	Farola.LoadModel("Models/Farola.obj");
@@ -566,6 +645,19 @@ int main()
 	LlantaTraseraMoto = Model();
 	LlantaTraseraMoto.LoadModel("Models/LlantaTraseraMoto.obj");
 
+	Locomotora = Model();
+	Locomotora.LoadModel("Models/Locomotora.obj");
+	Vagon = Model();
+	Vagon.LoadModel("Models/Vagon.obj");
+
+	// Keyframes inicializados del tren con valores por defecto
+	// Keyframe 0: posición inicial
+	KeyFrameTren[0].movTrenX = 240.0f;
+	// Keyframe 1: se movió a la izquierda
+	KeyFrameTren[1].movTrenX = 200.0f;
+	// Keyframe 2: regresa al centro
+	KeyFrameTren[2].movTrenX = 240.0f;
+	FrameIndexTren = 3; // 3 keyframes definidos
 
 	std::vector<std::string> skyboxFacesDia;
 	skyboxFacesDia.push_back("Textures/Skybox/Monte_right.jpeg");
@@ -1132,6 +1224,71 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		LlantaTraseraMoto.RenderModel();
+
+
+		// Controles del tren con keyframes
+		if (mainWindow.getsKeys()[GLFW_KEY_K]) // Guardar keyframe
+		{
+			saveFrameTren();
+		}
+		if (mainWindow.getsKeys()[GLFW_KEY_P]) // Reproducir animación
+		{
+			if (!playTren)
+			{
+				resetTren();
+				playTren = true;
+				playIndexTren = 0;
+				i_curr_steps = 0;
+				interpolationTren();
+			}
+		}
+		if (mainWindow.getsKeys()[GLFW_KEY_0]) // Resetear
+		{
+			resetTren();
+			playTren = false;
+		}
+
+		// Movimiento manual del tren 
+		if (!playTren)
+		{
+			if (mainWindow.getsKeys()[GLFW_KEY_N]) 
+			{
+				if (ciclo < 1)
+				{
+					movTrenX -= 20.0f;
+					printf("Tren movido hacia adelante: %f. Presiona 'M' para habilitar.\n", movTrenX);
+					ciclo++;
+					ciclo2 = 0;
+				}
+			}
+			if (mainWindow.getsKeys()[GLFW_KEY_M]) 
+			{
+				if (ciclo2 < 1)
+				{
+					ciclo = 0;
+					ciclo2++;
+					printf("Tecla 'N' habilitada de nuevo.\n");
+				}
+			}
+		}
+
+		// Actualizar animación del tren
+		animateTren();
+
+		//Modelo de tren
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(movTrenX, 3.0f, -15.0f)); // Centro del escenario
+		modelaux = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Locomotora.RenderModel();
+		//faltan ruedas, pero no se alcanzó a modelar a tiempo, se hizo un modelo de tren muy simple para poder incluirlo en el escenario y mostrar la animación por keyframes
+		// Vagón (opcional, detrás de la locomotora)
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Vagon.RenderModel();
+
 		//botes de basura
 
 		//ESTRUCTURAS
@@ -1166,16 +1323,21 @@ int main()
 		Edificio4.RenderModel();
 
 		//fabricas
-		for (const auto& molino : posicionesFabricas) {
-			// 1. Renderizar la base del Molino
+		for (const auto& fabricas : posicionesFabricas) {
 			model = glm::mat4(1.0f);
-			model = glm::translate(model, molino.posicion);
-			model = glm::rotate(model, glm::radians(molino.rotacionY), glm::vec3(0.0f, 1.0f, 0.0f));
-			modelaux = model;
+			model = glm::translate(model, fabricas.posicion);
+			model = glm::rotate(model, glm::radians(fabricas.rotacionY), glm::vec3(0.0f, 1.0f, 0.0f));
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 			Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 			fabrica.RenderModel();
 		}
+
+		//tunel del tren
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(260.0f, -3.0f, -15.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		TunelTren.RenderModel();
 
 		//animacion por teclado para el movimiento de los brazo y la casa
 		if (mainWindow.getsKeys()[GLFW_KEY_Q])
