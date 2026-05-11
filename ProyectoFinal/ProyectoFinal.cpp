@@ -156,8 +156,10 @@ bool animarCasa = false;
 bool presionoQ = false;
 float progresoCasa = 0.0f;
 int direccionCasa = 1;
-float velocidadCasa = 0.1f;
-int faseCasa = 0; // <-- NUEVA VARIABLE: Controla en qué parte del recorrido va
+float velocidadCasa = 0.05f;
+int faseCasa = 0; 
+// Variables temporales para aplicar en los modelos
+float angBrazo1, angBrazo2, angCasa, t;
 
 Skybox skyboxDia;
 Skybox skyboxNoche;
@@ -1148,9 +1150,6 @@ int main()
 		}
 
 		//animacion por teclado para el movimiento de los brazo y la casa
-		// ---------------------------------------------------------
-		// LÓGICA DE ACTIVACIÓN DE LA CASA (Tecla Q)
-		// ---------------------------------------------------------
 		if (mainWindow.getsKeys()[GLFW_KEY_Q])
 		{
 			if (!presionoQ) // Solo cambia el estado una vez por pulsación
@@ -1163,9 +1162,6 @@ int main()
 		{
 			presionoQ = false;
 		}
-		// ---------------------------------------------------------
-		// CÁLCULO DE ÁNGULOS DE LA CASA
-		// ---------------------------------------------------------
 		if (animarCasa)
 		{
 			progresoCasa += velocidadCasa * (deltaTime / 2) * direccionCasa;
@@ -1188,28 +1184,26 @@ int main()
 			else if (faseCasa == 2 && direccionCasa == 1 && progresoCasa >= 0.0f)
 			{
 				progresoCasa = 0.0f; // La fijamos exactamente en el centro (posición inicial)
-				animarCasa = false;  // ¡AQUÍ ES DONDE SE DETIENE COMO EXCALIBUR!
+				animarCasa = false;
 				faseCasa = 0;        // Lista para la próxima vez que presiones Q
 			}
 		
 		}
 
-		// Variables temporales para aplicar en los modelos
-		float angBrazo1, angBrazo2, angCasa;
-
-		// Interpolación lineal entre los extremos y el centro
 		if (progresoCasa < 0.0f) // Lado Izquierdo (de -1 a 0)
 		{
-			float t = progresoCasa + 1.0f; // Normalizamos de 0 a 1
+			//donde esta, a donde va y regresa a donde esta
+			t = progresoCasa + 1.0f; // Normalizamos de 0 a 1
 			angBrazo1 = 0.0f + (45.0f - 0.0f) * t;
 			angBrazo2 = -90.0f + (-45.0f - (-90.0f)) * t;
 			angCasa = 90.0f + (0.0f - 90.0f) * t;
 		}
 		else // Lado Derecho (de 0 a 1)
 		{
-			float t = progresoCasa; // Ya está de 0 a 1
+			//       inicial, derecha , regreso al centro
+			t = progresoCasa; // Ya está de 0 a 1
 			angBrazo1 = 45.0f + (135.0f - 45.0f) * t;
-			angBrazo2 = -45.0f + (0.0f - (-45.0f)) * t; // Asumí 0.0f para extremo derecho
+			angBrazo2 = -45.0f + (-90.0f - (-45.0f)) * t; // Asumí 0.0f para extremo derecho
 			angCasa = 0.0f + (-45.0f - 0.0f) * t;
 		}
 
