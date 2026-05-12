@@ -82,6 +82,12 @@ Model piedra;//piedra donde esta incrustada excalibur
 Model roca; // roca detras de la espada en la piedra
 Model robotLampara; //sentado en la roca
 
+Model Estrella;
+//Variables para animación de estrella
+glm::vec3 posicionEstrella = glm::vec3(0.0f, 0.0f, 0.0f);
+float rotacionEstrellaY = 0.0f;
+float timeAccumEstrella = 0.0f;
+
 //Decoraciones
 Model Farola;
 Model Arbol1; //low poly
@@ -468,6 +474,36 @@ void animacionMoto(float deltaTime, glm::vec3& position, glm::vec3 centroPista, 
 		if (abs(anguloInclinacion) < 0.1f) anguloInclinacion = 0.0f;
 	}
 }
+
+void animacionEstrella(float deltaTime, glm::vec3& posicionBase, float& rotacionY, float& timeAccum) {
+	// Actualizar el tiempo general
+	timeAccum += deltaTime;
+
+	float radioMaximo = 2.0f;     // Distancia al centro cuando está en la parte más baja
+	float alturaMaxima = 6.0f;    // Cuánto sube la estrella en el eje Y
+	float velocidadVertical = 0.005f;// Velocidad de la subida y bajada
+	float velocidadOrbita = 0.05f;  // Velocidad con la que da vueltas alrededor del centro
+	float velocidadGiro = 5.0f;  // Velocidad a la que rota sobre su propio centro
+
+	// Guardar la posición central
+	static glm::vec3 posicionCentral = posicionBase;
+
+	// Movimiento vertical
+	float factorAltura = std::abs(cos(timeAccum * velocidadVertical));
+	posicionBase.y = posicionCentral.y + (factorAltura * alturaMaxima);
+
+	// Movimiento en espiral cónica (Acercándose/Alejándose del centro)
+	float radioActual = radioMaximo * (1.0f - factorAltura);
+	posicionBase.x = posicionCentral.x + radioActual * cos(timeAccum * velocidadOrbita);
+	posicionBase.z = posicionCentral.z + radioActual * sin(timeAccum * velocidadOrbita);
+
+	// Rotación sobre su propio eje
+	rotacionY += velocidadGiro * deltaTime;
+
+	// Mantener los grados en un rango seguro
+	if (rotacionY >= 360.0f) {rotacionY -= 360.0f;}
+}
+
 // Función para guardar keyframes del tren (Tecla K)
 void saveFrameTren(void)
 {
@@ -642,6 +678,8 @@ int main()
 	Arbol2.LoadModel("Models/Abeto.obj");
 	Bancos = Model();
 	Bancos.LoadModel("Models/BancosSentar.obj");
+	Estrella = Model();
+	Estrella.LoadModel("Models/Star-Mario64.obj");
 	/*
 	BotesBasura = Model();
 	BotesBasura.LoadModel("Models/BotesBasura.obj");
@@ -1053,6 +1091,7 @@ int main()
 		Mario64BrazoIzq.RenderModel();
 		model = modelaux3;
 		model = glm::translate(model, glm::vec3(0.42f, 0.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(-30.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Mario64AntebrazoIzq.RenderModel();
@@ -1065,6 +1104,7 @@ int main()
 		Mario64BrazoDer.RenderModel();
 		model = modelaux3;
 		model = glm::translate(model, glm::vec3(-0.42f, 0.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(30.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Mario64AntebrazoDer.RenderModel();
@@ -1180,6 +1220,7 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		robotLampara.RenderModel();
+		
 
 		//modelo de barco volador
 		model = glm::mat4(1.0);
@@ -1583,7 +1624,14 @@ int main()
 			Arbol2.RenderModel();
 		}
 
-
+		//Estrella Mario 64
+		animacionEstrella(deltaTime, posicionEstrella, rotacionEstrellaY, timeAccumEstrella);
+		model = glm::mat4(1.0);
+		model = glm::translate(model, posicionEstrella + glm::vec3(-110.0f, -1.0f, 135.0f)); //Posicion dinámica + base
+		model = glm::rotate(model, glm::radians(90.0f + rotacionEstrellaY), glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Estrella.RenderModel();
 
 
 
