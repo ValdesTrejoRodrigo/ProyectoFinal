@@ -147,9 +147,9 @@ Model LlantaTraseraMoto;
 // Variables para animación de la motocicleta
 float motoTime = 0.0f;
 // Definimos el ancla o centro de la animación
-glm::vec3 centroRecorridoMoto(-20.0f, -1.0f, -185.0f);
+glm::vec3 centroRecorridoMoto(-20.0f, -0.5f, -185.0f);
 glm::vec3 motoPosition; // La función se encargará de darle valores a esto
-float motoRotationY = 0.0f;
+float motoRotationY = 180.0f;
 float anguloInclinacionMoto = 0.0f;
 float rotLlantasMoto = 0.0f;
 
