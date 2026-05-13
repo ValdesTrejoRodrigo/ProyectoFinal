@@ -88,6 +88,9 @@ glm::vec3 posicionEstrella = glm::vec3(0.0f, 0.0f, 0.0f);
 float rotacionEstrellaY = 0.0f;
 float timeAccumEstrella = 0.0f;
 
+Model Flag;
+Model Flagpole;
+
 //Decoraciones
 Model Farola;
 Model Arbol1; //low poly
@@ -632,6 +635,12 @@ int main()
 	roca.LoadModel("Models/Roca.obj");
 	robotLampara = Model();
 	robotLampara.LoadModel("Models/RobotLampara.obj");
+
+	//Bandera
+	Flag = Model();
+	Flag.LoadModel("Models/Flag.obj");
+	Flagpole = Model();
+	Flagpole.LoadModel("Models/Flagpole.obj");
 
 	//EDIFICIOS
 	EdificioGrande = Model();
@@ -1221,6 +1230,16 @@ int main()
 		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		robotLampara.RenderModel();
 		
+		//Bandera SM64
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-200.0f, -2.0, -130.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Flagpole.RenderModel();
+		model = glm::translate(model, glm::vec3(0.0f, -26.0f + mainWindow.getBanderaAltura(), 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Flag.RenderModel();
 
 		//modelo de barco volador
 		model = glm::mat4(1.0);

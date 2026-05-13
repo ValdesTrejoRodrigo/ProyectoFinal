@@ -18,6 +18,9 @@ Window::Window(GLint windowWidth, GLint windowHeight)
 	{
 		keys[i] = 0;
 	}
+	//Para bandera
+	banderaSube = false;
+	banderaAltura = 0.0;
 }
 int Window::Initialise()
 {
@@ -117,6 +120,16 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 			//printf("se solto la tecla %d'\n", key);
 		}
 	}
+	//Para bandera
+	if (key == GLFW_KEY_T)
+	{
+		if (theWindow->banderaSube == true && theWindow->banderaAltura >= 28.0) { theWindow->banderaSube = false; }
+		else if (theWindow->banderaSube == false && theWindow->banderaAltura <= 0.0) { theWindow->banderaSube = true; }
+		
+		if (theWindow->banderaSube) { theWindow->banderaAltura += 0.25; }
+		else { theWindow->banderaAltura -= 0.25; }
+	}
+	
 }
 
 void Window::ManejaMouse(GLFWwindow* window, double xPos, double yPos)
