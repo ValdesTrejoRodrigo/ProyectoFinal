@@ -96,8 +96,23 @@ Model Farola;
 Model Arbol1; //low poly
 Model Arbol2; //abeto?
 Model Bancos;
-Model BotesBasura;
 
+//Reloj
+Model Reloj_M;
+Model EngranajeGrande_M;
+Model EngranajeMediano_M;
+Model EngranajePequeño_M;
+Model EngranajeEnano_M;
+Model ManecillaHora_M;
+Model ManecillaMinuto_M;
+// Variables para animación del reloj
+float posXreloj = -225.0f, posYreloj = 15.0f, posZreloj = 50.0f;
+float rotEngranajeGrande = 0.0f;
+float rotEngranajeMediano = 0.0f;
+float rotEngranajePequeño = 0.0f;
+float rotEngranajeEnano = 0.0f;
+float rotManecillaHora = 0.0f;
+float rotManecillaMinuto = 0.0f;
 
 // Variables para animación de Excalibur
 bool excaliburSacada = false;
@@ -131,9 +146,9 @@ Model RuedaPLocomotora;
 float movTrenX = 240.0f;  // Movimiento en X
 float rotRuedasTren = 0.0f;  // Rotación de las ruedas
 float ciclo, ciclo2 = 0.0f; // Variables para controlar el ciclo de animación
-#define MAX_FRAMES 50
-int i_max_steps = 60;  // Pasos de interpolación entre keyframes
-int i_curr_steps = 0;
+#define MAX_FRAMES 100
+int i_max_steps = 90;  // Pasos de interpolación entre keyframes
+int i_curr_steps = 7;
 
 typedef struct _frameTren
 {
@@ -146,7 +161,27 @@ int FrameIndexTren = 0;
 bool playTren = false;
 int playIndexTren = 0;
 int	reinicioFrame,guardoFrame = 0;
-		
+
+typedef struct _frameReloj
+{
+	//Variables para GUARDAR Key Frames del reloj
+	float rotEngranajeGrande;
+	float rotEngranajeMediano;
+	float rotEngranajePequeño;
+	float rotEngranajeEnano;
+	float rotManecillaHora;
+	float rotManecillaMinuto;
+	float incRotEngranajeGrande = 0.0f;
+	float incRotEngranajeMediano = 0.0f;
+	float incRotEngranajePequeño = 0.0f;
+	float incRotEngranajeEnano = 0.0f;
+
+} FRAME_RELOJ;
+
+FRAME_RELOJ KeyFrameReloj[MAX_FRAMES];
+int FrameIndexReloj = 30;			//introducir datos
+bool playReloj = false;
+int playIndexReloj = 0;
 
 //motocicleta
 Model CuerpoMoto;
@@ -514,12 +549,33 @@ void saveFrameTren(void)
 	KeyFrameTren[FrameIndexTren].movTrenX = movTrenX;
 	FrameIndexTren++;
 }
-
+//Tecla por definir para guardar B y H para habilitar el guardado
+void saveFrameReloj(void)
+{
+	printf("Guardando keyframe del Reloj %d\n", FrameIndexReloj);
+	KeyFrameReloj[FrameIndexReloj].rotEngranajeGrande = rotEngranajeGrande;
+	KeyFrameReloj[FrameIndexReloj].rotEngranajeMediano = rotEngranajeMediano;
+	KeyFrameReloj[FrameIndexReloj].rotEngranajePequeño = rotEngranajePequeño;
+	KeyFrameReloj[FrameIndexReloj].rotEngranajeEnano = rotEngranajeEnano;
+	KeyFrameReloj[FrameIndexReloj].rotManecillaHora = rotManecillaHora;
+	KeyFrameReloj[FrameIndexReloj].rotManecillaMinuto = rotManecillaMinuto;
+	FrameIndexReloj++;
+}
 // Función para resetear el tren (Tecla 0)
 void resetTren(void)
 {
 	movTrenX = KeyFrameTren[0].movTrenX;
 	rotRuedasTren = 0.0f;
+}
+//Tecla R
+void resetReloj(void)
+{
+	rotEngranajeGrande = KeyFrameReloj[0].rotEngranajeGrande;
+	rotEngranajeMediano = KeyFrameReloj[0].rotEngranajeMediano;
+	rotEngranajePequeño = KeyFrameReloj[0].rotEngranajePequeño;
+	rotEngranajeEnano = KeyFrameReloj[0].rotEngranajeEnano;
+	rotManecillaHora = 0.0f;
+	rotManecillaMinuto = 0.0f;
 }
 
 // Interpolación entre keyframes
@@ -528,7 +584,13 @@ void interpolationTren(void)
 	KeyFrameTren[playIndexTren].movTrenXInc =
 		(KeyFrameTren[playIndexTren + 1].movTrenX - KeyFrameTren[playIndexTren].movTrenX) / i_max_steps;
 }
-
+void interpolationReloj(void)
+{
+	KeyFrameReloj[playIndexReloj].incRotEngranajeGrande = (KeyFrameReloj[playIndexReloj + 1].rotEngranajeGrande - KeyFrameReloj[playIndexReloj].rotEngranajeGrande) / i_max_steps;
+	KeyFrameReloj[playIndexReloj].incRotEngranajeMediano = (KeyFrameReloj[playIndexReloj + 1].rotEngranajeMediano - KeyFrameReloj[playIndexReloj].rotEngranajeMediano) / i_max_steps;
+	KeyFrameReloj[playIndexReloj].incRotEngranajePequeño = (KeyFrameReloj[playIndexReloj + 1].rotEngranajePequeño - KeyFrameReloj[playIndexReloj].rotEngranajePequeño) / i_max_steps;
+	KeyFrameReloj[playIndexReloj].incRotEngranajeEnano = (KeyFrameReloj[playIndexReloj + 1].rotEngranajeEnano - KeyFrameReloj[playIndexReloj].rotEngranajeEnano) / i_max_steps;
+}
 // Función de animación del tren
 void animateTren(void)
 {
@@ -559,7 +621,38 @@ void animateTren(void)
 		}
 	}
 }
-
+void animateReloj(void)
+{
+	if (playReloj)
+	{
+		if (i_curr_steps >= i_max_steps) // ¿Terminó la interpolación entre frames?
+		{
+			playIndexReloj++;
+			if (playIndexReloj > FrameIndexReloj - 2) // ¿Terminó la animación completa?
+			{
+				printf("Animación del reloj completada\n");
+				playIndexReloj = 0;
+				playReloj = false;
+			}
+			else // Siguiente frame
+			{
+				i_curr_steps = 0;
+				interpolationReloj();
+			}
+		}
+		else
+		{
+			// Animar
+			rotEngranajeGrande += KeyFrameReloj[playIndexReloj].incRotEngranajeGrande;
+			rotEngranajeMediano += KeyFrameReloj[playIndexReloj].incRotEngranajeMediano;
+			rotEngranajePequeño += KeyFrameReloj[playIndexReloj].incRotEngranajePequeño;
+			rotEngranajeEnano += KeyFrameReloj[playIndexReloj].incRotEngranajeEnano;
+			rotManecillaMinuto -= 0.5f; // velocidad de los minutos
+			rotManecillaHora -= 0.5f / 12.0f; // la hora gira 12 veces mas lento
+			i_curr_steps++;
+		}
+	}
+}
 int main()
 {
 	mainWindow = Window(1366, 768); // 1280, 1024 or 1024, 768
@@ -675,6 +768,38 @@ int main()
 	EngranajesIglesia = Model();
 	EngranajesIglesia.LoadModel("Models/EngranajesIglesia.obj");
 
+	Reloj_M = Model();
+	Reloj_M.LoadModel("Models/reloj.obj");
+	EngranajeGrande_M = Model();
+	EngranajeGrande_M.LoadModel("Models/engranajeGrande.obj");
+	EngranajeMediano_M = Model();
+	EngranajeMediano_M.LoadModel("Models/engranajeMediano.obj");
+	EngranajePequeño_M = Model();
+	EngranajePequeño_M.LoadModel("Models/engranajePequeno.obj");
+	EngranajeEnano_M = Model();
+	EngranajeEnano_M.LoadModel("Models/engranajeEnano.obj");
+	ManecillaHora_M = Model();
+	ManecillaHora_M.LoadModel("Models/manecillaHora.obj");
+	ManecillaMinuto_M = Model();
+	ManecillaMinuto_M.LoadModel("Models/manecillaMinuto.obj");
+
+	KeyFrameReloj[0].rotEngranajeGrande = 35.0f;
+	KeyFrameReloj[0].rotEngranajeMediano = -25.0f;
+	KeyFrameReloj[0].rotEngranajePequeño = 35.0f;
+	KeyFrameReloj[0].rotEngranajeEnano = -45.0f;
+
+	KeyFrameReloj[1].rotEngranajeGrande = 55.0f;
+	KeyFrameReloj[1].rotEngranajeMediano = 0.0f;
+	KeyFrameReloj[1].rotEngranajePequeño = 70.0f;
+	KeyFrameReloj[1].rotEngranajeEnano = 0.0f;
+
+	KeyFrameReloj[2].rotEngranajeGrande = 90.0f;
+	KeyFrameReloj[2].rotEngranajeMediano = 15.0f;
+	KeyFrameReloj[2].rotEngranajePequeño = 120.0f;
+	KeyFrameReloj[2].rotEngranajeEnano = 45.0f;
+
+	FrameIndexReloj = 3; // 3 keyframes definidos
+
 	TunelTren = Model();
 	TunelTren.LoadModel("Models/TunelTren.obj");
 
@@ -724,6 +849,7 @@ int main()
 	// Keyframe 2: regresa al centro
 	KeyFrameTren[2].movTrenX = 240.0f;
 	FrameIndexTren = 3; // 3 keyframes definidos
+
 
 	std::vector<std::string> skyboxFacesDia;
 	skyboxFacesDia.push_back("Textures/Skybox/Monte_right.jpeg");
@@ -1408,7 +1534,6 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Vagon.RenderModel();
 
-		//botes de basura
 
 		//ESTRUCTURAS
 
@@ -1599,6 +1724,176 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		EngranajesIglesia.RenderModel();
+
+		animateReloj();
+		//Reloj con jerarquía de modelos
+		//Base del reloj
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(posXreloj, posYreloj, posZreloj));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		modelaux = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Reloj_M.RenderModel();
+
+		// Engtanaje Grande
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-2.0f, 1.3f, -1.3f));
+		model = glm::rotate(model, glm::radians(rotEngranajeGrande), glm::vec3(0.0f, 0.0f, 1.0f)); // eje Z
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		EngranajeGrande_M.RenderModel();
+
+		// Engranaje Mediano
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(1.3f, -8.5f, -1.3f));
+		model = glm::rotate(model, glm::radians(rotEngranajeMediano), glm::vec3(0.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		EngranajeMediano_M.RenderModel();
+
+		// Engranaje Pequeño
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(9.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(rotEngranajePequeño), glm::vec3(0.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		EngranajePequeño_M.RenderModel();
+
+		// Engranaje Enano
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(7.0f, -2.6f, 0.0f));
+		model = glm::rotate(model, glm::radians(rotEngranajeEnano), glm::vec3(0.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		EngranajeEnano_M.RenderModel();
+
+		// Manecilla Hora
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-0.2f, -0.1f, -0.1f));
+		model = glm::rotate(model, glm::radians(rotManecillaHora), glm::vec3(0.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		ManecillaHora_M.RenderModel();
+
+		// Manecilla Minuto
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-0.2f, -0.1f, -0.1f));
+		model = glm::rotate(model, glm::radians(rotManecillaMinuto), glm::vec3(0.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		ManecillaMinuto_M.RenderModel();
+
+		// Controles del reloj con keyframes
+		if (mainWindow.getsKeys()[GLFW_KEY_B]) // Guardar keyframe
+		{
+			if (guardoFrame < 1)
+			{
+				saveFrameReloj();
+				printf("Frame guardado con exito. Presiona 'H' para habilitar el siguiente.\n");
+				guardoFrame++;
+				reinicioFrame = 0;
+			}
+		}
+		if (mainWindow.getsKeys()[GLFW_KEY_H]) // Guardar keyframe
+		{
+			if (reinicioFrame < 1)
+			{
+				guardoFrame = 0;
+				reinicioFrame++;
+				printf("Habilitado: Ya puedes guardar otro frame con 'B'\n");
+			}
+		}
+		if (mainWindow.getsKeys()[GLFW_KEY_SPACE]) // Reproducir animación
+		{
+			if (!playReloj)
+			{
+				resetReloj();
+				playReloj = true;
+				playIndexReloj = 0;
+				i_curr_steps = 0;
+				interpolationReloj();
+			}
+		}
+		if (mainWindow.getsKeys()[GLFW_KEY_R]) // Resetear
+		{
+			resetReloj();
+			playReloj = false;
+		}
+
+		// Movimiento engranaje grande del reloj
+		if (!playReloj)
+		{
+			if (mainWindow.getsKeys()[GLFW_KEY_Z])
+			{
+				if (ciclo < 1)
+				{
+					rotEngranajeGrande += 35.0f;
+					printf("Tren movido hacia adelante: %f. Presiona 'M' para habilitar.\n", movTrenX);
+					ciclo++;
+					ciclo2 = 0;
+				}
+			}
+			if (mainWindow.getsKeys()[GLFW_KEY_X])
+			{
+				if (ciclo2 < 1)
+				{
+					ciclo = 0;
+					ciclo2++;
+					printf("Tecla 'N' habilitada de nuevo.\n");
+				}
+			}
+			if (mainWindow.getsKeys()[GLFW_KEY_C])
+			{
+				if (ciclo < 1)
+				{
+					rotEngranajeMediano -= 35.0f;
+					printf("Tren movido hacia adelante: %f. Presiona 'V' para habilitar.\n", movTrenX);
+					ciclo++;
+					ciclo2 = 0;
+				}
+			}
+			if (mainWindow.getsKeys()[GLFW_KEY_V])
+			{
+				if (ciclo2 < 1)
+				{
+					ciclo = 0;
+					ciclo2++;
+					printf("Tecla 'C' habilitada de nuevo.\n");
+				}
+			}
+			if (mainWindow.getsKeys()[GLFW_KEY_6])
+			{
+				if (ciclo < 1)
+				{
+					rotEngranajePequeño += 35.0f;
+					printf("Tren movido hacia adelante: %f. Presiona '7' para habilitar.\n", movTrenX);
+					ciclo++;
+					ciclo2 = 0;
+				}
+			}
+			if (mainWindow.getsKeys()[GLFW_KEY_7])
+			{
+				if (ciclo2 < 1)
+				{
+					ciclo = 0;
+					ciclo2++;
+					printf("Tecla '6' habilitada de nuevo.\n");
+				}
+			}
+			if (mainWindow.getsKeys()[GLFW_KEY_8])
+			{
+				if (ciclo < 1)
+				{
+					rotEngranajeEnano -= 35.0f;
+					printf("Tren movido hacia adelante: %f. Presiona '9' para habilitar.\n", movTrenX);
+					ciclo++;
+					ciclo2 = 0;
+				}
+			}
+			if (mainWindow.getsKeys()[GLFW_KEY_9])
+			{
+				if (ciclo2 < 1)
+				{
+					ciclo = 0;
+					ciclo2++;
+					printf("Tecla '8' habilitada de nuevo.\n");
+				}
+			}
+		}
 
 		// Farolas
 		for (const auto& pos : posicionFarolas) {

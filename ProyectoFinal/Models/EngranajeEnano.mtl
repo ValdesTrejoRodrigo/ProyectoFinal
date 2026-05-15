@@ -1,0 +1,13 @@
+# Blender 5.0.1 MTL File: 'RelojSteampunk.blend'
+# www.blender.org
+
+newmtl Material_#3
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ni 1.520000
+d 1.000000
+illum 2
+map_Kd Clock_wire_255255255_BaseColor.png
+map_Ns Clock_wire_255255255_Roughness.png
+map_Ke Emmision.png
+map_Bump -bm 1.000000 Clock_wire_255255255_Normal.png
