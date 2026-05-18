@@ -26,7 +26,7 @@
 #include"Model.h"
 #include "Skybox.h"
 
-//para iluminación
+//para iluminaciï¿½n
 #include "CommonValues.h"
 #include "DirectionalLight.h"
 #include "PointLight.h"
@@ -34,7 +34,7 @@
 #include "Material.h"
 const float toRadians = 3.14159265f / 180.0f;
 
-//variables para animación
+//variables para animaciï¿½n
 float angulovaria = 0.0f;
 
 Window mainWindow;
@@ -48,7 +48,7 @@ Texture grassTexture;
 Texture waterTexture;
 
 // Variables para control de farolas
-int numFarolasActivas = 0; // Número de farolas actualmente encendidas
+int numFarolasActivas = 0; // Nï¿½mero de farolas actualmente encendidas
 bool farolasEncendidas = false; // Estado de las farolas
 
 //personajes
@@ -83,7 +83,7 @@ Model roca; // roca detras de la espada en la piedra
 Model robotLampara; //sentado en la roca
 
 Model Estrella;
-//Variables para animación de estrella
+//Variables para animaciï¿½n de estrella
 glm::vec3 posicionEstrella = glm::vec3(0.0f, 0.0f, 0.0f);
 float rotacionEstrellaY = 0.0f;
 float timeAccumEstrella = 0.0f;
@@ -101,25 +101,25 @@ Model Bancos;
 Model Reloj_M;
 Model EngranajeGrande_M;
 Model EngranajeMediano_M;
-Model EngranajePequeño_M;
+Model EngranajePequeno_M;
 Model EngranajeEnano_M;
 Model ManecillaHora_M;
 Model ManecillaMinuto_M;
-// Variables para animación del reloj
+// Variables para animaciï¿½n del reloj
 float posXreloj = -225.0f, posYreloj = 15.0f, posZreloj = 50.0f;
 float rotEngranajeGrande = 0.0f;
 float rotEngranajeMediano = 0.0f;
-float rotEngranajePequeño = 0.0f;
+float rotEngranajePequeno = 0.0f;
 float rotEngranajeEnano = 0.0f;
 float rotManecillaHora = 0.0f;
 float rotManecillaMinuto = 0.0f;
 
-// Variables para animación de Excalibur
+// Variables para animaciï¿½n de Excalibur
 bool excaliburSacada = false;
 float excaliburTiempoAnimado = 0.0f;
 float excaliburY = 1.0f; // Altura inicial
-float rotExcalibur = 0.0f; // Rotación en Y
-float animDuration = 8.0f;// Duración total de la animación: 8 segundos
+float rotExcalibur = 0.0f; // Rotaciï¿½n en Y
+float animDuration = 8.0f;// Duraciï¿½n total de la animaciï¿½n: 8 segundos
 float progreso = 0.0f;
 float giroEspada = 0.0f;
 
@@ -128,9 +128,9 @@ Model Dirigible;
 Model AspaDirigible;
 Model ColaDirigible;
 
-// Variables para animación del dirigible
+// Variables para animaciï¿½n del dirigible
 float dirigibleTime = 0.0f;
-glm::vec3 posicionDirigible(130.0f, 90.0f, -130.0f); // Posición central del recorrido
+glm::vec3 posicionDirigible(130.0f, 90.0f, -130.0f); // Posiciï¿½n central del recorrido
 float rotYDirigible = 180.0f;
 float inclinacionDirigible = 0.0f;
 float rotColaDirigible = 0.0f;
@@ -142,17 +142,17 @@ Model RuedaGLocomotora;
 Model RuedaPLocomotora;
 */
 
-// Variables para animación por keyframes del tren
+// Variables para animaciï¿½n por keyframes del tren
 float movTrenX = 240.0f;  // Movimiento en X
-float rotRuedasTren = 0.0f;  // Rotación de las ruedas
-float ciclo, ciclo2 = 0.0f; // Variables para controlar el ciclo de animación
+float rotRuedasTren = 0.0f;  // Rotaciï¿½n de las ruedas
+float ciclo, ciclo2 = 0.0f; // Variables para controlar el ciclo de animaciï¿½n
 #define MAX_FRAMES 100
-int i_max_steps = 90;  // Pasos de interpolación entre keyframes
+int i_max_steps = 90;  // Pasos de interpolaciï¿½n entre keyframes
 int i_curr_steps = 7;
 
 typedef struct _frameTren
 {
-	float movTrenX;      // Posición X del tren
+	float movTrenX;      // Posiciï¿½n X del tren
 	float movTrenXInc;   // Incremento en X
 } FRAME_TREN;
 
@@ -167,13 +167,13 @@ typedef struct _frameReloj
 	//Variables para GUARDAR Key Frames del reloj
 	float rotEngranajeGrande;
 	float rotEngranajeMediano;
-	float rotEngranajePequeño;
+	float rotEngranajePequeno;
 	float rotEngranajeEnano;
 	float rotManecillaHora;
 	float rotManecillaMinuto;
 	float incRotEngranajeGrande = 0.0f;
 	float incRotEngranajeMediano = 0.0f;
-	float incRotEngranajePequeño = 0.0f;
+	float incRotEngranajePequeno = 0.0f;
 	float incRotEngranajeEnano = 0.0f;
 
 } FRAME_RELOJ;
@@ -188,11 +188,11 @@ Model CuerpoMoto;
 Model LlantaDelanteraMoto;
 Model LlantaTraseraMoto;
 
-// Variables para animación de la motocicleta
+// Variables para animaciï¿½n de la motocicleta
 float motoTime = 0.0f;
-// Definimos el ancla o centro de la animación
+// Definimos el ancla o centro de la animaciï¿½n
 glm::vec3 centroRecorridoMoto(-20.0f, -0.5f, -185.0f);
-glm::vec3 motoPosition; // La función se encargará de darle valores a esto
+glm::vec3 motoPosition; // La funciï¿½n se encargarï¿½ de darle valores a esto
 float motoRotationY = 180.0f;
 float anguloInclinacionMoto = 0.0f;
 float rotLlantasMoto = 0.0f;
@@ -249,6 +249,8 @@ DirectionalLight mainLight;
 //para declarar varias luces de tipo pointlight
 PointLight pointLights[MAX_POINT_LIGHTS];
 SpotLight spotLights[MAX_SPOT_LIGHTS];
+bool luzEspadaActiva = true;   // toggle con tecla F
+bool luzEspadaKeyPressed = false;
 
 // Vertex Shader
 static const char* vShader = "shaders/shader_light.vert";
@@ -258,7 +260,7 @@ static const char* fShader = "shaders/shader_light.frag";
 
 
 
-//cálculo del promedio de las normales para sombreado de Phong
+//cï¿½lculo del promedio de las normales para sombreado de Phong
 void calcAverageNormals(unsigned int* indices, unsigned int indiceCount, GLfloat* vertices, unsigned int verticeCount,
 	unsigned int vLength, unsigned int normalOffset)
 {
@@ -331,7 +333,7 @@ void CreateObjects()
 }
 struct ObjetoEscena {
 	glm::vec3 posicion;
-	float rotacionY; // Ángulo en grados
+	float rotacionY; // ï¿½ngulo en grados
 };
 
 //arreglos de posiciones para las decoraciones (farolas, los arboles...)
@@ -412,16 +414,16 @@ void CreateShaders()
 	shaderList.push_back(*shader1);
 }
 
-// Función de animación compleja del barco volador
+// Funciï¿½n de animaciï¿½n compleja del barco volador
 void animacionDirigible(float deltaTime, glm::vec3& posicionBase, float& rotacionY,
 	float& inclinacion, float& timeAccum) {
 	timeAccum += deltaTime / 16;
 
-	float tamañoRecorrido = 50.0f;
+	float tamanoRecorrido = 50.0f;
 	float velocidad = 0.2f;
 	float t = timeAccum * velocidad;
 
-	// Guardar posición central SOLO LA PRIMERA VEZ
+	// Guardar posiciï¿½n central SOLO LA PRIMERA VEZ
 	static bool primeraVez = true;
 	static glm::vec3 posicionCentral;
 	if (primeraVez) {
@@ -431,26 +433,25 @@ void animacionDirigible(float deltaTime, glm::vec3& posicionBase, float& rotacio
 
 	// Lemniscata (figura de 8)
 	float denominador = 1.0f + sin(t) * sin(t);
-	float offsetX = tamañoRecorrido * cos(t) / denominador;
-	float offsetZ = tamañoRecorrido * sin(t) * cos(t) / denominador;
+	float offsetX = tamanoRecorrido * cos(t) / denominador;
+	float offsetZ = tamanoRecorrido * sin(t) * cos(t) / denominador;
 
-	// Aplicar offsets a la posición central
+	// Aplicar offsets a la posiciï¿½n central
 	posicionBase.x = posicionCentral.x + offsetX;
 	posicionBase.z = posicionCentral.z + offsetZ;
 
-	// Altura que depende de la posición en la curva
+	// Altura que depende de la posiciï¿½n en la curva
 	float distanciaDelCentro = sqrt(offsetX * offsetX + offsetZ * offsetZ);
-	posicionBase.y = posicionCentral.y + sin(t) * 3.0f + (distanciaDelCentro / tamañoRecorrido) * 2.0f;
+	posicionBase.y = posicionCentral.y + sin(t) * 3.0f + (distanciaDelCentro / tamanoRecorrido) * 2.0f;
 
-	// Calcular rotación
-	float dx = -tamañoRecorrido * sin(t) / denominador;
-	float dz = tamañoRecorrido * (cos(t) * cos(t) - sin(t) * sin(t)) / denominador;
-
+	// Calcular rotaciï¿½n
+	float dx = -tamanoRecorrido * sin(t) / denominador;
+	float dz = tamanoRecorrido * (cos(t) * cos(t) - sin(t) * sin(t)) / denominador;
 	rotacionY = glm::degrees(atan2(dx, dz));
 
-	//Inclinacion del dirigible basada en la curvatura de la trayectoria para un efecto más realista
+	//Inclinacion del dirigible basada en la curvatura de la trayectoria para un efecto mï¿½s realista
 	float curvatura = dx * dz; // Producto cruzado simplificado
-	inclinacion = curvatura * 0.05f; // Inclinación proporcional
+	inclinacion = curvatura * 0.05f; // Inclinaciï¿½n proporcional
 }
 
 void animacionMoto(float deltaTime, glm::vec3& position, glm::vec3 centroPista,float& rotationY, float& anguloInclinacion, float& wheelRotation,float& timeAccum) {
@@ -461,32 +462,32 @@ void animacionMoto(float deltaTime, glm::vec3& position, glm::vec3 centroPista,f
 	float velocidadAngular = 0.5f;
 	float angulo = timeAccum * velocidadAngular;
 
-	// Posición en círculo
+	// Posiciï¿½n en cï¿½rculo
 	position.x = centroPista.x + radio * cos(angulo);
 	position.z = centroPista.z + radio * sin(angulo);
 	position.y = centroPista.y;
 
-	// Rotación tangente a la curva
+	// Rotaciï¿½n tangente a la curva
 	rotationY = glm::degrees(angulo) - 90.0f;
 
-	// Rotación de ruedas
+	// Rotaciï¿½n de ruedas
 	wheelRotation += velocidadAngular * radio * 10.0f;
 
-	// Caballito en puntos específicos (cada PI radianes)
+	// Caballito en puntos especï¿½ficos (cada PI radianes)
 	float moduloAngulo = fmod(angulo, 3.14159f);
 	bool hacerCaballito = (moduloAngulo < 0.5f); // Durante el primer cuarto de cada media vuelta
 
 	if (hacerCaballito) {
 		float progreso = moduloAngulo / 0.5f; // 0 a 1
 
-		// Salto parabólico
+		// Salto parabï¿½lico
 		position.y = centroPista.y + sin(progreso * 3.14159f) * 2.0f;
 
-		// Inclinación hacia ATRÁS (eje X negativo)
+		// Inclinaciï¿½n hacia ATRï¿½S (eje X negativo)
 		anguloInclinacion = -45.0f * sin(progreso * 3.14159f);
 	}
 	else {
-		// Volver suavemente a posición normal
+		// Volver suavemente a posiciï¿½n normal
 		anguloInclinacion *= 0.9f;
 		if (abs(anguloInclinacion) < 0.1f) anguloInclinacion = 0.0f;
 	}
@@ -496,32 +497,32 @@ void animacionEstrella(float deltaTime, glm::vec3& posicionBase, float& rotacion
 	// Actualizar el tiempo general
 	timeAccum += deltaTime;
 
-	float radioMaximo = 2.0f;     // Distancia al centro cuando está en la parte más baja
-	float alturaMaxima = 6.0f;    // Cuánto sube la estrella en el eje Y
+	float radioMaximo = 2.0f;     // Distancia al centro cuando estï¿½ en la parte mï¿½s baja
+	float alturaMaxima = 6.0f;    // Cuï¿½nto sube la estrella en el eje Y
 	float velocidadVertical = 0.005f;// Velocidad de la subida y bajada
 	float velocidadOrbita = 0.05f;  // Velocidad con la que da vueltas alrededor del centro
 	float velocidadGiro = 5.0f;  // Velocidad a la que rota sobre su propio centro
 
-	// Guardar la posición central
+	// Guardar la posiciï¿½n central
 	static glm::vec3 posicionCentral = posicionBase;
 
 	// Movimiento vertical
 	float factorAltura = std::abs(cos(timeAccum * velocidadVertical));
 	posicionBase.y = posicionCentral.y + (factorAltura * alturaMaxima);
 
-	// Movimiento en espiral cónica (Acercándose/Alejándose del centro)
+	// Movimiento en espiral cï¿½nica (Acercï¿½ndose/Alejï¿½ndose del centro)
 	float radioActual = radioMaximo * (1.0f - factorAltura);
 	posicionBase.x = posicionCentral.x + radioActual * cos(timeAccum * velocidadOrbita);
 	posicionBase.z = posicionCentral.z + radioActual * sin(timeAccum * velocidadOrbita);
 
-	// Rotación sobre su propio eje
+	// Rotaciï¿½n sobre su propio eje
 	rotacionY += velocidadGiro * deltaTime;
 
 	// Mantener los grados en un rango seguro
 	if (rotacionY >= 360.0f) {rotacionY -= 360.0f;}
 }
 
-// Función para guardar keyframes del tren (Tecla K)
+// Funciï¿½n para guardar keyframes del tren (Tecla K)
 void saveFrameTren(void)
 {
 	printf("Guardando keyframe del tren %d\n", FrameIndexTren);
@@ -534,13 +535,13 @@ void saveFrameReloj(void)
 	printf("Guardando keyframe del Reloj %d\n", FrameIndexReloj);
 	KeyFrameReloj[FrameIndexReloj].rotEngranajeGrande = rotEngranajeGrande;
 	KeyFrameReloj[FrameIndexReloj].rotEngranajeMediano = rotEngranajeMediano;
-	KeyFrameReloj[FrameIndexReloj].rotEngranajePequeño = rotEngranajePequeño;
+	KeyFrameReloj[FrameIndexReloj].rotEngranajePequeno = rotEngranajePequeno;
 	KeyFrameReloj[FrameIndexReloj].rotEngranajeEnano = rotEngranajeEnano;
 	KeyFrameReloj[FrameIndexReloj].rotManecillaHora = rotManecillaHora;
 	KeyFrameReloj[FrameIndexReloj].rotManecillaMinuto = rotManecillaMinuto;
 	FrameIndexReloj++;
 }
-// Función para resetear el tren (Tecla 0)
+// Funciï¿½n para resetear el tren (Tecla 0)
 void resetTren(void)
 {
 	movTrenX = KeyFrameTren[0].movTrenX;
@@ -551,13 +552,13 @@ void resetReloj(void)
 {
 	rotEngranajeGrande = KeyFrameReloj[0].rotEngranajeGrande;
 	rotEngranajeMediano = KeyFrameReloj[0].rotEngranajeMediano;
-	rotEngranajePequeño = KeyFrameReloj[0].rotEngranajePequeño;
+	rotEngranajePequeno = KeyFrameReloj[0].rotEngranajePequeno;
 	rotEngranajeEnano = KeyFrameReloj[0].rotEngranajeEnano;
 	rotManecillaHora = 0.0f;
 	rotManecillaMinuto = 0.0f;
 }
 
-// Interpolación entre keyframes
+// Interpolaciï¿½n entre keyframes
 void interpolationTren(void)
 {
 	KeyFrameTren[playIndexTren].movTrenXInc =
@@ -567,21 +568,21 @@ void interpolationReloj(void)
 {
 	KeyFrameReloj[playIndexReloj].incRotEngranajeGrande = (KeyFrameReloj[playIndexReloj + 1].rotEngranajeGrande - KeyFrameReloj[playIndexReloj].rotEngranajeGrande) / i_max_steps;
 	KeyFrameReloj[playIndexReloj].incRotEngranajeMediano = (KeyFrameReloj[playIndexReloj + 1].rotEngranajeMediano - KeyFrameReloj[playIndexReloj].rotEngranajeMediano) / i_max_steps;
-	KeyFrameReloj[playIndexReloj].incRotEngranajePequeño = (KeyFrameReloj[playIndexReloj + 1].rotEngranajePequeño - KeyFrameReloj[playIndexReloj].rotEngranajePequeño) / i_max_steps;
+	KeyFrameReloj[playIndexReloj].incRotEngranajePequeno = (KeyFrameReloj[playIndexReloj + 1].rotEngranajePequeno - KeyFrameReloj[playIndexReloj].rotEngranajePequeno) / i_max_steps;
 	KeyFrameReloj[playIndexReloj].incRotEngranajeEnano = (KeyFrameReloj[playIndexReloj + 1].rotEngranajeEnano - KeyFrameReloj[playIndexReloj].rotEngranajeEnano) / i_max_steps;
 }
-// Función de animación del tren
+// Funciï¿½n de animaciï¿½n del tren
 void animateTren(void)
 {
 	if (playTren)
 	{
-		if (i_curr_steps >= i_max_steps) // ¿Terminó la interpolación entre frames?
+		if (i_curr_steps >= i_max_steps) // ï¿½Terminï¿½ la interpolaciï¿½n entre frames?
 		{
 			playIndexTren++;
 
-			if (playIndexTren > FrameIndexTren - 2) // ¿Terminó la animación completa?
+			if (playIndexTren > FrameIndexTren - 2) // ï¿½Terminï¿½ la animaciï¿½n completa?
 			{
-				printf("Animación del tren completada\n");
+				printf("Animaciï¿½n del tren completada\n");
 				playIndexTren = 0;
 				playTren = false;
 			}
@@ -604,12 +605,12 @@ void animateReloj(void)
 {
 	if (playReloj)
 	{
-		if (i_curr_steps >= i_max_steps) // ¿Terminó la interpolación entre frames?
+		if (i_curr_steps >= i_max_steps) // ï¿½Terminï¿½ la interpolaciï¿½n entre frames?
 		{
 			playIndexReloj++;
-			if (playIndexReloj > FrameIndexReloj - 2) // ¿Terminó la animación completa?
+			if (playIndexReloj > FrameIndexReloj - 2) // ï¿½Terminï¿½ la animaciï¿½n completa?
 			{
-				printf("Animación del reloj completada\n");
+				printf("Animaciï¿½n del reloj completada\n");
 				playIndexReloj = 0;
 				playReloj = false;
 			}
@@ -624,7 +625,7 @@ void animateReloj(void)
 			// Animar
 			rotEngranajeGrande += KeyFrameReloj[playIndexReloj].incRotEngranajeGrande;
 			rotEngranajeMediano += KeyFrameReloj[playIndexReloj].incRotEngranajeMediano;
-			rotEngranajePequeño += KeyFrameReloj[playIndexReloj].incRotEngranajePequeño;
+			rotEngranajePequeno += KeyFrameReloj[playIndexReloj].incRotEngranajePequeno;
 			rotEngranajeEnano += KeyFrameReloj[playIndexReloj].incRotEngranajeEnano;
 			rotManecillaMinuto -= 0.5f; // velocidad de los minutos
 			rotManecillaHora -= 0.5f / 12.0f; // la hora gira 12 veces mas lento
@@ -753,8 +754,8 @@ int main()
 	EngranajeGrande_M.LoadModel("Models/engranajeGrande.obj");
 	EngranajeMediano_M = Model();
 	EngranajeMediano_M.LoadModel("Models/engranajeMediano.obj");
-	EngranajePequeño_M = Model();
-	EngranajePequeño_M.LoadModel("Models/engranajePequeno.obj");
+	EngranajePequeno_M = Model();
+	EngranajePequeno_M.LoadModel("Models/engranajePequeno.obj");
 	EngranajeEnano_M = Model();
 	EngranajeEnano_M.LoadModel("Models/engranajeEnano.obj");
 	ManecillaHora_M = Model();
@@ -764,17 +765,17 @@ int main()
 
 	KeyFrameReloj[0].rotEngranajeGrande = 35.0f;
 	KeyFrameReloj[0].rotEngranajeMediano = -25.0f;
-	KeyFrameReloj[0].rotEngranajePequeño = 35.0f;
+	KeyFrameReloj[0].rotEngranajePequeno = 35.0f;
 	KeyFrameReloj[0].rotEngranajeEnano = -45.0f;
 
 	KeyFrameReloj[1].rotEngranajeGrande = 55.0f;
 	KeyFrameReloj[1].rotEngranajeMediano = 0.0f;
-	KeyFrameReloj[1].rotEngranajePequeño = 70.0f;
+	KeyFrameReloj[1].rotEngranajePequeno = 70.0f;
 	KeyFrameReloj[1].rotEngranajeEnano = 0.0f;
 
 	KeyFrameReloj[2].rotEngranajeGrande = 90.0f;
 	KeyFrameReloj[2].rotEngranajeMediano = 15.0f;
-	KeyFrameReloj[2].rotEngranajePequeño = 120.0f;
+	KeyFrameReloj[2].rotEngranajePequeno = 120.0f;
 	KeyFrameReloj[2].rotEngranajeEnano = 45.0f;
 
 	FrameIndexReloj = 3; // 3 keyframes definidos
@@ -821,9 +822,9 @@ int main()
 	ViasTren.LoadModel("Models/ViasTren.obj");
 
 	// Keyframes inicializados del tren con valores por defecto
-	// Keyframe 0: posición inicial
+	// Keyframe 0: posiciï¿½n inicial
 	KeyFrameTren[0].movTrenX = 240.0f;
-	// Keyframe 1: se movió a la izquierda
+	// Keyframe 1: se moviï¿½ a la izquierda
 	KeyFrameTren[1].movTrenX = 200.0f;
 	// Keyframe 2: regresa al centro
 	KeyFrameTren[2].movTrenX = 240.0f;
@@ -853,19 +854,19 @@ int main()
 	Material_opaco = Material(0.3f, 4);
 
 
-	//luz direccional, sólo 1 y siempre debe de existir
+	//luz direccional, sï¿½lo 1 y siempre debe de existir
 	mainLight = DirectionalLight(1.0f, 1.0f, 1.0f,
 		0.3f, 0.3f,
 		0.0f, -1.0f, 0.0f);
 
 	//contador de luces puntuales
 	unsigned int pointLightCount = 0;
-	//Declaración de primer luz puntual
+	//Declaraciï¿½n de primer luz puntual
 	// Farola 1
-	pointLights[pointLightCount] = PointLight(1.0f, 0.6f, 0.2f,  // Color naranja cálido
+	pointLights[pointLightCount] = PointLight(1.0f, 0.6f, 0.2f,  // Color naranja cï¿½lido
 		0.5f, 2.5f,  // Intensidad ambiental y difusa AUMENTADAS
-		-80.0f, 7.0f, 156.0f,  // Posición
-		1.0f, 0.022f, 0.0019f);  // Atenuación REDUCIDA (mayor alcance)
+		-80.0f, 7.0f, 156.0f,  // Posiciï¿½n
+		1.0f, 0.022f, 0.0019f);  // Atenuaciï¿½n REDUCIDA (mayor alcance)
 
 	// Farola 2
 	pointLights[pointLightCount + 1] = PointLight(1.0f, 0.6f, 0.2f,
@@ -886,7 +887,7 @@ int main()
 		1.0f, 0.022f, 0.0019f);
 
 	unsigned int baseLightCount = pointLightCount;
-	numFarolasActivas = 4; // Número total de farolas
+	numFarolasActivas = 4; // Nï¿½mero total de farolas
 
 	unsigned int spotLightCount = 0;
 	//linterna
@@ -941,7 +942,7 @@ int main()
 		lastTime = now;
 
 		angulovaria += 0.5f * deltaTime;
-		// Actualizar ciclo día/noche
+		// Actualizar ciclo dï¿½a/noche
 		mainLight.UpdateCycle(deltaTime);
 
 		GLfloat sunHeight = mainLight.getDirection().y; // Obtener altura del sol
@@ -952,7 +953,7 @@ int main()
 			farolasEncendidas = true;
 			pointLightCount = baseLightCount + numFarolasActivas;
 		}
-		else if (sunHeight <= 0.0f && farolasEncendidas) // Es de día y farolas encendidas
+		else if (sunHeight <= 0.0f && farolasEncendidas) // Es de dï¿½a y farolas encendidas
 		{
 			// Apagar farolas
 			farolasEncendidas = false;
@@ -963,7 +964,7 @@ int main()
 		// Animar el dirigible
 		animacionDirigible(deltaTime, posicionDirigible, rotYDirigible, inclinacionDirigible, dirigibleTime);
 
-		// Actualizar animación de la motocicleta
+		// Actualizar animaciï¿½n de la motocicleta
 		animacionMoto(deltaTime, motoPosition, centroRecorridoMoto, motoRotationY, anguloInclinacionMoto, rotLlantasMoto, motoTime);
 
 		//Recibir eventos del usuario
@@ -971,26 +972,40 @@ int main()
 		camera.keyControl(mainWindow.getsKeys(), deltaTime);
 		camera.mouseControl(mainWindow.getXChange(), mainWindow.getYChange());
 
-		// Cambiar modo de cámara con teclas numéricas
+		// Cambiar modo de cï¿½mara con teclas numï¿½ricas
 		if (mainWindow.getsKeys()[GLFW_KEY_1])
 		{
 			camera.setCameraMode(1); // Modo tercera persona
 		}
 		if (mainWindow.getsKeys()[GLFW_KEY_2])
 		{
-			camera.setCameraMode(2); // Modo aéreo
+			camera.setCameraMode(2); // Modo aï¿½reo
 		}
 		if (mainWindow.getsKeys()[GLFW_KEY_3])
 		{
-			camera.setCameraMode(3); // Modo cámara fija 1
+			camera.setCameraMode(3); // Modo cï¿½mara fija 1
 		}
 		if (mainWindow.getsKeys()[GLFW_KEY_4])
 		{
-			camera.setCameraMode(4); // Modo cámara fija 2
+			camera.setCameraMode(4); // Modo cï¿½mara fija 2
 		}
 		if (mainWindow.getsKeys()[GLFW_KEY_5])
 		{
-			camera.setCameraMode(5); // Modo cámara fija 3
+			camera.setCameraMode(5); // Modo cï¿½mara fija 3
+		}
+
+		// Toggle luz sobre la espada (tecla F)
+		if (mainWindow.getsKeys()[GLFW_KEY_F])
+		{
+			if (!luzEspadaKeyPressed)
+			{
+				luzEspadaActiva = !luzEspadaActiva;
+				luzEspadaKeyPressed = true;
+			}
+		}
+		else
+		{
+			luzEspadaKeyPressed = false;
 		}
 
 		// Clear the window
@@ -1001,7 +1016,7 @@ int main()
 		{
 			skyboxNoche.DrawSkybox(camera.calculateViewMatrix(), projection);
 		}
-		else // Día 
+		else // Dï¿½a 
 		{
 			skyboxDia.DrawSkybox(camera.calculateViewMatrix(), projection);
 		}
@@ -1014,7 +1029,7 @@ int main()
 		uniformColor = shaderList[0].getColorLocation();
 		uniformTextureOffset = shaderList[0].getOffsetLocation(); // para la textura con movimiento
 
-		//información en el shader de intensidad especular y brillo
+		//informaciï¿½n en el shader de intensidad especular y brillo
 		uniformSpecularIntensity = shaderList[0].GetSpecularIntensityLocation();
 		uniformShininess = shaderList[0].GetShininessLocation();
 
@@ -1022,15 +1037,32 @@ int main()
 		glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera.calculateViewMatrix()));
 		glUniform3f(uniformEyePosition, camera.getCameraPosition().x, camera.getCameraPosition().y, camera.getCameraPosition().z);
 
-		// luz ligada a la cámara de tipo flash
+		// luz ligada a la cï¿½mara de tipo flash
 		lowerLight = camera.getCameraPosition();
 		lowerLight.y -= 0.3f;
 		spotLights[0].SetFlash(lowerLight, camera.getCameraDirection());
 
-		//información al shader de fuentes de iluminación
+		//informaciï¿½n al shader de fuentes de iluminaciï¿½n
 		shaderList[0].SetDirectionalLight(&mainLight);
 		shaderList[0].SetPointLights(pointLights, pointLightCount);
-		shaderList[0].SetSpotLights(spotLights, spotLightCount);
+
+		// Si la luz de la espada estï¿½ activa, mandar el arreglo completo.
+		// Si estï¿½ apagada, armar un arreglo temporal sin spotLights[1].
+		if (luzEspadaActiva)
+		{
+			shaderList[0].SetSpotLights(spotLights, spotLightCount);
+		}
+		else
+		{
+			SpotLight spotLightsSinEspada[MAX_SPOT_LIGHTS];
+			unsigned int countSinEspada = 0;
+			for (unsigned int i = 0; i < spotLightCount; i++)
+			{
+				if (i != 1) // 1 es la luz sobre la espada
+					spotLightsSinEspada[countSinEspada++] = spotLights[i];
+			}
+			shaderList[0].SetSpotLights(spotLightsSinEspada, countSinEspada);
+		}
 
 
 		//Reinicializando variables cada ciclo de reloj
@@ -1259,17 +1291,17 @@ int main()
 		Mario64PieDer.RenderModel();
 
 
-		// Activar/desactivar animación de Excalibur con tecla E
+		// Activar/desactivar animaciï¿½n de Excalibur con tecla E
 		if (mainWindow.getsKeys()[GLFW_KEY_E])
 		{
 			if (!excaliburSacada)
 			{
 				excaliburSacada = true;
-				excaliburTiempoAnimado = 0.0f; // Reiniciar animación
+				excaliburTiempoAnimado = 0.0f; // Reiniciar animaciï¿½n
 			}
 		}
 
-		// Actualizar animación de Excalibur si está activa
+		// Actualizar animaciï¿½n de Excalibur si estï¿½ activa
 		if (excaliburSacada)
 		{
 			excaliburTiempoAnimado += deltaTime/16;
@@ -1285,7 +1317,7 @@ int main()
 			{
 				// Mantener altura y girar
 				excaliburY = 6.0f;
-				giroEspada = excaliburTiempoAnimado - 2.0f; // Tiempo desde que empezó a girar
+				giroEspada = excaliburTiempoAnimado - 2.0f; // Tiempo desde que empezï¿½ a girar
 				rotExcalibur = giroEspada * 180.0f; // 2 vueltas completas en 4 segundos (720 grados)
 			}
 			else if (excaliburTiempoAnimado < animDuration) // Fase 3: Bajar (2 segundos)
@@ -1294,11 +1326,11 @@ int main()
 				float tiempoDescenso = excaliburTiempoAnimado - 6.0f; // 0 a 2
 				progreso = tiempoDescenso / 2.0f; // 0 a 1
 				excaliburY = 6.0f - (progreso * 7.0f); // De 8.0 a 1.0
-				rotExcalibur = 720.0f; // Mantener rotación final
+				rotExcalibur = 720.0f; // Mantener rotaciï¿½n final
 			}
-			else // Animación completada
+			else // Animaciï¿½n completada
 			{
-				// Reiniciar animación
+				// Reiniciar animaciï¿½n
 				excaliburSacada = false;
 				excaliburTiempoAnimado = 0.0f;
 				excaliburY = 1.0f;
@@ -1322,7 +1354,7 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		piedra.RenderModel();
-		//roca detras de la piedra para dar sensación de profundidad al punto de interés
+		//roca detras de la piedra para dar sensaciï¿½n de profundidad al punto de interï¿½s
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(106.0f, 0.0f, 83.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
@@ -1348,9 +1380,9 @@ int main()
 
 		//modelo de barco volador
 		model = glm::mat4(1.0);
-		model = glm::translate(model, posicionDirigible);//para cambiar la posición del dirigible en su recorrido
-		model = glm::rotate(model, glm::radians(rotYDirigible+180), glm::vec3(0.0f, 1.0f, 0.0f)); // Rotación animada
-		// Añadir inclinación en los giros
+		model = glm::translate(model, posicionDirigible);//para cambiar la posiciï¿½n del dirigible en su recorrido
+		model = glm::rotate(model, glm::radians(rotYDirigible+180), glm::vec3(0.0f, 1.0f, 0.0f)); // Rotaciï¿½n animada
+		// Aï¿½adir inclinaciï¿½n en los giros
 		//inclinacionDirigible = sin(dirigibleTime * 0.6f) * 15.0f;
 		model = glm::rotate(model, glm::radians(inclinacionDirigible), glm::vec3(0.0f, 0.0f, 1.0f));
 
@@ -1359,18 +1391,18 @@ int main()
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Dirigible.RenderModel();
 
-		// Aspa del dirigible DERECHA (con rotación continua)
+		// Aspa del dirigible DERECHA (con rotaciï¿½n continua)
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(2.5f, -0.2f, 1.25f));
-		model = glm::rotate(model, dirigibleTime * 10.0f, glm::vec3(0.0f, 0.0f, 1.0f)); // Gira rápido
+		model = glm::rotate(model, dirigibleTime * 10.0f, glm::vec3(0.0f, 0.0f, 1.0f)); // Gira rï¿½pido
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		AspaDirigible.RenderModel();
 
-		// Aspa del dirigible IZQUIERDA (con rotación continua)
+		// Aspa del dirigible IZQUIERDA (con rotaciï¿½n continua)
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(-2.5f, -0.2f, 1.25f));
-		model = glm::rotate(model, -dirigibleTime * 10.0f, glm::vec3(0.0f, 0.0f, 1.0f)); // Gira rápido en sentido opuesto
+		model = glm::rotate(model, -dirigibleTime * 10.0f, glm::vec3(0.0f, 0.0f, 1.0f)); // Gira rï¿½pido en sentido opuesto
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		AspaDirigible.RenderModel();
@@ -1378,8 +1410,8 @@ int main()
 		// Cola del dirigible (movimiento como pez)
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 3.0f));
-		// Movimiento de cola tipo pez (oscilación lateral)
-		rotColaDirigible = sin(dirigibleTime * 3.0f) * 20.0f; // Oscila ±20 grados
+		// Movimiento de cola tipo pez (oscilaciï¿½n lateral)
+		rotColaDirigible = sin(dirigibleTime * 3.0f) * 20.0f; // Oscila ï¿½20 grados
 		model = glm::rotate(model, glm::radians(rotColaDirigible), glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
@@ -1387,7 +1419,7 @@ int main()
 
 		//modelo de motocicleta
 		model = glm::mat4(1.0f);
-		model = glm::translate(model, motoPosition); // Usar posición animada (que ya tiene el offset)
+		model = glm::translate(model, motoPosition); // Usar posiciï¿½n animada (que ya tiene el offset)
 		model = glm::rotate(model, glm::radians(motoRotationY), glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::rotate(model, glm::radians(anguloInclinacionMoto), glm::vec3(1.0f, 0.0f, 0.0f));
 		modelaux = model;
@@ -1395,34 +1427,34 @@ int main()
 		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		CuerpoMoto.RenderModel();
 
-		// Llanta delantera izquierda con rotación de avance
+		// Llanta delantera izquierda con rotaciï¿½n de avance
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(-0.675f, -0.55f, -2.6f));
-		model = glm::rotate(model, glm::radians(rotLlantasMoto), glm::vec3(1.0f, 0.0f, 0.0f)); // Rotación de la llanta
+		model = glm::rotate(model, glm::radians(rotLlantasMoto), glm::vec3(1.0f, 0.0f, 0.0f)); // Rotaciï¿½n de la llanta
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		LlantaDelanteraMoto.RenderModel();
 
-		// Llanta delantera derecha con rotación de avance
+		// Llanta delantera derecha con rotaciï¿½n de avance
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(0.675f, -0.55f, -2.6f));
-		model = glm::rotate(model, glm::radians(rotLlantasMoto), glm::vec3(1.0f, 0.0f, 0.0f)); // Rotación de la llanta
+		model = glm::rotate(model, glm::radians(rotLlantasMoto), glm::vec3(1.0f, 0.0f, 0.0f)); // Rotaciï¿½n de la llanta
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		LlantaDelanteraMoto.RenderModel();
 
-		// Llanta trasera izquierda con rotación de avance
+		// Llanta trasera izquierda con rotaciï¿½n de avance
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(0.0f, -0.6f, 1.1f));
-		model = glm::rotate(model, glm::radians(rotLlantasMoto), glm::vec3(1.0f, 0.0f, 0.0f)); // Rotación de la llanta
+		model = glm::rotate(model, glm::radians(rotLlantasMoto), glm::vec3(1.0f, 0.0f, 0.0f)); // Rotaciï¿½n de la llanta
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		LlantaTraseraMoto.RenderModel();
 
-		// Llanta trasera derecha con rotación de avance
+		// Llanta trasera derecha con rotaciï¿½n de avance
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(0.0f, -0.6f, 2.55f));
-		model = glm::rotate(model, glm::radians(rotLlantasMoto), glm::vec3(1.0f, 0.0f, 0.0f)); // Rotación de la llanta
+		model = glm::rotate(model, glm::radians(rotLlantasMoto), glm::vec3(1.0f, 0.0f, 0.0f)); // Rotaciï¿½n de la llanta
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		LlantaTraseraMoto.RenderModel();
@@ -1448,7 +1480,7 @@ int main()
 				printf("Habilitado: Ya puedes guardar otro frame con 'K'\n");
 			}
 		}
-		if (mainWindow.getsKeys()[GLFW_KEY_P]) // Reproducir animación
+		if (mainWindow.getsKeys()[GLFW_KEY_P]) // Reproducir animaciï¿½n
 		{
 			if (!playTren)
 			{
@@ -1489,7 +1521,7 @@ int main()
 			}
 		}
 
-		// Actualizar animación del tren
+		// Actualizar animaciï¿½n del tren
 		animateTren();
 
 		//Modelo de tren
@@ -1497,16 +1529,16 @@ int main()
 		model = glm::translate(model, glm::vec3(movTrenX, 3.0f, -15.0f)); // Centro del escenario
 		modelaux = model;
 		glm::vec3 posTren = glm::vec3(model[3][0], model[3][1], model[3][2]);
-		posTren.z += 2.0f; // Ajusta este valor según el largo de tu modelo para que salga por el frente
+		posTren.z += 2.0f; // Ajusta este valor segï¿½n el largo de tu modelo para que salga por el frente
 		glm::vec3 dirTren = glm::vec3(-1.0f, 0.0f, 0.0f);
-		// 3. Actualizar la Spotlight (asumiendo que es la posición 2 del arreglo de spotlights)
+		// 3. Actualizar la Spotlight (asumiendo que es la posiciï¿½n 2 del arreglo de spotlights)
 		// Parametros: Color, Ambiente, Difuso, Posicion, Direccion, Lineal, Cuadratico, Cutoff
 		spotLights[2].SetFlash(posTren, dirTren);
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Locomotora.RenderModel();
-		//faltan ruedas, pero no se alcanzó a modelar a tiempo, se hizo un modelo de tren muy simple para poder incluirlo en el escenario y mostrar la animación por keyframes
-		// Vagón 
+		//faltan ruedas, pero no se alcanzï¿½ a modelar a tiempo, se hizo un modelo de tren muy simple para poder incluirlo en el escenario y mostrar la animaciï¿½n por keyframes
+		// Vagï¿½n 
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
@@ -1581,7 +1613,7 @@ int main()
 		//animacion por teclado para el movimiento de los brazo y la casa
 		if (mainWindow.getsKeys()[GLFW_KEY_Q])
 		{
-			if (!presionoQ) // Solo cambia el estado una vez por pulsación
+			if (!presionoQ) // Solo cambia el estado una vez por pulsaciï¿½n
 			{
 				animarCasa = !animarCasa;
 				presionoQ = true;
@@ -1599,22 +1631,22 @@ int main()
 			if (direccionCasa == 1 && progresoCasa >= 1.0f)
 			{
 				progresoCasa = 1.0f;
-				direccionCasa = -1; // Cambiamos dirección
+				direccionCasa = -1; // Cambiamos direcciï¿½n
 				faseCasa = 1;       // Pasamos a la siguiente fase
 			}
 			// FASE 1: De la derecha a la izquierda (cruzando el centro)
 			else if (direccionCasa == -1 && progresoCasa <= -1.0f)
 			{
 				progresoCasa = -1.0f;
-				direccionCasa = 1; // Cambiamos dirección para volver
+				direccionCasa = 1; // Cambiamos direcciï¿½n para volver
 				faseCasa = 2;      // Pasamos a la fase final
 			}
 			// FASE 2: De la izquierda de regreso al centro EXACTO
 			else if (faseCasa == 2 && direccionCasa == 1 && progresoCasa >= 0.0f)
 			{
-				progresoCasa = 0.0f; // La fijamos exactamente en el centro (posición inicial)
+				progresoCasa = 0.0f; // La fijamos exactamente en el centro (posiciï¿½n inicial)
 				animarCasa = false;
-				faseCasa = 0;        // Lista para la próxima vez que presiones Q
+				faseCasa = 0;        // Lista para la prï¿½xima vez que presiones Q
 			}
 		
 		}
@@ -1630,9 +1662,9 @@ int main()
 		else // Lado Derecho (de 0 a 1)
 		{
 			//       inicial, derecha , regreso al centro
-			t = progresoCasa; // Ya está de 0 a 1
+			t = progresoCasa; // Ya estï¿½ de 0 a 1
 			angBrazo1 = 45.0f + (135.0f - 45.0f) * t;
-			angBrazo2 = -45.0f + (-90.0f - (-45.0f)) * t; // Asumí 0.0f para extremo derecho
+			angBrazo2 = -45.0f + (-90.0f - (-45.0f)) * t; // Asumï¿½ 0.0f para extremo derecho
 			angCasa = 0.0f + (-45.0f - 0.0f) * t;
 		}
 
@@ -1667,7 +1699,7 @@ int main()
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		CasaMobileSteampunk.RenderModel();
 
-		//molinos, renderizados en un loop para aplicar animación a las aspas de cada molino
+		//molinos, renderizados en un loop para aplicar animaciï¿½n a las aspas de cada molino
 		for (const auto& molino : posicionesMolinos) {
 			// 1. Renderizar la base del Molino
 			model = glm::mat4(1.0f);
@@ -1704,7 +1736,7 @@ int main()
 		EngranajesIglesia.RenderModel();
 
 		animateReloj();
-		//Reloj con jerarquía de modelos
+		//Reloj con jerarquï¿½a de modelos
 		//Base del reloj
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(posXreloj, posYreloj, posZreloj));
@@ -1727,12 +1759,12 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		EngranajeMediano_M.RenderModel();
 
-		// Engranaje Pequeño
+		// Engranaje Pequeï¿½o
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(9.0f, 0.0f, 0.0f));
-		model = glm::rotate(model, glm::radians(rotEngranajePequeño), glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::rotate(model, glm::radians(rotEngranajePequeno), glm::vec3(0.0f, 0.0f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		EngranajePequeño_M.RenderModel();
+		EngranajePequeno_M.RenderModel();
 
 		// Engranaje Enano
 		model = modelaux;
@@ -1775,7 +1807,7 @@ int main()
 				printf("Habilitado: Ya puedes guardar otro frame con 'B'\n");
 			}
 		}
-		if (mainWindow.getsKeys()[GLFW_KEY_SPACE]) // Reproducir animación
+		if (mainWindow.getsKeys()[GLFW_KEY_SPACE]) // Reproducir animaciï¿½n
 		{
 			if (!playReloj)
 			{
@@ -1837,7 +1869,7 @@ int main()
 			{
 				if (ciclo < 1)
 				{
-					rotEngranajePequeño += 35.0f;
+					rotEngranajePequeno += 35.0f;
 					printf("Tren movido hacia adelante: %f. Presiona '7' para habilitar.\n", movTrenX);
 					ciclo++;
 					ciclo2 = 0;
@@ -1919,7 +1951,7 @@ int main()
 		//Estrella Mario 64
 		animacionEstrella(deltaTime, posicionEstrella, rotacionEstrellaY, timeAccumEstrella);
 		model = glm::mat4(1.0);
-		model = glm::translate(model, posicionEstrella + glm::vec3(-110.0f, -1.0f, 135.0f)); //Posicion dinámica + base
+		model = glm::translate(model, posicionEstrella + glm::vec3(-110.0f, -1.0f, 135.0f)); //Posicion dinï¿½mica + base
 		model = glm::rotate(model, glm::radians(90.0f + rotacionEstrellaY), glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
