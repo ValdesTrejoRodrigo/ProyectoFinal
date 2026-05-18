@@ -413,102 +413,81 @@ void CreateShaders()
 }
 
 // Función de animación compleja del barco volador
-void animacionDirigible(float deltaTime, glm::vec3& posicionBase, float& rotacionY, float& timeAccum)
-{
-	// Actualizar tiempo
-	timeAccum += deltaTime/16;
+void animacionDirigible(float deltaTime, glm::vec3& posicionBase, float& rotacionY,
+	float& inclinacion, float& timeAccum) {
+	timeAccum += deltaTime / 16;
 
-	// Movimiento en forma de 8 (lemniscata) en el plano XZ
-	float tamañoRecorrido = 50.0f; // Tamaño de la trayectoria
-	float velocidad = 0.2f;  // Velocidad de recorrido
-
+	float tamañoRecorrido = 50.0f;
+	float velocidad = 0.2f;
 	float t = timeAccum * velocidad;
 
-	// Ecuación paramétrica de la lemniscata (figura de 8)
+	// Guardar posición central SOLO LA PRIMERA VEZ
+	static bool primeraVez = true;
+	static glm::vec3 posicionCentral;
+	if (primeraVez) {
+		posicionCentral = posicionBase;
+		primeraVez = false;
+	}
+
+	// Lemniscata (figura de 8)
 	float denominador = 1.0f + sin(t) * sin(t);
 	float offsetX = tamañoRecorrido * cos(t) / denominador;
 	float offsetZ = tamañoRecorrido * sin(t) * cos(t) / denominador;
 
-	// Guardar la posición base
-	static glm::vec3 posicionCentral = posicionBase; // Se guarda solo la primera vez
-
-	// Aplicar offset a la posición central
+	// Aplicar offsets a la posición central
 	posicionBase.x = posicionCentral.x + offsetX;
 	posicionBase.z = posicionCentral.z + offsetZ;
 
-	// Movimiento vertical ondulante (sube y baja suavemente) desde la altura base
-	posicionBase.y = posicionCentral.y + sin(timeAccum * 0.5f) * 2.0f;
+	// Altura que depende de la posición en la curva
+	float distanciaDelCentro = sqrt(offsetX * offsetX + offsetZ * offsetZ);
+	posicionBase.y = posicionCentral.y + sin(t) * 3.0f + (distanciaDelCentro / tamañoRecorrido) * 2.0f;
 
-	// Calcular rotación para que apunte hacia la dirección de movimiento
+	// Calcular rotación
 	float dx = -tamañoRecorrido * sin(t) / denominador;
 	float dz = tamañoRecorrido * (cos(t) * cos(t) - sin(t) * sin(t)) / denominador;
 
 	rotacionY = glm::degrees(atan2(dx, dz));
+
+	//Inclinacion del dirigible basada en la curvatura de la trayectoria para un efecto más realista
+	float curvatura = dx * dz; // Producto cruzado simplificado
+	inclinacion = curvatura * 0.05f; // Inclinación proporcional
 }
 
-// Añadimos 'centroPista' a los parámetros
-void animacionMoto(float deltaTime, glm::vec3& position, glm::vec3 centroPista, float& rotationY, float& anguloInclinacion, float& wheelRotation, float& timeAccum)
-{
-	// Actualizar tiempo
-	timeAccum += deltaTime / 16;
+void animacionMoto(float deltaTime, glm::vec3& position, glm::vec3 centroPista,float& rotationY, float& anguloInclinacion, float& wheelRotation,float& timeAccum) {
+	timeAccum += deltaTime / 32;
 
-	// Dimensiones del cuadrado
-	float longitudLado = 60.0f;
-	float velocidadMoto = 8.0f;
+	// RECORRIDO CIRCULAR
+	float radio = 30.0f;
+	float velocidadAngular = 0.5f;
+	float angulo = timeAccum * velocidadAngular;
 
-	// Perímetro total del cuadrado
-	float perimetro = 4.0f * longitudLado;
-	float distanciaMoto = fmod(timeAccum * velocidadMoto, perimetro);
-
-	wheelRotation = distanciaMoto * 10.0f;
-	bool hacerCaballito = false;
-
-	if (distanciaMoto < longitudLado)  // Lado 1 
-	{
-		// SUMAMOS EL CENTRO AQUÍ
-		position.x = centroPista.x + (-longitudLado / 2 + distanciaMoto);
-		position.z = centroPista.z + (-longitudLado / 2);
-		rotationY = 90.0f;
-
-		if (distanciaMoto > longitudLado * 0.4f && distanciaMoto < longitudLado * 0.6f)
-			hacerCaballito = true;
-	}
-	else if (distanciaMoto < 2 * longitudLado)  // Lado 2 
-	{
-		position.x = centroPista.x + (longitudLado / 2);
-		position.z = centroPista.z + (-longitudLado / 2 + (distanciaMoto - longitudLado));
-		rotationY = 0.0f;
-	}
-	else if (distanciaMoto < 3 * longitudLado)  // Lado 3 
-	{
-		position.x = centroPista.x + (longitudLado / 2 - (distanciaMoto - 2 * longitudLado));
-		position.z = centroPista.z + (longitudLado / 2);
-		rotationY = 270.0f;
-
-		if (distanciaMoto > (2 * longitudLado + longitudLado * 0.4f) && distanciaMoto < (2 * longitudLado + longitudLado * 0.6f))
-			hacerCaballito = true;
-	}
-	else  // Lado 4 
-	{
-		position.x = centroPista.x + (-longitudLado / 2);
-		position.z = centroPista.z + (longitudLado / 2 - (distanciaMoto - 3 * longitudLado));
-		rotationY = 180.0f;
-	}
-
-	// Altura base sobre el suelo (tomando en cuenta la altura del centro de la pista)
+	// Posición en círculo
+	position.x = centroPista.x + radio * cos(angulo);
+	position.z = centroPista.z + radio * sin(angulo);
 	position.y = centroPista.y;
 
-	// Animación del caballito
-	if (hacerCaballito)
-	{
-		float caballitoProgress = sin((distanciaMoto - floor(distanciaMoto / longitudLado) * longitudLado) * 10.0f);
-		anguloInclinacion = -25.0f * abs(caballitoProgress);
-		// Sumamos el levantamiento a la altura base
-		position.y = centroPista.y + (abs(caballitoProgress) * 0.5f);
+	// Rotación tangente a la curva
+	rotationY = glm::degrees(angulo) - 90.0f;
+
+	// Rotación de ruedas
+	wheelRotation += velocidadAngular * radio * 10.0f;
+
+	// Caballito en puntos específicos (cada PI radianes)
+	float moduloAngulo = fmod(angulo, 3.14159f);
+	bool hacerCaballito = (moduloAngulo < 0.5f); // Durante el primer cuarto de cada media vuelta
+
+	if (hacerCaballito) {
+		float progreso = moduloAngulo / 0.5f; // 0 a 1
+
+		// Salto parabólico
+		position.y = centroPista.y + sin(progreso * 3.14159f) * 2.0f;
+
+		// Inclinación hacia ATRÁS (eje X negativo)
+		anguloInclinacion = -45.0f * sin(progreso * 3.14159f);
 	}
-	else
-	{
-		anguloInclinacion = anguloInclinacion * 0.9f;
+	else {
+		// Volver suavemente a posición normal
+		anguloInclinacion *= 0.9f;
 		if (abs(anguloInclinacion) < 0.1f) anguloInclinacion = 0.0f;
 	}
 }
@@ -982,7 +961,7 @@ int main()
 
 
 		// Animar el dirigible
-		animacionDirigible(deltaTime, posicionDirigible, rotYDirigible, dirigibleTime);
+		animacionDirigible(deltaTime, posicionDirigible, rotYDirigible, inclinacionDirigible, dirigibleTime);
 
 		// Actualizar animación de la motocicleta
 		animacionMoto(deltaTime, motoPosition, centroRecorridoMoto, motoRotationY, anguloInclinacionMoto, rotLlantasMoto, motoTime);
@@ -1371,9 +1350,8 @@ int main()
 		model = glm::mat4(1.0);
 		model = glm::translate(model, posicionDirigible);//para cambiar la posición del dirigible en su recorrido
 		model = glm::rotate(model, glm::radians(rotYDirigible+180), glm::vec3(0.0f, 1.0f, 0.0f)); // Rotación animada
-
 		// Añadir inclinación en los giros
-		inclinacionDirigible = sin(dirigibleTime * 0.6f) * 15.0f;
+		//inclinacionDirigible = sin(dirigibleTime * 0.6f) * 15.0f;
 		model = glm::rotate(model, glm::radians(inclinacionDirigible), glm::vec3(0.0f, 0.0f, 1.0f));
 
 		modelaux = model;
