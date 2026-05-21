@@ -1,6 +1,9 @@
 //Proyecto Final de Computacion Grafica e Interaccion Humano Computadora
 //iNTEGRANTES:
 #define STB_IMAGE_IMPLEMENTATION
+//para audio
+#define MINIAUDIO_IMPLEMENTATION
+#include "miniaudio.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -33,6 +36,10 @@
 #include "SpotLight.h"
 #include "Material.h"
 const float toRadians = 3.14159265f / 180.0f;
+
+//para audio
+ma_engine engine;
+ma_sound music; //soundtrack de fondo
 
 //variables para animaci�n
 float angulovaria = 0.0f;
@@ -643,6 +650,15 @@ int main()
 
 	camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 0.5f, 0.5f);
 
+	//audio
+	if (ma_engine_init(NULL, &engine) != MA_SUCCESS) {
+		printf("Error al inicializar el motor de audio\n");
+	}
+	//Soundtrack de fondo
+	ma_sound_init_from_file(&engine, "Audio/Musica/Soundtrack.wav", 0, NULL, NULL, &music);
+	ma_sound_set_looping(&music, MA_TRUE); // Para que se repita
+	ma_sound_start(&music); // Para empezar a reproducir
+
 	plain = Texture("Textures/plain.png");
 	plain.LoadTextureA();
 	pisoTexture = Texture("Textures/piso.tga");
@@ -1011,6 +1027,7 @@ int main()
 		// Clear the window
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 
 		if (sunHeight > 0.0f) // Noche
 		{
@@ -1967,6 +1984,13 @@ int main()
 
 		mainWindow.swapBuffers();
 	}
+	// 1. Detener el sonido
+	ma_sound_stop(&music);
 
+	// 2. Liberar el recurso del sonido
+	ma_sound_uninit(&music);
+
+	// 3. Liberar el motor de audio
+	ma_engine_uninit(&engine);
 	return 0;
 }
