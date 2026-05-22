@@ -104,6 +104,7 @@ Model Farola;
 Model Arbol1; //low poly
 Model Arbol2; //abeto?
 Model Bancos;
+Model Lampara;
 
 //Reloj
 Model Reloj_M;
@@ -209,6 +210,7 @@ float rotLlantasMoto = 0.0f;
 Model Molino;
 Model AspaMolino;
 Model Castillo;
+Model Castillo_Noche;
 
 Model Iglesia;
 Model EngranajesIglesia;
@@ -732,6 +734,10 @@ int main()
 	Flagpole = Model();
 	Flagpole.LoadModel("Models/Flagpole.obj");
 
+	//Lampara japonesa
+	Lampara = Model();
+	Lampara.LoadModel("Models/Japanese-Lantern.fbx");
+
 	//EDIFICIOS
 	EdificioGrande = Model();
 	EdificioGrande.LoadModel("Models/EdificioGrande.obj");
@@ -760,6 +766,8 @@ int main()
 	AspaMolino.LoadModel("Models/AspaMolino.obj");
 	Castillo = Model();
 	Castillo.LoadModel("Models/PeachCastle.obj");
+	Castillo_Noche = Model();
+	Castillo_Noche.LoadModel("Models/PeachCastle-baked.obj");
 	Iglesia = Model();
 	Iglesia.LoadModel("Models/Iglesia.obj");
 	EngranajesIglesia = Model();
@@ -942,6 +950,14 @@ int main()
 
 	glm::vec3 lowerLight(0.0f, 0.0f, 0.0f);
 
+	//Castillo de Mario = glm::vec3(150.0f, -1.5f, 105.0f);
+	glm::vec3 castillo = glm::vec3(150.0f, -1.5f, 105.0f);
+	glm::vec3 lampara1 = glm::vec3(165.0f, -2.0f, 100.0f);
+	glm::vec3 lampara2 = glm::vec3(135.0f, -2.0f, 100.0f);
+	glm::vec3 lampara3 = glm::vec3(80.0f, -2.0f, 152.5f);
+	glm::vec3 lampara4 = glm::vec3(220.0f, -2.0f, 152.5f);
+
+
 	glm::mat4 model(1.0);
 	glm::mat4 modelaux(1.0);
 	glm::mat4 modelaux2(1.0);
@@ -959,7 +975,7 @@ int main()
 		lastTime = now;
 
 		angulovaria += 0.5f * deltaTime;
-		// Actualizar ciclo d�a/noche
+		// Actualizar ciclo dáa/noche
 		mainLight.UpdateCycle(deltaTime);
 
 		GLfloat sunHeight = mainLight.getDirection().y; // Obtener altura del sol
@@ -977,7 +993,7 @@ int main()
 			pointLightCount = baseLightCount;
 		}
 
-
+		
 		// Animar el dirigible
 		animacionDirigible(deltaTime, posicionDirigible, rotYDirigible, inclinacionDirigible, dirigibleTime);
 		// A) Actualizar los "oídos" del jugador (La Cámara)
@@ -1582,14 +1598,86 @@ int main()
 
 
 		//ESTRUCTURAS
-
-		//Castillo
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(150.0f, -1.5f, 105.0f));
-		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		Castillo.RenderModel();
+		// Modelos con cocinado de luces (dependientes al ciclo día/noche)
+		if (sunHeight > 0.0f) //Cuando es de noche
+		{
+			//Castillo
+			model = glm::mat4(1.0);
+			model = glm::translate(model, castillo);
+			model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+			Castillo_Noche.RenderModel();
+			//Lamparas japonesas
+			//Lampara
+			model = glm::mat4(1.0);
+			model = glm::translate(model, lampara1);
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+			model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Lampara.RenderModel();
+			//Lampara
+			model = glm::mat4(1.0);
+			model = glm::translate(model, lampara2);
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+			model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Lampara.RenderModel();
+			//Lampara
+			model = glm::mat4(1.0);
+			model = glm::translate(model, lampara3);
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+			model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Lampara.RenderModel();
+			//Lampara
+			model = glm::mat4(1.0);
+			model = glm::translate(model, lampara4);
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+			model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Lampara.RenderModel();
+		}
+		else //Cuando es de día
+		{
+			//Castillo
+			model = glm::mat4(1.0);
+			model = glm::translate(model, castillo);
+			model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+			Castillo.RenderModel();
+			//Lamparas japonesas
+			//Lampara
+			model = glm::mat4(1.0);
+			model = glm::translate(model, lampara1);
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+			model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Lampara.RenderModel();
+			//Lampara
+			model = glm::mat4(1.0);
+			model = glm::translate(model, lampara2);
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+			model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Lampara.RenderModel();
+			//Lampara
+			model = glm::mat4(1.0);
+			model = glm::translate(model, lampara3);
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+			model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Lampara.RenderModel();
+			//Lampara
+			model = glm::mat4(1.0);
+			model = glm::translate(model, lampara4);
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+			model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Lampara.RenderModel();
+		}
+		
 
 		//Edificio grande
 		model = glm::mat4(1.0);
