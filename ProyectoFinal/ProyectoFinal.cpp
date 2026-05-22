@@ -40,6 +40,7 @@ const float toRadians = 3.14159265f / 180.0f;
 //para audio
 ma_engine engine;
 ma_sound music; //soundtrack de fondo
+ma_sound sonidoDirigible;
 
 //variables para animaci�n
 float angulovaria = 0.0f;
@@ -461,43 +462,27 @@ void animacionDirigible(float deltaTime, glm::vec3& posicionBase, float& rotacio
 	inclinacion = curvatura * 0.05f; // Inclinaci�n proporcional
 }
 
-void animacionMoto(float deltaTime, glm::vec3& position, glm::vec3 centroPista,float& rotationY, float& anguloInclinacion, float& wheelRotation,float& timeAccum) {
+void animacionMoto(float deltaTime, glm::vec3& position, glm::vec3 centroPista, float& rotationY, float& anguloInclinacion, float& wheelRotation, float& timeAccum) {
 	timeAccum += deltaTime / 32;
 
 	// RECORRIDO CIRCULAR
-	float radio = 30.0f;
+	float radio = 35.0f;
 	float velocidadAngular = 0.5f;
 	float angulo = timeAccum * velocidadAngular;
+	float giroMoto = timeAccum * 0.45f; 
 
-	// Posici�n en c�rculo
+	// Posicin en crculo
 	position.x = centroPista.x + radio * cos(angulo);
 	position.z = centroPista.z + radio * sin(angulo);
 	position.y = centroPista.y;
 
-	// Rotaci�n tangente a la curva
-	rotationY = glm::degrees(angulo) - 90.0f;
+	// Rotacin tangente a la curva (para que apunte hacia adelante)
+	rotationY = glm::degrees(giroMoto) - 45.0f;
 
-	// Rotaci�n de ruedas
+	// Rotacin de las llantas
 	wheelRotation += velocidadAngular * radio * 10.0f;
 
-	// Caballito en puntos espec�ficos (cada PI radianes)
-	float moduloAngulo = fmod(angulo, 3.14159f);
-	bool hacerCaballito = (moduloAngulo < 0.5f); // Durante el primer cuarto de cada media vuelta
-
-	if (hacerCaballito) {
-		float progreso = moduloAngulo / 0.5f; // 0 a 1
-
-		// Salto parab�lico
-		position.y = centroPista.y + sin(progreso * 3.14159f) * 2.0f;
-
-		// Inclinaci�n hacia ATR�S (eje X negativo)
-		anguloInclinacion = -45.0f * sin(progreso * 3.14159f);
-	}
-	else {
-		// Volver suavemente a posici�n normal
-		anguloInclinacion *= 0.9f;
-		if (abs(anguloInclinacion) < 0.1f) anguloInclinacion = 0.0f;
-	}
+	anguloInclinacion = 20.0f;
 }
 
 void animacionEstrella(float deltaTime, glm::vec3& posicionBase, float& rotacionY, float& timeAccum) {
@@ -655,9 +640,25 @@ int main()
 		printf("Error al inicializar el motor de audio\n");
 	}
 	//Soundtrack de fondo
-	ma_sound_init_from_file(&engine, "Audio/Musica/Soundtrack.wav", 0, NULL, NULL, &music);
+	ma_sound_init_from_file(&engine, "Audio/Musica/Soundtrack.mp3", MA_SOUND_FLAG_STREAM | MA_SOUND_FLAG_NO_SPATIALIZATION, NULL, NULL, &music);
 	ma_sound_set_looping(&music, MA_TRUE); // Para que se repita
 	ma_sound_start(&music); // Para empezar a reproducir
+
+	// Inicializar sonido
+	ma_sound_init_from_file(&engine, "Audio/SFX/running-motor-altered-version.wav", 0, NULL, NULL, &sonidoDirigible);
+	ma_sound_set_looping(&sonidoDirigible, MA_TRUE);
+
+	// 1. FORZAR EL MODELO LINEAL (Para que el max_distance sí funcione)
+	ma_sound_set_attenuation_model(&sonidoDirigible, ma_attenuation_model_linear);
+
+	// 2. CONFIGURAR DISTANCIAS
+	ma_sound_set_min_distance(&sonidoDirigible, 50.0f);  // Volumen al 100% a 25 unidades o menos
+	ma_sound_set_max_distance(&sonidoDirigible, 120.0f); // Volumen al 0% (silencio) a 50 de distancia
+
+	// 3. BAJAR VOLUMEN MAESTRO (Opcional, si el motor es muy ruidoso)
+	ma_sound_set_volume(&sonidoDirigible, 0.5f); // 50% del volumen original
+
+	ma_sound_start(&sonidoDirigible);
 
 	plain = Texture("Textures/plain.png");
 	plain.LoadTextureA();
@@ -979,6 +980,18 @@ int main()
 
 		// Animar el dirigible
 		animacionDirigible(deltaTime, posicionDirigible, rotYDirigible, inclinacionDirigible, dirigibleTime);
+		// A) Actualizar los "oídos" del jugador (La Cámara)
+		glm::vec3 camPos = camera.getCameraPosition();
+		glm::vec3 camFront = camera.getCameraDirection();
+
+		// Decirle a miniaudio dónde está el jugador (Listener 0)
+		ma_engine_listener_set_position(&engine, 0, camPos.x, camPos.y, camPos.z);
+		// Decirle hacia dónde está mirando el jugador (para saber si suena en el oído izquierdo o derecho)
+		ma_engine_listener_set_direction(&engine, 0, camFront.x, camFront.y, camFront.z);
+
+		// B) Posicionar el sonido en tu mundo
+		// Reemplaza 'posicionDirigible' con el glm::vec3 real de tu modelo
+		ma_sound_set_position(&sonidoDirigible, posicionDirigible.x, posicionDirigible.y, posicionDirigible.z);
 
 		// Actualizar animaci�n de la motocicleta
 		animacionMoto(deltaTime, motoPosition, centroRecorridoMoto, motoRotationY, anguloInclinacionMoto, rotLlantasMoto, motoTime);
@@ -1315,6 +1328,9 @@ int main()
 			{
 				excaliburSacada = true;
 				excaliburTiempoAnimado = 0.0f; // Reiniciar animaci�n
+				// 1. SONIDO AL LEVANTAR/GIRAR 
+				// Se dispara una sola vez en el instante en que presionas la 'E' y arranca la Fase 1
+				ma_engine_play_sound(&engine, "Audio/SFX/levantamientoespada.wav", NULL);
 			}
 		}
 
@@ -1352,6 +1368,8 @@ int main()
 				excaliburTiempoAnimado = 0.0f;
 				excaliburY = 1.0f;
 				rotExcalibur = 0.0f;
+				// 2. SONIDO DE IMPACTO AL CLAVARSE
+				ma_engine_play_sound(&engine, "Audio/SFX/espada_clavandose.wav", NULL);
 			}
 		}
 
@@ -1428,7 +1446,7 @@ int main()
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 3.0f));
 		// Movimiento de cola tipo pez (oscilaci�n lateral)
-		rotColaDirigible = sin(dirigibleTime * 3.0f) * 20.0f; // Oscila �20 grados
+		rotColaDirigible = sin(dirigibleTime * 3.0f) * 20.0f; // Oscila 20 grados
 		model = glm::rotate(model, glm::radians(rotColaDirigible), glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
@@ -1436,9 +1454,10 @@ int main()
 
 		//modelo de motocicleta
 		model = glm::mat4(1.0f);
-		model = glm::translate(model, motoPosition); // Usar posici�n animada (que ya tiene el offset)
-		model = glm::rotate(model, glm::radians(motoRotationY), glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::rotate(model, glm::radians(anguloInclinacionMoto), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::translate(model, motoPosition);
+		model = glm::rotate(model, glm::radians(motoRotationY), glm::vec3(0.0f, -1.0f, 0.0f));
+		// AQUI ESTÁ EL CAMBIO: Usar el eje Z (0,0,1) en lugar del eje X (1,0,0)
+		model = glm::rotate(model, glm::radians(anguloInclinacionMoto), glm::vec3(0.0f, 0.0f, -1.0f));
 		modelaux = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
@@ -1984,13 +2003,20 @@ int main()
 
 		mainWindow.swapBuffers();
 	}
-	// 1. Detener el sonido
+	// 1. Limpiar memoria dinámica de los Meshes (C++)
+	for (size_t i = 0; i < meshList.size(); i++)
+	{
+		delete meshList[i];
+	}
+	meshList.clear();
+
+	// 2. Detener y liberar el audio (Tu código original)
 	ma_sound_stop(&music);
-
-	// 2. Liberar el recurso del sonido
 	ma_sound_uninit(&music);
-
-	// 3. Liberar el motor de audio
+	ma_sound_uninit(&sonidoDirigible);
 	ma_engine_uninit(&engine);
+
+	// 3. Destruir el contexto de la ventana y liberar OpenGL
+	glfwTerminate();
 	return 0;
 }
