@@ -395,11 +395,11 @@ std::vector<ObjetoEscena> bancoPositions = {
 //edicios iguales al molino pero con diferentes posiciones y rotaciones para dar variedad al escenario
 
 std::vector<ObjetoEscena> posicionesMolinos = {
-	{glm::vec3(-205.0f, -2.0f, -240.0f), 180.0f}, // molino original
-	{glm::vec3(-220.0f, -2.0f, -220.0f), 180.0f}, // Molino 2
-	{glm::vec3(-190.0f, -2.0f, -220.0f), 180.0f},  // Molino 3 
-	{glm::vec3(-235.0f, -2.0f, -250.0f), 180.0f},   // Molino 4
-	{glm::vec3(-250.0f,  -2.0f, -240.0f), 180.0f}  // Molino 5
+	{glm::vec3(-205.0f, -2.0f, -240.0f), 90.0f}, // molino original
+	{glm::vec3(-220.0f, -2.0f, -220.0f), 90.0f}, // Molino 2
+	{glm::vec3(-190.0f, -2.0f, -220.0f), 90.0f},  // Molino 3 
+	{glm::vec3(-235.0f, -2.0f, -250.0f), 90.0f},   // Molino 4
+	{glm::vec3(-250.0f,  -2.0f, -240.0f), 90.0f}  // Molino 5
 };
 
 std::vector<ObjetoEscena> posicionesFabricas = {
@@ -432,7 +432,7 @@ void CreateShaders()
 	shaderList.push_back(*shader1);
 }
 
-// Funci�n de animaci�n compleja del barco volador
+// Funci�n de animacion compleja del barco volador
 void animacionDirigible(float deltaTime, glm::vec3& posicionBase, float& rotacionY,
 	float& inclinacion, float& timeAccum) {
 	timeAccum += deltaTime / 16;
@@ -441,7 +441,7 @@ void animacionDirigible(float deltaTime, glm::vec3& posicionBase, float& rotacio
 	float velocidad = 0.2f;
 	float t = timeAccum * velocidad;
 
-	// Guardar posici�n central SOLO LA PRIMERA VEZ
+	// Guardar posicion central
 	static bool primeraVez = true;
 	static glm::vec3 posicionCentral;
 	if (primeraVez) {
@@ -664,13 +664,13 @@ int main()
 	ma_sound_start(&sonidoAgua);
 
 	// 2. ZONA DE LOS MOLINOS (Viento)
-	ma_sound_init_from_file(&engine, "Audio/Ambient/nicotep__larrun_mountains_lowrumble_veryquiet_wind_mid_distant_bells.mp3", 0, NULL, NULL, &sonidoViento);
+	ma_sound_init_from_file(&engine, "Audio/Ambient/richwise__storm-force-winds-1.mp3", 0, NULL, NULL, &sonidoViento);
 	ma_sound_set_looping(&sonidoViento, MA_TRUE);
 	ma_sound_set_attenuation_model(&sonidoViento, ma_attenuation_model_linear);
 	ma_sound_set_min_distance(&sonidoViento, 40.0f);  // El viento abarca más espacio
 	ma_sound_set_max_distance(&sonidoViento, 200.0f);
 
-	ma_sound_set_position(&sonidoViento, -205.0f, 10.0f, -240.0f);
+	ma_sound_set_position(&sonidoViento, -235.0f, 0.0f, -240.0f);
 	ma_sound_start(&sonidoViento);
 
 	// 3. ZONA DE LA IGLESIA (Pájaros)
@@ -681,7 +681,7 @@ int main()
 	ma_sound_set_max_distance(&sonidoPajaros, 120.0f);
 
 	// Usamos las coordenadas de la iglesia
-	ma_sound_set_position(&sonidoPajaros, -146.0f, 9.0f, 136.0f);
+	ma_sound_set_position(&sonidoPajaros, -146.0f, 0.0f, 136.0f);
 	ma_sound_start(&sonidoPajaros);
 
 	// Inicializar sonido
