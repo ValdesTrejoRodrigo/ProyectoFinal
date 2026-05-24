@@ -190,6 +190,11 @@ FRAME_RELOJ KeyFrameReloj[MAX_FRAMES];
 int FrameIndexReloj = 30;			//introducir datos
 bool playReloj = false;
 int playIndexReloj = 0;
+static bool zPresionada = false;
+static bool xPresionada = false;
+static bool cPresionada = false;
+static bool vPresionada = false;
+static bool spacePresionada = false;
 
 //motocicleta
 Model CuerpoMoto;
@@ -1653,6 +1658,7 @@ int main()
 			{
 				animarCasa = !animarCasa;
 				presionoQ = true;
+				ma_engine_play_sound(&engine, "Audio/SFX/mechanical-switch-latch-02.wav", NULL);
 			}
 		}
 		else
@@ -1843,102 +1849,80 @@ int main()
 				printf("Habilitado: Ya puedes guardar otro frame con 'B'\n");
 			}
 		}
-		if (mainWindow.getsKeys()[GLFW_KEY_SPACE]) // Reproducir animaci�n
+		if (mainWindow.getsKeys()[GLFW_KEY_SPACE]) // Reproducir animación
 		{
-			if (!playReloj)
+			if (!playReloj && !spacePresionada)
 			{
 				resetReloj();
 				playReloj = true;
 				playIndexReloj = 0;
 				i_curr_steps = 0;
 				interpolationReloj();
+				ma_engine_play_sound(&engine, "Audio/SFX/clock-chime-antique-a.wav", NULL);
+				spacePresionada = true;
 			}
 		}
+		else { spacePresionada = false; }
 		if (mainWindow.getsKeys()[GLFW_KEY_R]) // Resetear
 		{
 			resetReloj();
 			playReloj = false;
 		}
 
-		// Movimiento engranaje grande del reloj
+		// Movimiento manual de los engranajes del reloj
 		if (!playReloj)
 		{
+			// ENGRANAJE GRANDE (Tecla Z)
 			if (mainWindow.getsKeys()[GLFW_KEY_Z])
 			{
-				if (ciclo < 1)
+				if (!zPresionada) // Solo entra el instante en que presionas
 				{
 					rotEngranajeGrande += 35.0f;
-					printf("Tren movido hacia adelante: %f. Presiona 'M' para habilitar.\n", movTrenX);
-					ciclo++;
-					ciclo2 = 0;
+					ma_engine_play_sound(&engine, "Audio/SFX/wind-up4.wav", NULL);
+					printf("REPRODUCIENDO SONIDO ENGRANAJE Z\n");
+					zPresionada = true; // Bloquea la tecla para que no se repita a 60 FPS
 				}
 			}
+			else { zPresionada = false; } // Se libera el candado al soltar la tecla Z
+
+			// ENGRANAJE MEDIANO (Tecla X)
 			if (mainWindow.getsKeys()[GLFW_KEY_X])
 			{
-				if (ciclo2 < 1)
-				{
-					ciclo = 0;
-					ciclo2++;
-					printf("Tecla 'N' habilitada de nuevo.\n");
-				}
-			}
-			if (mainWindow.getsKeys()[GLFW_KEY_C])
-			{
-				if (ciclo < 1)
+				if (!xPresionada)
 				{
 					rotEngranajeMediano -= 35.0f;
-					printf("Tren movido hacia adelante: %f. Presiona 'V' para habilitar.\n", movTrenX);
-					ciclo++;
-					ciclo2 = 0;
+					ma_engine_play_sound(&engine, "Audio/SFX/wind-up4.wav", NULL);
+					printf("REPRODUCIENDO SONIDO ENGRANAJE X\n");
+					xPresionada = true;
 				}
 			}
-			if (mainWindow.getsKeys()[GLFW_KEY_V])
+			else { xPresionada = false; }
+
+			// ENGRANAJE PEQUEÑO (Tecla C)
+			if (mainWindow.getsKeys()[GLFW_KEY_C])
 			{
-				if (ciclo2 < 1)
-				{
-					ciclo = 0;
-					ciclo2++;
-					printf("Tecla 'C' habilitada de nuevo.\n");
-				}
-			}
-			if (mainWindow.getsKeys()[GLFW_KEY_6])
-			{
-				if (ciclo < 1)
+				if (!cPresionada)
 				{
 					rotEngranajePequeno += 35.0f;
-					printf("Tren movido hacia adelante: %f. Presiona '7' para habilitar.\n", movTrenX);
-					ciclo++;
-					ciclo2 = 0;
+					ma_engine_play_sound(&engine, "Audio/SFX/wind-up4.wav", NULL);
+					printf("REPRODUCIENDO SONIDO ENGRANAJE C\n");
+					cPresionada = true;
 				}
 			}
-			if (mainWindow.getsKeys()[GLFW_KEY_7])
+			else { cPresionada = false; }
+
+			// ENGRANAJE ENANO (Tecla V)
+			if (mainWindow.getsKeys()[GLFW_KEY_V])
 			{
-				if (ciclo2 < 1)
-				{
-					ciclo = 0;
-					ciclo2++;
-					printf("Tecla '6' habilitada de nuevo.\n");
-				}
-			}
-			if (mainWindow.getsKeys()[GLFW_KEY_8])
-			{
-				if (ciclo < 1)
+				if (!vPresionada)
 				{
 					rotEngranajeEnano -= 35.0f;
-					printf("Tren movido hacia adelante: %f. Presiona '9' para habilitar.\n", movTrenX);
-					ciclo++;
-					ciclo2 = 0;
+					ma_engine_play_sound(&engine, "Audio/SFX/wind-up4.wav", NULL);
+					printf("REPRODUCIENDO SONIDO ENGRANAJE V\n");
+					vPresionada = true;
 				}
 			}
-			if (mainWindow.getsKeys()[GLFW_KEY_9])
-			{
-				if (ciclo2 < 1)
-				{
-					ciclo = 0;
-					ciclo2++;
-					printf("Tecla '8' habilitada de nuevo.\n");
-				}
-			}
+			else { vPresionada = false; }
 		}
 
 		// Farolas
