@@ -41,6 +41,9 @@ const float toRadians = 3.14159265f / 180.0f;
 ma_engine engine;
 ma_sound music; //soundtrack de fondo
 ma_sound sonidoDirigible;
+ma_sound sonidoAgua;
+ma_sound sonidoViento;
+ma_sound sonidoPajaros;
 
 //variables para animaci�n
 float angulovaria = 0.0f;
@@ -650,6 +653,36 @@ int main()
 	ma_sound_init_from_file(&engine, "Audio/Musica/Soundtrack.mp3", MA_SOUND_FLAG_STREAM | MA_SOUND_FLAG_NO_SPATIALIZATION, NULL, NULL, &music);
 	ma_sound_set_looping(&music, MA_TRUE); // Para que se repita
 	ma_sound_start(&music); // Para empezar a reproducir
+
+	ma_sound_init_from_file(&engine, "Audio/Ambient/byronabadia__53_mar_ambiente.mp3", 0, NULL, NULL, &sonidoAgua);
+	ma_sound_set_looping(&sonidoAgua, MA_TRUE);
+	ma_sound_set_attenuation_model(&sonidoAgua, ma_attenuation_model_linear);
+	ma_sound_set_min_distance(&sonidoAgua, 25.0f);  // Se escucha perfecto a 25 uds
+	ma_sound_set_max_distance(&sonidoAgua, 100.0f); // Se desvanece a los 80 uds
+
+	ma_sound_set_position(&sonidoAgua, 0.0f, -1.99f, 250.0f);
+	ma_sound_start(&sonidoAgua);
+
+	// 2. ZONA DE LOS MOLINOS (Viento)
+	ma_sound_init_from_file(&engine, "Audio/Ambient/nicotep__larrun_mountains_lowrumble_veryquiet_wind_mid_distant_bells.mp3", 0, NULL, NULL, &sonidoViento);
+	ma_sound_set_looping(&sonidoViento, MA_TRUE);
+	ma_sound_set_attenuation_model(&sonidoViento, ma_attenuation_model_linear);
+	ma_sound_set_min_distance(&sonidoViento, 40.0f);  // El viento abarca más espacio
+	ma_sound_set_max_distance(&sonidoViento, 200.0f);
+
+	ma_sound_set_position(&sonidoViento, -205.0f, 10.0f, -240.0f);
+	ma_sound_start(&sonidoViento);
+
+	// 3. ZONA DE LA IGLESIA (Pájaros)
+	ma_sound_init_from_file(&engine, "Audio/Ambient/kangaroovindaloo__wind-farm-whistle.mp3", 0, NULL, NULL, &sonidoPajaros);
+	ma_sound_set_looping(&sonidoPajaros, MA_TRUE);
+	ma_sound_set_attenuation_model(&sonidoPajaros, ma_attenuation_model_linear);
+	ma_sound_set_min_distance(&sonidoPajaros, 20.0f);
+	ma_sound_set_max_distance(&sonidoPajaros, 120.0f);
+
+	// Usamos las coordenadas de la iglesia
+	ma_sound_set_position(&sonidoPajaros, -146.0f, 9.0f, 136.0f);
+	ma_sound_start(&sonidoPajaros);
 
 	// Inicializar sonido
 	ma_sound_init_from_file(&engine, "Audio/SFX/running-motor-altered-version.wav", 0, NULL, NULL, &sonidoDirigible);
@@ -2083,6 +2116,9 @@ int main()
 	meshList.clear();
 
 	// 2. Detener y liberar el audio (Tu código original)
+	ma_sound_uninit(&sonidoAgua);
+	ma_sound_uninit(&sonidoViento);
+	ma_sound_uninit(&sonidoPajaros);
 	ma_sound_stop(&music);
 	ma_sound_uninit(&music);
 	ma_sound_uninit(&sonidoDirigible);
