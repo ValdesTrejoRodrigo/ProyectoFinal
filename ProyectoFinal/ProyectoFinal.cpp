@@ -269,6 +269,8 @@ PointLight pointLights[MAX_POINT_LIGHTS];
 SpotLight spotLights[MAX_SPOT_LIGHTS];
 bool luzEspadaActiva = true;   // toggle con tecla F
 bool luzEspadaKeyPressed = false;
+bool luzTrenActiva = true;     // toggle con tecla G
+bool luzTrenKeyPressed = false;
 
 // Vertex Shader
 static const char* vShader = "shaders/shader_light.vert";
@@ -1091,6 +1093,20 @@ int main()
 			luzEspadaKeyPressed = false;
 		}
 
+		// Toggle luz del tren (tecla G)
+		if (mainWindow.getsKeys()[GLFW_KEY_G])
+		{
+			if (!luzTrenKeyPressed)
+			{
+				luzTrenActiva = !luzTrenActiva;
+				luzTrenKeyPressed = true;
+			}
+		}
+		else
+		{
+			luzTrenKeyPressed = false;
+		}
+
 		// Clear the window
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -1130,22 +1146,17 @@ int main()
 		shaderList[0].SetDirectionalLight(&mainLight);
 		shaderList[0].SetPointLights(pointLights, pointLightCount);
 
-		// Si la luz de la espada est� activa, mandar el arreglo completo.
-		// Si est� apagada, armar un arreglo temporal sin spotLights[1].
-		if (luzEspadaActiva)
+		// Construir arreglo de spotlights activas segun toggles (F = espada, G = tren)
 		{
-			shaderList[0].SetSpotLights(spotLights, spotLightCount);
-		}
-		else
-		{
-			SpotLight spotLightsSinEspada[MAX_SPOT_LIGHTS];
-			unsigned int countSinEspada = 0;
+			SpotLight spotLightsActivas[MAX_SPOT_LIGHTS];
+			unsigned int countActivas = 0;
 			for (unsigned int i = 0; i < spotLightCount; i++)
 			{
-				if (i != 1) // 1 es la luz sobre la espada
-					spotLightsSinEspada[countSinEspada++] = spotLights[i];
+				if (i == 1 && !luzEspadaActiva) continue; // luz espada apagada (F)
+				if (i == 2 && !luzTrenActiva)   continue; // luz tren apagada (G)
+				spotLightsActivas[countActivas++] = spotLights[i];
 			}
-			shaderList[0].SetSpotLights(spotLightsSinEspada, countSinEspada);
+			shaderList[0].SetSpotLights(spotLightsActivas, countActivas);
 		}
 
 
