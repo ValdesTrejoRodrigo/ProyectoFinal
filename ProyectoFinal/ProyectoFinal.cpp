@@ -63,6 +63,8 @@ Texture IgleTexture;
 int numFarolasActivas = 0; // N�mero de farolas actualmente encendidas
 bool farolasEncendidas = false; // Estado de las farolas
 
+Model Tifa;
+
 //personajes
 //Avtara ligado a la camara
 Model Cuerpo;
@@ -815,6 +817,9 @@ int main()
 	Castillo.LoadModel("Models/PeachCastle.obj");
 	Castillo_Noche = Model();
 	Castillo_Noche.LoadModel("Models/PeachCastle-baked.obj");
+
+	Tifa = Model();
+	Tifa.LoadModel("Models/Tifa.fbx");
 
 	Iglesia = Model();
 	Iglesia.LoadModel("Models/Igle.fbx");
@@ -1739,6 +1744,12 @@ int main()
 			Lampara.RenderModel();
 		}
 		
+		// MODELO TIFA 
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(0.0f, 1.7f, 0.0f)); 
+		model = glm::scale(model, glm::vec3(0.033f, 0.033f, 0.033f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Tifa.RenderModel();
 
 		//Edificio grande
 		model = glm::mat4(1.0);
