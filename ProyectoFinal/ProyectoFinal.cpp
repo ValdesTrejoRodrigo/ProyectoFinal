@@ -117,6 +117,7 @@ Model Arbol1; //low poly
 Model Arbol2; //abeto?
 Model Bancos;
 Model Lampara;
+Model LamparaOff;
 
 //Reloj
 Model Reloj_M;
@@ -800,7 +801,9 @@ int main()
 
 	//Lampara japonesa
 	Lampara = Model();
-	Lampara.LoadModel("Models/Japanese-Lantern.fbx");
+	Lampara.LoadModel("Models/Japanese-Lantern-on.fbx");
+	LamparaOff = Model();
+	LamparaOff.LoadModel("Models/Japanese-Lantern-off.fbx");
 
 	//EDIFICIOS
 	EdificioGrande = Model();
@@ -1778,28 +1781,28 @@ int main()
 			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 			model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-			Lampara.RenderModel();
+			LamparaOff.RenderModel();
 			//Lampara
 			model = glm::mat4(1.0);
 			model = glm::translate(model, lampara2);
 			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 			model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-			Lampara.RenderModel();
+			LamparaOff.RenderModel();
 			//Lampara
 			model = glm::mat4(1.0);
 			model = glm::translate(model, lampara3);
 			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 			model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-			Lampara.RenderModel();
+			LamparaOff.RenderModel();
 			//Lampara
 			model = glm::mat4(1.0);
 			model = glm::translate(model, lampara4);
 			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 			model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-			Lampara.RenderModel();
+			LamparaOff.RenderModel();
 		}
 		
 		// MODELO TIFA 
