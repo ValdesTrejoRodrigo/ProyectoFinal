@@ -120,6 +120,9 @@ Model EngranajePequeno_M;
 Model EngranajeEnano_M;
 Model ManecillaHora_M;
 Model ManecillaMinuto_M;
+
+Model Seph;
+
 // Variables para animaci�n del reloj
 float posXreloj = -225.0f, posYreloj = 15.0f, posZreloj = 50.0f;
 float rotEngranajeGrande = 0.0f;
@@ -719,6 +722,9 @@ int main()
 
 	IgleTexture = Texture("Textures/aeris-0.png");
 	IgleTexture.LoadTextureA();
+
+	Seph = Model();
+	Seph.LoadModel("Models/Seph.fbx");
 
 	//avatar ligado a la camara
 	Cuerpo = Model();
@@ -1744,12 +1750,25 @@ int main()
 			Lampara.RenderModel();
 		}
 		
+		//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+		//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+		//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+		//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 		// MODELO TIFA 
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(0.0f, 1.7f, 0.0f)); 
 		model = glm::scale(model, glm::vec3(0.033f, 0.033f, 0.033f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Tifa.RenderModel();
+
+		// MODELO SEPHIROTH 
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(109.0f, -2.0f, 72.0f)); // Modifica aquí su posición (X, Y, Z)
+		model = glm::rotate(model, glm::radians(-145.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.0045f, 0.0045f, 0.0045f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Seph.RenderModel();
 
 		//Edificio grande
 		model = glm::mat4(1.0);
