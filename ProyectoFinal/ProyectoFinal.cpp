@@ -77,6 +77,8 @@ Model PiernaIzq;
 Model Sherlock;
 Model Waver;
 Model Reines;
+Model Toad;
+Model Goomba;
 Model Mario64Cuerpo;
 Model Mario64Cabeza;
 Model Mario64BrazoDer;
@@ -752,6 +754,10 @@ int main()
 	Waver.LoadModel("Models/NPC/WaverFGO.obj");
 	Reines = Model();
 	Reines.LoadModel("Models/NPC/ReinesFGO.obj");
+	Toad = Model();
+	Toad.LoadModel("Models/NPC/SM64Toad.obj");
+	Goomba = Model();
+	Goomba.LoadModel("Models/NPC/Goomba.obj");
 	Mario64Cuerpo = Model();
 	Mario64Cuerpo.LoadModel("Models/NPC/PersonajeMario64/Mario64Cuerpo.obj");
 	Mario64Cabeza = Model();
@@ -1349,6 +1355,20 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Reines.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(150.0f, -2.0f, 45.0f));
+		model = glm::rotate(model, glm::radians(-150.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Toad.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-250.0f, -2.0f, 45.0f));
+		model = glm::rotate(model, glm::radians(-45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Goomba.RenderModel();
 
 		//Mario (NPC)
 		//El cuerpo es el modelo padre del resto de las partes del cuerpo.
