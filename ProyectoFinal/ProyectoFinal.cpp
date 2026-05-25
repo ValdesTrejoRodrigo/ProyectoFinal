@@ -1,5 +1,5 @@
 //Proyecto Final de Computacion Grafica e Interaccion Humano Computadora
-//iNTEGRANTES:
+//iNTEGRANTES: Sky
 #define STB_IMAGE_IMPLEMENTATION
 //para audio
 #define MINIAUDIO_IMPLEMENTATION
@@ -909,21 +909,21 @@ int main()
 
 
 	std::vector<std::string> skyboxFacesDia;
-	skyboxFacesDia.push_back("Textures/Skybox/Monte_right.jpeg");
-	skyboxFacesDia.push_back("Textures/Skybox/Monte_left.jpeg");
-	skyboxFacesDia.push_back("Textures/Skybox/Monte_down.jpeg");
-	skyboxFacesDia.push_back("Textures/Skybox/Monte_up.jpeg");
-	skyboxFacesDia.push_back("Textures/Skybox/Monte_back.jpeg");
-	skyboxFacesDia.push_back("Textures/Skybox/Monte_front.jpeg");
+	skyboxFacesDia.push_back("Textures/Skybox/day_rt.png");
+	skyboxFacesDia.push_back("Textures/Skybox/day_lf.png");
+	skyboxFacesDia.push_back("Textures/Skybox/day_dn.png");
+	skyboxFacesDia.push_back("Textures/Skybox/day_up.png");
+	skyboxFacesDia.push_back("Textures/Skybox/day_bk.png");
+	skyboxFacesDia.push_back("Textures/Skybox/day_ft.png");
 	skyboxDia = Skybox(skyboxFacesDia);
 
 	std::vector<std::string> skyboxFacesNoche;
-	skyboxFacesNoche.push_back("Textures/Skybox/MonteN_right.jpeg");
-	skyboxFacesNoche.push_back("Textures/Skybox/MonteN_left.jpeg");
-	skyboxFacesNoche.push_back("Textures/Skybox/MonteN_down.jpeg");
-	skyboxFacesNoche.push_back("Textures/Skybox/MonteN_up.jpeg");
-	skyboxFacesNoche.push_back("Textures/Skybox/MonteN_back.jpeg");
-	skyboxFacesNoche.push_back("Textures/Skybox/MonteN_front.jpeg");
+	skyboxFacesNoche.push_back("Textures/Skybox/ngt_rt.png");
+	skyboxFacesNoche.push_back("Textures/Skybox/ngt_lf.png");
+	skyboxFacesNoche.push_back("Textures/Skybox/ngt_dn.png");
+	skyboxFacesNoche.push_back("Textures/Skybox/ngt_up.png");
+	skyboxFacesNoche.push_back("Textures/Skybox/ngt_bk.png");
+	skyboxFacesNoche.push_back("Textures/Skybox/ngt_ft.png");
 	skyboxNoche = Skybox(skyboxFacesNoche);
 
 
