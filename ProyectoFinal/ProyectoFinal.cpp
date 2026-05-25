@@ -130,6 +130,8 @@ Model ManecillaMinuto_M;
 
 Model Seph;
 
+Model Cloud;
+
 // Variables para animaci�n del reloj
 float posXreloj = -225.0f, posYreloj = 15.0f, posZreloj = 50.0f;
 float rotEngranajeGrande = 0.0f;
@@ -844,6 +846,9 @@ int main()
 
 	Tifa = Model();
 	Tifa.LoadModel("Models/Tifa.fbx");
+
+	Cloud = Model();
+	Cloud.LoadModel("Models/Cloud.fbx");
 
 	Iglesia = Model();
 	Iglesia.LoadModel("Models/Igle.fbx");
@@ -1830,6 +1835,14 @@ int main()
 		model = glm::scale(model, glm::vec3(0.0045f, 0.0045f, 0.0045f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Seph.RenderModel();
+
+		// MODELO CLOUD 
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(3.0f, -1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(40.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::scale(model, glm::vec3(0.045f, 0.045f, 0.045f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Cloud.RenderModel();
 
 		//Edificio grande
 		model = glm::mat4(1.0);
