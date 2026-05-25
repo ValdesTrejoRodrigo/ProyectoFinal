@@ -150,6 +150,9 @@ float rotColaDirigible = 0.0f;
 
 Model Locomotora;
 Model Vagon;
+
+Model Estat;
+
 /*
 Model RuedaGLocomotora;
 Model RuedaPLocomotora;
@@ -853,6 +856,9 @@ int main()
 
 	TunelTren = Model();
 	TunelTren.LoadModel("Models/TunelTren.obj");
+
+	Estat = Model();
+	Estat.LoadModel("Models/estat.fbx");
 
 	//decoraciones
 	Farola = Model();
@@ -1847,6 +1853,14 @@ int main()
 			angBrazo2 = -45.0f + (-90.0f - (-45.0f)) * t; // Asum� 0.0f para extremo derecho
 			angCasa = 0.0f + (-45.0f - 0.0f) * t;
 		}
+
+		// MODELO ESTATUA DON QUIJOTE 
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(-205.0f, -3.0f, -200.0f));
+		model = glm::scale(model, glm::vec3(40.0f, 40.0f, 40.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Estat.RenderModel();
 
 		//Casa mobile Steampunk
 		model = glm::mat4(1.0f);
