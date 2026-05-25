@@ -89,6 +89,12 @@ Model Mario64PieDer;
 Model Mario64PiernaIzq;
 Model Mario64MusloIzq;
 Model Mario64PieIzq;
+Model PeachCuerpo;
+Model PeachBrazoD;
+Model PeachAnteBrazoD;
+Model PeachBrazoI;
+Model PeachAnteBrazoI;
+
 
 //elementos del entorno
 Model excalibur;
@@ -111,6 +117,7 @@ Model Arbol1; //low poly
 Model Arbol2; //abeto?
 Model Bancos;
 Model Lampara;
+Model LamparaOff;
 
 //Reloj
 Model Reloj_M;
@@ -769,7 +776,16 @@ int main()
 	Mario64MusloIzq.LoadModel("Models/NPC/PersonajeMario64/Mario64MusloIzq.obj");
 	Mario64PieIzq = Model();
 	Mario64PieIzq.LoadModel("Models/NPC/PersonajeMario64/Mario64PieIzq.obj");
-
+	PeachCuerpo = Model();
+	PeachCuerpo.LoadModel("Models/NPC/Peach/PeachBody.obj");
+	PeachBrazoD = Model();
+	PeachBrazoD.LoadModel("Models/NPC/Peach/PeachBrazoD.obj");
+	PeachAnteBrazoD = Model();
+	PeachAnteBrazoD.LoadModel("Models/NPC/Peach/PeachAnteBrazoD.obj");
+	PeachBrazoI = Model();
+	PeachBrazoI.LoadModel("Models/NPC/Peach/PeachBrazoI.obj");
+	PeachAnteBrazoI = Model();
+	PeachAnteBrazoI.LoadModel("Models/NPC/Peach/PeachAnteBrazoI.obj");
 
 	//elementos del entorno
 
@@ -791,7 +807,9 @@ int main()
 
 	//Lampara japonesa
 	Lampara = Model();
-	Lampara.LoadModel("Models/Japanese-Lantern.fbx");
+	Lampara.LoadModel("Models/Japanese-Lantern-on.fbx");
+	LamparaOff = Model();
+	LamparaOff.LoadModel("Models/Japanese-Lantern-off.fbx");
 
 	//EDIFICIOS
 	EdificioGrande = Model();
@@ -1409,6 +1427,49 @@ int main()
 		Mario64PieDer.RenderModel();
 
 
+		//Peach (NPC)
+		//El cuerpo es el modelo padre del resto de las partes del cuerpo.
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(150.0f, 15.0f, 109.0f));
+		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		modelaux2 = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		PeachCuerpo.RenderModel();
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(0.2f, 1.35f, -0.05f));
+		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::rotate(model, glm::radians(-20.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		modelaux3 = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		PeachBrazoI.RenderModel();
+		model = modelaux3;
+		model = glm::translate(model, glm::vec3(0.2f, 0.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(-120.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(-20.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		PeachAnteBrazoI.RenderModel();
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-0.2f, 1.35f, -0.05f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::rotate(model, glm::radians(20.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		modelaux3 = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		PeachBrazoD.RenderModel();
+		model = modelaux3;
+		model = glm::translate(model, glm::vec3(-0.2f, 0.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(120.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(20.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		PeachAnteBrazoD.RenderModel();
+
 		// Activar/desactivar animaci�n de Excalibur con tecla E
 		if (mainWindow.getsKeys()[GLFW_KEY_E])
 		{
@@ -1726,28 +1787,28 @@ int main()
 			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 			model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-			Lampara.RenderModel();
+			LamparaOff.RenderModel();
 			//Lampara
 			model = glm::mat4(1.0);
 			model = glm::translate(model, lampara2);
 			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 			model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-			Lampara.RenderModel();
+			LamparaOff.RenderModel();
 			//Lampara
 			model = glm::mat4(1.0);
 			model = glm::translate(model, lampara3);
 			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 			model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-			Lampara.RenderModel();
+			LamparaOff.RenderModel();
 			//Lampara
 			model = glm::mat4(1.0);
 			model = glm::translate(model, lampara4);
 			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 			model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-			Lampara.RenderModel();
+			LamparaOff.RenderModel();
 		}
 		
 		//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
