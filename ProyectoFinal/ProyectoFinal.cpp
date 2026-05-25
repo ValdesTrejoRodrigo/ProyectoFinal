@@ -134,6 +134,8 @@ Model Seph;
 
 Model Cloud;
 
+Model Leon;
+
 Model Ca1;
 
 // Variables para animaci�n del reloj
@@ -738,6 +740,9 @@ int main()
 
 	Seph = Model();
 	Seph.LoadModel("Models/Seph.fbx");
+
+	Leon = Model();
+	Leon.LoadModel("Models/Leon.fbx");
 
 	//avatar ligado a la camara
 	Cuerpo = Model();
@@ -1879,6 +1884,15 @@ int main()
 		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Ca1.RenderModel();
+
+		// MODELO LEON
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(3.0f, 1.35f, 0.0f));
+		model = glm::rotate(model, glm::radians(72.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		//model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.25f, 0.25f, 0.25f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Leon.RenderModel();
 
 		//Edificio grande
 		model = glm::mat4(1.0);
