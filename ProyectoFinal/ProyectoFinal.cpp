@@ -57,6 +57,7 @@ Texture plain;
 Texture pisoTexture;
 Texture grassTexture;
 Texture waterTexture;
+Texture IgleTexture;
 
 // Variables para control de farolas
 int numFarolasActivas = 0; // N�mero de farolas actualmente encendidas
@@ -711,6 +712,9 @@ int main()
 	waterTexture = Texture("Textures/agua.jpg");
 	waterTexture.LoadTextureA();
 
+	IgleTexture = Texture("Textures/aeris-0.png");
+	IgleTexture.LoadTextureA();
+
 	//avatar ligado a la camara
 	Cuerpo = Model();
 	Cuerpo.LoadModel("Models/PersonajeGray/GrayCuerpo.obj");
@@ -808,8 +812,10 @@ int main()
 	Castillo.LoadModel("Models/PeachCastle.obj");
 	Castillo_Noche = Model();
 	Castillo_Noche.LoadModel("Models/PeachCastle-baked.obj");
+
 	Iglesia = Model();
-	Iglesia.LoadModel("Models/Iglesia.obj");
+	Iglesia.LoadModel("Models/Igle.fbx");
+	
 	EngranajesIglesia = Model();
 	EngranajesIglesia.LoadModel("Models/EngranajesIglesia.obj");
 
@@ -1895,15 +1901,17 @@ int main()
 
 		//Iglesia
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(-146.0f, 9.0f, 136.0f));
-		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, -1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(-250.0f, -4.0f, 140.0f));
+		model = glm::rotate(model, glm::radians(270.0f), glm::vec3(0.0f, -1.0f, 0.0f));
+		//model = glm::rotate(model, glm::radians(180.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 		modelaux = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Iglesia.RenderModel();
+		IgleTexture.UseTexture();
 
 		modelaux = model;
-		model = glm::translate(model, glm::vec3(3.0f, 8.2f, 2.7f));
+		model = glm::translate(model, glm::vec3(1.0f, 14.0f, 2.5f));
 		model = glm::rotate(model, glm::radians(angulovaria), glm::vec3(0.0f, 0.0f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
