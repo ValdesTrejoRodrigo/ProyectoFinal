@@ -241,6 +241,7 @@ float rotLlantasMoto = 0.0f;
 //estrcuturas
 Model Molino;
 Model AspaMolino;
+Model Stands;
 Model Castillo;
 Model Castillo_Noche;
 
@@ -852,6 +853,8 @@ int main()
 	Molino.LoadModel("Models/Molino.obj");
 	AspaMolino = Model();
 	AspaMolino.LoadModel("Models/AspaMolino.obj");
+	Stands = Model();
+	Stands.LoadModel("Models/stands.obj");
 	Castillo = Model();
 	Castillo.LoadModel("Models/PeachCastle.obj");
 	Castillo_Noche = Model();
@@ -1378,9 +1381,32 @@ int main()
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Toad.RenderModel();
 
+		//Goomba
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(-250.0f, -2.0f, 45.0f));
-		model = glm::rotate(model, glm::radians(-45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(-287.0f, -1.0f, -103.0f));
+		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.8f, 0.8f, 0.8f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Goomba.RenderModel();
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-287.0f, -1.0f, -97.0f));
+		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.8f, 0.8f, 0.8f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Goomba.RenderModel();
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-287.0f, -1.0f, -91.0f));
+		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.8f, 0.8f, 0.8f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Goomba.RenderModel();
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-287.0f, -1.0f, -85.0f));
+		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.8f, 0.8f, 0.8f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Goomba.RenderModel();
@@ -1588,7 +1614,7 @@ int main()
 		
 		//Bandera SM64
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(-200.0f, -2.0, -130.0f));
+		model = glm::translate(model, glm::vec3(-150.0f, -2.0, -150.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Flagpole.RenderModel();
@@ -2066,6 +2092,31 @@ int main()
 			Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 			AspaMolino.RenderModel();
 		}
+		//Stands
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(-290.0f, -2.0f, -64.0f));
+		model = glm::scale(model, glm::vec3(1.5f, 1.5f, 1.5f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		modelaux = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Stands.RenderModel();
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(-290.0f, -2.0f, -100.0f));
+		model = glm::scale(model, glm::vec3(1.5f, 1.5f, 1.5f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		modelaux = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Stands.RenderModel();
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(-290.0f, -2.0f, -136.0f));
+		model = glm::scale(model, glm::vec3(1.5f, 1.5f, 1.5f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		modelaux = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Stands.RenderModel();
 
 		//Iglesia
 		model = glm::mat4(1.0);
