@@ -138,6 +138,16 @@ Model Leon;
 
 Model Ca1;
 
+Model Tyr;
+
+Model Per;
+
+Model Ca2;
+
+Model EsPoli;
+
+Texture rpdTexture;
+
 // Variables para animaci�n del reloj
 float posXreloj = -225.0f, posYreloj = 15.0f, posZreloj = 50.0f;
 float rotEngranajeGrande = 0.0f;
@@ -744,6 +754,21 @@ int main()
 
 	Leon = Model();
 	Leon.LoadModel("Models/Leon.fbx");
+
+	Tyr = Model();
+	Tyr.LoadModel("Models/Tyr.fbx");
+
+	Per = Model();
+	Per.LoadModel("Models/Per.fbx");
+
+	Ca2 = Model();
+	Ca2.LoadModel("Models/Ca2.fbx");
+
+	EsPoli = Model();
+	EsPoli.LoadModel("Models/EsPoli.fbx");
+
+	rpdTexture = Texture("Textures/rpd.png");
+	rpdTexture.LoadTextureA();
 
 	//avatar ligado a la camara
 	Cuerpo = Model();
@@ -1879,7 +1904,8 @@ int main()
 
 		// MODELO TIFA 
 		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, 1.7f, 0.0f)); 
+		model = glm::translate(model, glm::vec3(245.0f, 1.7f, -85.0f));
+		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(0.033f, 0.033f, 0.033f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Tifa.RenderModel();
@@ -1913,12 +1939,48 @@ int main()
 
 		// MODELO LEON
 		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(3.0f, 1.35f, 0.0f));
+		model = glm::translate(model, glm::vec3(-80.0f, 1.35f, -225.0f));
 		model = glm::rotate(model, glm::radians(72.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 		//model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(0.25f, 0.25f, 0.25f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Leon.RenderModel();
+
+		// MODELO TYRANT
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(-76.0f, -0.7f, -225.0f));
+		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.03f, 0.03f, 0.03f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Tyr.RenderModel();
+
+		// MODELO PERRO
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(-110.0f, 0.55f, 125.0f));
+		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Per.RenderModel();
+
+		// MODELO CASA 2
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(275.0f, 0.0f, -110.0f));
+		model = glm::scale(model, glm::vec3(1.3f, 1.0f, 1.8f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Ca2.RenderModel();
+
+		// MODELO ESTACION POLICIA RACOON CITY
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(-90.0f, 5.0f, -280.0f));
+		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		rpdTexture.UseTexture();
+		//Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		EsPoli.RenderModel();
 
 		//Edificio grande
 		model = glm::mat4(1.0);
