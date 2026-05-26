@@ -79,6 +79,8 @@ Model Waver;
 Model Reines;
 Model Toad;
 Model Goomba;
+Model Ivanhoe;
+Model Baron_Front;
 Model Mario64Cuerpo;
 Model Mario64Cabeza;
 Model Mario64BrazoDer;
@@ -103,6 +105,7 @@ Model excalibur;
 Model piedra;//piedra donde esta incrustada excalibur
 Model roca; // roca detras de la espada en la piedra
 Model robotLampara; //sentado en la roca
+Model Valla;
 
 Model Estrella;
 //Variables para animaci�n de estrella
@@ -793,6 +796,10 @@ int main()
 	Toad.LoadModel("Models/NPC/SM64Toad.obj");
 	Goomba = Model();
 	Goomba.LoadModel("Models/NPC/Goomba.obj");
+	Ivanhoe = Model();
+	Ivanhoe.LoadModel("Models/NPC/Ivanhoe.obj");
+	Baron_Front = Model();
+	Baron_Front.LoadModel("Models/NPC/Front-de-Boeuf.obj");
 	Mario64Cuerpo = Model();
 	Mario64Cuerpo.LoadModel("Models/NPC/PersonajeMario64/Mario64Cuerpo.obj");
 	Mario64Cabeza = Model();
@@ -839,6 +846,8 @@ int main()
 	roca.LoadModel("Models/Roca.obj");
 	robotLampara = Model();
 	robotLampara.LoadModel("Models/RobotLampara.obj");
+	Valla = Model();
+	Valla.LoadModel("Models/valla.obj");
 
 	//Bandera
 	Flag = Model();
@@ -1406,7 +1415,7 @@ int main()
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Toad.RenderModel();
 
-		//Goomba
+		//Goombas
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(-287.0f, -1.0f, -103.0f));
 		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
@@ -1435,6 +1444,24 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Goomba.RenderModel();
+
+		//Ivanhoe
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-252.0f, -2.0f, -54.0f));
+		model = glm::rotate(model, glm::radians(-180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Ivanhoe.RenderModel();
+
+		//Front de Beauf
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-258.0f, -2.0f, -134.0f));
+		model = glm::rotate(model, glm::radians(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Baron_Front.RenderModel();
 
 		//Mario (NPC)
 		//El cuerpo es el modelo padre del resto de las partes del cuerpo.
@@ -2179,6 +2206,14 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Stands.RenderModel();
+
+		//Valla de torneo de caballeros
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-255.0f, -2.0f, -94.0f));
+		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Valla.RenderModel();
 
 		//Iglesia
 		model = glm::mat4(1.0);
